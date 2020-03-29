@@ -10,7 +10,7 @@ node_modules/
 !.vscode/extensions.json
 !.vscode/settings.json
 
-temp/
-lib/
-dist/
-coverage/
+/temp
+/dist
+/coverage
+/lib
