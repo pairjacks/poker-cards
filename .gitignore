@@ -1,0 +1,16 @@
+.DS_Store
+
+node_modules/
+*.log
+*.log.*
+
+.idea/
+.stryker-tmp/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+temp/
+lib/
+dist/
+coverage/
