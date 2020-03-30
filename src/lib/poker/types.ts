@@ -1,4 +1,4 @@
-export enum PokerHandRank {
+export enum HandRank {
   HighCard = 'HighCard',
   OnePair = 'OnePair',
   TwoPair = 'TwoPair',

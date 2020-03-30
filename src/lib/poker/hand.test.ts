@@ -1,6 +1,6 @@
 import { Face, Suit } from '../cards';
 import { evaluatePokerHand, comparePokerHands } from './hand';
-import { PokerHandRank } from './types';
+import { HandRank } from './types';
 
 describe('poker/hand', () => {
   describe('comparePokerHands', () => {
@@ -18,7 +18,7 @@ describe('poker/hand', () => {
   describe('evaluatePokerHand', () => {
     it('evaluates high card', () => {
       expect(evaluatePokerHand(ranksHighCard)).toEqual({
-        rank: PokerHandRank.HighCard,
+        rank: HandRank.HighCard,
         rankCards: [{ face: Face.Queen, suit: Suit.Diamonds }],
         kickers: [
           { face: Face.Jack, suit: Suit.Clubs },
@@ -31,7 +31,7 @@ describe('poker/hand', () => {
 
     it('evaluates one pair', () => {
       expect(evaluatePokerHand(ranksOnePair)).toEqual({
-        rank: PokerHandRank.OnePair,
+        rank: HandRank.OnePair,
         rankCards: [
           { face: Face.Six, suit: Suit.Clubs },
           { face: Face.Six, suit: Suit.Diamonds },
@@ -46,7 +46,7 @@ describe('poker/hand', () => {
 
     it('evaluates two pair', () => {
       expect(evaluatePokerHand(ranksTwoPair)).toEqual({
-        rank: PokerHandRank.TwoPair,
+        rank: HandRank.TwoPair,
         rankCards: [
           { face: Face.Jack, suit: Suit.Clubs },
           { face: Face.Jack, suit: Suit.Diamonds },
@@ -57,7 +57,7 @@ describe('poker/hand', () => {
       });
 
       expect(evaluatePokerHand(ranksTwoPairAndThreePair)).toEqual({
-        rank: PokerHandRank.TwoPair,
+        rank: HandRank.TwoPair,
         rankCards: [
           { face: Face.Queen, suit: Suit.Spades },
           { face: Face.Queen, suit: Suit.Clubs },
@@ -70,7 +70,7 @@ describe('poker/hand', () => {
 
     it('evaluates three of a kind', () => {
       expect(evaluatePokerHand(ranksThreeOfAKind)).toEqual({
-        rank: PokerHandRank.ThreeOfAKind,
+        rank: HandRank.ThreeOfAKind,
         rankCards: [
           { face: Face.Six, suit: Suit.Hearts },
           { face: Face.Six, suit: Suit.Clubs },
@@ -85,7 +85,7 @@ describe('poker/hand', () => {
 
     it('evaluates straight', () => {
       expect(evaluatePokerHand(ranksStraightAndPair)).toEqual({
-        rank: PokerHandRank.Straight,
+        rank: HandRank.Straight,
         rankCards: [
           { face: Face.Six, suit: Suit.Hearts },
           { face: Face.Five, suit: Suit.Clubs },
@@ -99,7 +99,7 @@ describe('poker/hand', () => {
 
     it('evaluates flush', () => {
       expect(evaluatePokerHand(ranksFlushAndTwoPair)).toEqual({
-        rank: PokerHandRank.Flush,
+        rank: HandRank.Flush,
         rankCards: [
           { face: Face.Jack, suit: Suit.Diamonds },
           { face: Face.Five, suit: Suit.Diamonds },
@@ -113,7 +113,7 @@ describe('poker/hand', () => {
 
     it('evaluates full house', () => {
       expect(evaluatePokerHand(ranksFullHouse)).toEqual({
-        rank: PokerHandRank.FullHouse,
+        rank: HandRank.FullHouse,
         rankCards: [
           { face: Face.Three, suit: Suit.Spades },
           { face: Face.Three, suit: Suit.Clubs },
@@ -125,7 +125,7 @@ describe('poker/hand', () => {
       });
 
       expect(evaluatePokerHand(ranksFullHouseAndTwoPair)).toEqual({
-        rank: PokerHandRank.FullHouse,
+        rank: HandRank.FullHouse,
         rankCards: [
           { face: Face.Jack, suit: Suit.Spades },
           { face: Face.Jack, suit: Suit.Hearts },
@@ -137,7 +137,7 @@ describe('poker/hand', () => {
       });
 
       expect(evaluatePokerHand(ranksFullHouseAndTwoThreeOfAKind)).toEqual({
-        rank: PokerHandRank.FullHouse,
+        rank: HandRank.FullHouse,
         rankCards: [
           { face: Face.Jack, suit: Suit.Spades },
           { face: Face.Jack, suit: Suit.Hearts },
@@ -151,7 +151,7 @@ describe('poker/hand', () => {
 
     it('evaluates four of a kind', () => {
       expect(evaluatePokerHand(ranksFourOfAKind)).toEqual({
-        rank: PokerHandRank.FourOfAKind,
+        rank: HandRank.FourOfAKind,
         rankCards: [
           { face: Face.Six, suit: Suit.Spades },
           { face: Face.Six, suit: Suit.Hearts },
@@ -164,7 +164,7 @@ describe('poker/hand', () => {
 
     it('evaluates straight flush', () => {
       expect(evaluatePokerHand(ranksStraightFlushAndOnePair)).toEqual({
-        rank: PokerHandRank.StraightFlush,
+        rank: HandRank.StraightFlush,
         rankCards: [
           { face: Face.Six, suit: Suit.Clubs },
           { face: Face.Five, suit: Suit.Clubs },
@@ -178,7 +178,7 @@ describe('poker/hand', () => {
 
     it('evaluates royal flush', () => {
       expect(evaluatePokerHand(ranksRoyalFlushAndOnePair)).toEqual({
-        rank: PokerHandRank.RoyalFlush,
+        rank: HandRank.RoyalFlush,
         rankCards: [
           { face: Face.Ace, suit: Suit.Clubs },
           { face: Face.King, suit: Suit.Clubs },

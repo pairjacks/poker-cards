@@ -2,7 +2,7 @@ import { uniqBy } from 'lodash/fp';
 
 import { Face } from '~/lib/cards';
 
-import { PokerHandRank } from '../types';
+import { HandRank } from '../types';
 import {
   omitAndSort,
   getSortedConsequtiveFaceGroups,
@@ -16,8 +16,8 @@ import {
 
 // https://www.cardschat.com/poker-hands/
 
-export const extractRoyalFlush: RankExtractor = (hand) => {
-  const { rankCards, kickers } = extractStraightFlush(hand) || {
+export const extractRoyalFlush: RankExtractor = (cards) => {
+  const { rankCards, kickers } = extractStraightFlush(cards) || {
     rankCards: null,
     kickers: [],
   };
@@ -26,103 +26,103 @@ export const extractRoyalFlush: RankExtractor = (hand) => {
     ? {
         rankCards,
         kickers,
-        rank: PokerHandRank.RoyalFlush,
+        rank: HandRank.RoyalFlush,
       }
     : null;
 };
 
-export const extractStraightFlush: RankExtractor = (hand) => {
+export const extractStraightFlush: RankExtractor = (cards) => {
   const rankCards = getSortedSuitGroups(
-    getSortedConsequtiveFaceGroups(hand).find((group) => group.length > 4) ||
+    getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 4) ||
       [],
   )
     .find((group) => group.length > 4)
     ?.slice(0, 5);
 
   return rankCards
-    ? createExtractorResult(PokerHandRank.StraightFlush, rankCards, hand)
+    ? createExtractorResult(HandRank.StraightFlush, rankCards, cards)
     : null;
 };
 
-export const extractFourOfAKind: RankExtractor = (hand) => {
-  const rankCards = getSortedFaceGroups(hand)
+export const extractFourOfAKind: RankExtractor = (cards) => {
+  const rankCards = getSortedFaceGroups(cards)
     .find((p) => p.length > 3)
     ?.slice(0, 4);
 
   return rankCards
-    ? createExtractorResult(PokerHandRank.FourOfAKind, rankCards, hand)
+    ? createExtractorResult(HandRank.FourOfAKind, rankCards, cards)
     : null;
 };
 
-export const extractFullHouse: RankExtractor = (hand) => {
-  const { rankCards: tok } = extractThreeOfAKind(hand) || {
+export const extractFullHouse: RankExtractor = (cards) => {
+  const { rankCards: tok } = extractThreeOfAKind(cards) || {
     rankCards: null,
   };
 
-  const pair = getSortedFaceGroups(omitAndSort(hand, tok || []))[0]?.slice(
+  const pair = getSortedFaceGroups(omitAndSort(cards, tok || []))[0]?.slice(
     0,
     2,
   );
 
   return tok && pair
-    ? createExtractorResult(PokerHandRank.FullHouse, [...tok, ...pair], hand)
+    ? createExtractorResult(HandRank.FullHouse, [...tok, ...pair], cards)
     : null;
 };
 
-export const extractFlush: RankExtractor = (hand) => {
-  const rankCards = getSortedSuitGroups(hand)
+export const extractFlush: RankExtractor = (cards) => {
+  const rankCards = getSortedSuitGroups(cards)
     .find((g) => g.length > 4)
     ?.slice(0, 5);
 
   return rankCards
-    ? createExtractorResult(PokerHandRank.Flush, rankCards, hand)
+    ? createExtractorResult(HandRank.Flush, rankCards, cards)
     : null;
 };
 
-export const extractStraight: RankExtractor = (hand) => {
-  const rankCards = getSortedConsequtiveFaceGroups(hand)
+export const extractStraight: RankExtractor = (cards) => {
+  const rankCards = getSortedConsequtiveFaceGroups(cards)
     .map(uniqBy(({ face }) => face))
     .find((g) => g.length > 4)
     ?.slice(-5);
 
   return rankCards?.length === 5
-    ? createExtractorResult(PokerHandRank.Straight, rankCards, hand)
+    ? createExtractorResult(HandRank.Straight, rankCards, cards)
     : null;
 };
 
-export const extractThreeOfAKind: RankExtractor = (hand) => {
-  const rankCards = getSortedFaceGroups(hand)
+export const extractThreeOfAKind: RankExtractor = (cards) => {
+  const rankCards = getSortedFaceGroups(cards)
     .find((p) => p.length > 2)
     ?.slice(0, 3);
 
   return rankCards
-    ? createExtractorResult(PokerHandRank.ThreeOfAKind, rankCards, hand)
+    ? createExtractorResult(HandRank.ThreeOfAKind, rankCards, cards)
     : null;
 };
 
-export const extractTwoPair: RankExtractor = (hand) => {
-  const rankCards = getSortedFaceGroups(hand)
+export const extractTwoPair: RankExtractor = (cards) => {
+  const rankCards = getSortedFaceGroups(cards)
     .slice(0, 2)
     .flatMap((cards) => cards.slice(0, 2));
 
   return rankCards.length === 4
-    ? createExtractorResult(PokerHandRank.TwoPair, rankCards, hand)
+    ? createExtractorResult(HandRank.TwoPair, rankCards, cards)
     : null;
 };
 
-export const extractOnePair: RankExtractor = (hand) => {
-  const rankCards = getSortedFaceGroups(hand)[0]?.slice(0, 2);
+export const extractOnePair: RankExtractor = (cards) => {
+  const rankCards = getSortedFaceGroups(cards)[0]?.slice(0, 2);
 
   return rankCards
-    ? createExtractorResult(PokerHandRank.OnePair, rankCards, hand)
+    ? createExtractorResult(HandRank.OnePair, rankCards, cards)
     : null;
 };
 
-export const extractHighCard: RankExtractor<RankExtractorResult> = (hand) => {
-  const [highestCard, ...kickers] = getSortedCards(hand);
+export const extractHighCard: RankExtractor<RankExtractorResult> = (cards) => {
+  const [highestCard, ...kickers] = getSortedCards(cards);
 
   return {
-    rank: PokerHandRank.HighCard,
+    rank: HandRank.HighCard,
     rankCards: [highestCard],
     kickers: kickers.slice(0, 4),
   };

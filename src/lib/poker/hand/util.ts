@@ -1,58 +1,65 @@
 import { groupBy, differenceWith, memoize, pipe } from 'lodash/fp';
 
-import { Card, isSameCard } from '~/lib/cards';
+import { Card, isSameCard, Cards } from '~/lib/cards';
 
-import { PokerHandRank } from '../types';
+import { HandRank } from '../types';
 import { compareCards, compareFaces, compareSuits } from '../card';
 import { Hand } from './types';
+
+const flattenHand = ({ pocket, community }: Hand): Cards => [
+  ...pocket,
+  ...community,
+];
 
 export const extractInPreferenceOrder = (
   extractors: RankExtractor[],
   fallback: RankExtractor<RankExtractorResult>,
-) => (hand: Hand): RankExtractorResult =>
-  pipe(...extractors.map(pipeableExtractor(hand)))(null) || fallback(hand);
+) => (hand: Hand): RankExtractorResult => {
+  const cards = flattenHand(hand);
 
-const pipeableExtractor = (hand: Hand) => (extractor: RankExtractor) => (
+  return (
+    pipe(...extractors.map(pipeableExtractor(cards)))(null) || fallback(cards)
+  );
+};
+
+const pipeableExtractor = (cards: Cards) => (extractor: RankExtractor) => (
   previousResult: RankExtractorResult | null,
-) => (previousResult ? previousResult : extractor(hand));
+) => (previousResult ? previousResult : extractor(cards));
 
 export const createExtractorResult = (
-  rank: PokerHandRank,
-  rankCards: readonly Card[],
-  hand: Hand,
+  rank: HandRank,
+  rankCards: Cards,
+  cards: Cards,
 ): RankExtractorResult => ({
   rank,
   rankCards,
   // Kickers are determined from a 5 card slice of the full hand
-  kickers: omitAndSort(hand, rankCards).slice(
+  kickers: omitAndSort(cards, rankCards).slice(
     0,
     Math.max(0, 5 - rankCards.length),
   ),
 });
 
 export const getSortedCards = memoize(
-  (hand: Hand | readonly Card[]): readonly Card[] =>
-    [...flattenHand(hand)].sort(compareCards),
+  (cards: Cards): Cards => [...cards].sort(compareCards),
 );
 
-export const getSortedFaceGroups = memoize(
-  (hand: Hand | readonly Card[]): readonly Card[][] =>
-    Object.entries(groupBy('face', getSortedCards(hand)))
-      .filter(([_, cards]) => cards?.length > 1)
-      .map(([_, cards]) => cards),
+export const getSortedFaceGroups = memoize((cards: Cards): readonly Cards[] =>
+  Object.entries(groupBy('face', getSortedCards(cards)))
+    .filter(([_, cards]) => cards?.length > 1)
+    .map(([_, cards]) => cards),
 );
 
-export const getSortedSuitGroups = memoize(
-  (hand: Hand | readonly Card[]): readonly Card[][] =>
-    Object.entries(groupBy('suit', getSortedCards(hand)))
-      .filter(([_, cards]) => cards?.length > 1)
-      .map(([_, cards]) => cards)
-      .sort((a, b) => compareSuits(a[0], b[0])),
+export const getSortedSuitGroups = memoize((cards: Cards): readonly Cards[] =>
+  Object.entries(groupBy('suit', getSortedCards(cards)))
+    .filter(([_, cards]) => cards?.length > 1)
+    .map(([_, cards]) => cards)
+    .sort((a, b) => compareSuits(a[0], b[0])),
 );
 
 export const getSortedConsequtiveFaceGroups = memoize(
-  (hand: Hand | readonly Card[]): readonly Card[][] =>
-    getSortedCards(hand).reduce((groups: Card[][], card) => {
+  (cards: Cards): readonly Cards[] =>
+    getSortedCards(cards).reduce((groups: Card[][], card) => {
       if (!groups.length) return [[card]];
 
       const currentGroup = groups[groups.length - 1];
@@ -66,22 +73,13 @@ export const getSortedConsequtiveFaceGroups = memoize(
     }, []),
 );
 
-const flattenHand = (hand: Hand | readonly Card[]): readonly Card[] =>
-  isHand(hand) ? [...hand.pocket, ...hand.community] : hand;
-
-export const omitAndSort = (
-  hand: Hand | readonly Card[],
-  cards: readonly Card[],
-) => getSortedCards(differenceWith(isSameCard, flattenHand(hand), cards));
-
-const isHand = (value: unknown): value is Hand =>
-  Array.isArray((value as Hand).pocket) &&
-  Array.isArray((value as Hand).community);
+export const omitAndSort = (from: Cards, cards: Cards) =>
+  getSortedCards(differenceWith(isSameCard, from, cards));
 
 export interface RankExtractorResult {
-  rank: PokerHandRank;
+  rank: HandRank;
   rankCards: readonly Card[];
   kickers: readonly Card[];
 }
 
-export type RankExtractor<T = RankExtractorResult | null> = (hand: Hand) => T;
+export type RankExtractor<T = RankExtractorResult | null> = (cards: Cards) => T;

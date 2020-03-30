@@ -1,6 +1,6 @@
-import { Card } from '~/lib/cards';
+import { Cards } from '~/lib/cards';
 
 export type Hand = Readonly<{
-  pocket: readonly Card[];
-  community: readonly Card[];
+  pocket: Cards;
+  community: Cards;
 }>;

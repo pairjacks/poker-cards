@@ -13,7 +13,7 @@ import {
   extractOnePair,
   extractHighCard,
 } from './extractors';
-import { PokerHandRank } from '../types';
+import { HandRank } from '../types';
 import { Hand } from './types';
 
 export * from './types';
@@ -41,14 +41,14 @@ export const evaluatePokerHand = extractInPreferenceOrder(
 );
 
 const rankValueMap = {
-  [PokerHandRank.RoyalFlush]: 10,
-  [PokerHandRank.StraightFlush]: 9,
-  [PokerHandRank.FourOfAKind]: 8,
-  [PokerHandRank.FullHouse]: 7,
-  [PokerHandRank.Flush]: 6,
-  [PokerHandRank.Straight]: 5,
-  [PokerHandRank.ThreeOfAKind]: 4,
-  [PokerHandRank.TwoPair]: 3,
-  [PokerHandRank.OnePair]: 2,
-  [PokerHandRank.HighCard]: 1,
+  [HandRank.RoyalFlush]: 10,
+  [HandRank.StraightFlush]: 9,
+  [HandRank.FourOfAKind]: 8,
+  [HandRank.FullHouse]: 7,
+  [HandRank.Flush]: 6,
+  [HandRank.Straight]: 5,
+  [HandRank.ThreeOfAKind]: 4,
+  [HandRank.TwoPair]: 3,
+  [HandRank.OnePair]: 2,
+  [HandRank.HighCard]: 1,
 } as const;

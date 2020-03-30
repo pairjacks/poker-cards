@@ -1,3 +1,5 @@
+export type Cards = readonly Card[];
+
 export type Card = Readonly<{ suit: Suit; face: Face }>;
 
 export enum Suit {
