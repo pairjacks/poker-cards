@@ -1,10 +1,22 @@
+import { range } from 'lodash/fp';
+
 import { Suite, Face, Card } from './types';
 import { Shuffler, shuffleFisherYatesStack } from './util/shuffle';
 
-export const generateDeck = (): Deck =>
-  Object.values(Suite).flatMap((suite) =>
-    Object.values(Face).map((face) => ({ suite, face })),
-  );
+export const generateDeck = ({
+  jokers = false,
+}: { jokers?: boolean } = {}): Deck => {
+  const suites = Object.values(Suite).filter((suite) => suite !== Suite.Joker);
+  const faces = Object.values(Face).filter((face) => face !== Face.Joker);
+
+  return suites
+    .flatMap((suite) => faces.map((face) => ({ suite, face })))
+    .concat(
+      jokers
+        ? range(0, 4).map(() => ({ face: Face.Joker, suite: Suite.Joker }))
+        : [],
+    );
+};
 
 // index 0 represents 'top' of a deck
 export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {

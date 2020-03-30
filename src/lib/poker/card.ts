@@ -17,6 +17,7 @@ const getFaceValue = ({ face }: Pick<Card, 'face'>) => faceValueMap[face];
 const getSuiteValue = ({ suite }: Pick<Card, 'suite'>) => suiteValueMap[suite];
 
 const faceValueMap = {
+  [Face.Joker]: 0,
   [Face.Two]: 1,
   [Face.Three]: 2,
   [Face.Four]: 3,
@@ -33,6 +34,7 @@ const faceValueMap = {
 } as const;
 
 const suiteValueMap = {
+  [Suite.Joker]: 0,
   [Suite.Diamonds]: 1,
   [Suite.Clubs]: 2,
   [Suite.Hearts]: 3,

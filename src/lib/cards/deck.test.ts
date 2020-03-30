@@ -7,6 +7,7 @@ describe('lib/cards/deck', () => {
   describe('generateDeck', () => {
     it('generates a deck', () => {
       expect(generateDeck()).toEqual(fullDeck);
+      expect(generateDeck({ jokers: true })).toEqual(fullDeckWithJokers);
     });
   });
 
@@ -97,7 +98,7 @@ describe('lib/cards/deck', () => {
   });
 });
 
-const fullDeck: Deck = [
+const fullDeck = [
   { suite: Suite.Diamonds, face: Face.Two },
   { suite: Suite.Diamonds, face: Face.Three },
   { suite: Suite.Diamonds, face: Face.Four },
@@ -150,4 +151,12 @@ const fullDeck: Deck = [
   { suite: Suite.Spades, face: Face.Queen },
   { suite: Suite.Spades, face: Face.King },
   { suite: Suite.Spades, face: Face.Ace },
-];
+] as const;
+
+const fullDeckWithJokers = [
+  ...fullDeck,
+  { face: Face.Joker, suite: Suite.Joker },
+  { face: Face.Joker, suite: Suite.Joker },
+  { face: Face.Joker, suite: Suite.Joker },
+  { face: Face.Joker, suite: Suite.Joker },
+] as const;
