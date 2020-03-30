@@ -1,3 +1,7 @@
+import { uniqBy } from 'lodash/fp';
+
+import { Face } from '~/lib/cards';
+
 import { PokerHandRank } from '../types';
 import {
   omitAndSort,
@@ -11,9 +15,37 @@ import {
 
 // https://www.cardschat.com/poker-hands/
 
-export const extractRoyalFlush: RankExtractor = () => null;
+export const extractRoyalFlush: RankExtractor = (hand) => {
+  const { rankCards, kickers } = extractStraightFlush(hand) || {
+    rankCards: null,
+    kickers: [],
+  };
 
-export const extractStraightFlush: RankExtractor = () => null;
+  return rankCards?.[0]?.face === Face.Ace
+    ? {
+        rankCards,
+        kickers,
+        rank: PokerHandRank.RoyalFlush,
+      }
+    : null;
+};
+
+export const extractStraightFlush: RankExtractor = (hand) => {
+  const rankCards = getSortedSuiteGroups(
+    getSortedConsequtiveFaceGroups(hand).find((group) => group.length > 4) ||
+      [],
+  )
+    .find((group) => group.length > 4)
+    ?.slice(0, 5);
+
+  return rankCards
+    ? {
+        rankCards,
+        rank: PokerHandRank.StraightFlush,
+        kickers: omitAndSort(hand, rankCards),
+      }
+    : null;
+};
 
 export const extractFourOfAKind: RankExtractor = (hand) => {
   const rankCards = getSortedFaceGroups(hand)
@@ -63,6 +95,7 @@ export const extractFlush: RankExtractor = (hand) => {
 
 export const extractStraight: RankExtractor = (hand) => {
   const rankCards = getSortedConsequtiveFaceGroups(hand)
+    .map(uniqBy(({ face }) => face))
     .find((g) => g.length > 4)
     ?.slice(-5);
 

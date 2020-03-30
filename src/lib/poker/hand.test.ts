@@ -86,7 +86,7 @@ describe('poker/hand', () => {
     });
 
     it('evaluates straight', () => {
-      expect(evaluatePokerHand(ranksStraight)).toEqual({
+      expect(evaluatePokerHand(ranksStraightAndPair)).toEqual({
         rank: PokerHandRank.Straight,
         rankCards: [
           { face: Face.Six, suite: Suite.Hearts },
@@ -96,8 +96,8 @@ describe('poker/hand', () => {
           { face: Face.Two, suite: Suite.Clubs },
         ],
         kickers: [
-          { face: Face.Jack, suite: Suite.Clubs },
           { face: Face.Eight, suite: Suite.Spades },
+          { face: Face.Six, suite: Suite.Diamonds },
         ],
       });
     });
@@ -165,6 +165,57 @@ describe('poker/hand', () => {
         ],
       });
     });
+
+    it('evaluates four of a kind', () => {
+      expect(evaluatePokerHand(ranksFourOfAKind)).toEqual({
+        rank: PokerHandRank.FourOfAKind,
+        rankCards: [
+          { face: Face.Six, suite: Suite.Spades },
+          { face: Face.Six, suite: Suite.Hearts },
+          { face: Face.Six, suite: Suite.Clubs },
+          { face: Face.Six, suite: Suite.Diamonds },
+        ],
+        kickers: [
+          { face: Face.Jack, suite: Suite.Diamonds },
+          { face: Face.Eight, suite: Suite.Spades },
+          { face: Face.Two, suite: Suite.Diamonds },
+        ],
+      });
+    });
+
+    it('evaluates straight flush', () => {
+      expect(evaluatePokerHand(ranksStraightFlushAndOnePair)).toEqual({
+        rank: PokerHandRank.StraightFlush,
+        rankCards: [
+          { face: Face.Six, suite: Suite.Clubs },
+          { face: Face.Five, suite: Suite.Clubs },
+          { face: Face.Four, suite: Suite.Clubs },
+          { face: Face.Three, suite: Suite.Clubs },
+          { face: Face.Two, suite: Suite.Clubs },
+        ],
+        kickers: [
+          { face: Face.Eight, suite: Suite.Spades },
+          { face: Face.Six, suite: Suite.Spades },
+        ],
+      });
+    });
+
+    it('evaluates royal flush', () => {
+      expect(evaluatePokerHand(ranksRoyalFlushAndOnePair)).toEqual({
+        rank: PokerHandRank.RoyalFlush,
+        rankCards: [
+          { face: Face.Ace, suite: Suite.Clubs },
+          { face: Face.King, suite: Suite.Clubs },
+          { face: Face.Queen, suite: Suite.Clubs },
+          { face: Face.Jack, suite: Suite.Clubs },
+          { face: Face.Ten, suite: Suite.Clubs },
+        ],
+        kickers: [
+          { face: Face.Jack, suite: Suite.Spades },
+          { face: Face.Eight, suite: Suite.Spades },
+        ],
+      });
+    });
   });
 });
 
@@ -218,14 +269,14 @@ const ranksThreeOfAKind = [
   { face: Face.Queen, suite: Suite.Clubs },
 ];
 
-const ranksStraight = [
+const ranksStraightAndPair = [
   { face: Face.Four, suite: Suite.Diamonds },
   { face: Face.Two, suite: Suite.Clubs },
   { face: Face.Three, suite: Suite.Diamonds },
   { face: Face.Eight, suite: Suite.Spades },
   { face: Face.Five, suite: Suite.Clubs },
   { face: Face.Six, suite: Suite.Hearts },
-  { face: Face.Jack, suite: Suite.Clubs },
+  { face: Face.Six, suite: Suite.Diamonds },
 ];
 
 const ranksFlushAndTwoPair = [
@@ -266,4 +317,34 @@ const ranksFullHouseAndTwoThreeOfAKind = [
   { face: Face.Four, suite: Suite.Diamonds },
   { face: Face.Jack, suite: Suite.Diamonds },
   { face: Face.Jack, suite: Suite.Hearts },
+];
+
+const ranksFourOfAKind = [
+  { face: Face.Six, suite: Suite.Diamonds },
+  { face: Face.Two, suite: Suite.Diamonds },
+  { face: Face.Jack, suite: Suite.Diamonds },
+  { face: Face.Eight, suite: Suite.Spades },
+  { face: Face.Six, suite: Suite.Clubs },
+  { face: Face.Six, suite: Suite.Hearts },
+  { face: Face.Six, suite: Suite.Spades },
+];
+
+const ranksStraightFlushAndOnePair = [
+  { face: Face.Four, suite: Suite.Clubs },
+  { face: Face.Two, suite: Suite.Clubs },
+  { face: Face.Three, suite: Suite.Clubs },
+  { face: Face.Eight, suite: Suite.Spades },
+  { face: Face.Five, suite: Suite.Clubs },
+  { face: Face.Six, suite: Suite.Clubs },
+  { face: Face.Six, suite: Suite.Spades },
+];
+
+const ranksRoyalFlushAndOnePair = [
+  { face: Face.Ace, suite: Suite.Clubs },
+  { face: Face.Queen, suite: Suite.Clubs },
+  { face: Face.Ten, suite: Suite.Clubs },
+  { face: Face.Eight, suite: Suite.Spades },
+  { face: Face.Jack, suite: Suite.Clubs },
+  { face: Face.King, suite: Suite.Clubs },
+  { face: Face.Jack, suite: Suite.Spades },
 ];

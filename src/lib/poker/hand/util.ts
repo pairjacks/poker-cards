@@ -35,7 +35,7 @@ export const getSortedSuiteGroups = memoize((hand: Hand): readonly Card[][] =>
 
 export const getSortedConsequtiveFaceGroups = memoize(
   (hand: Hand): readonly Card[][] =>
-    [...hand].sort(compareFaces).reduce((groups: Card[][], card) => {
+    getSortedCards(hand).reduce((groups: Card[][], card) => {
       if (!groups.length) return [[card]];
 
       const currentGroup = groups[groups.length - 1];
@@ -47,13 +47,21 @@ export const getSortedConsequtiveFaceGroups = memoize(
       }
 
       const previousCard = currentGroup[currentGroup.length - 1];
+      const diff = compareFaces(card, previousCard);
 
-      if (compareFaces(card, previousCard) === 1) currentGroup.push(card);
+      if (diff === 0 || diff === 1) currentGroup.push(card);
       else groups.push([card]);
 
       return groups;
     }, []),
 );
+
+export const allSameSuite = (hand: Hand) =>
+  hand.every((card, index, all) => {
+    const previous = all[index - 1];
+
+    return previous ? previous.suite === card.suite : true;
+  });
 
 export const omitAndSort: (
   hand: Hand,
