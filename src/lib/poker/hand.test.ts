@@ -1,8 +1,20 @@
 import { Face, Suite } from '../cards';
-import { evaluatePokerHand } from './hand';
+import { evaluatePokerHand, comparePokerHands } from './hand';
 import { PokerHandRank } from './types';
 
 describe('poker/hand', () => {
+  describe('comparePokerHands', () => {
+    it('compares hands', () => {
+      expect(comparePokerHands(ranksOnePair, ranksOnePair)).toBe(0);
+      expect(
+        comparePokerHands(ranksTwoPair, ranksThreeOfAKind),
+      ).toBeGreaterThan(0);
+      expect(comparePokerHands(ranksFullHouse, ranksThreeOfAKind)).toBeLessThan(
+        0,
+      );
+    });
+  });
+
   describe('evaluatePokerHand', () => {
     it('evaluates high card', () => {
       expect(evaluatePokerHand(ranksHighCard)).toEqual({

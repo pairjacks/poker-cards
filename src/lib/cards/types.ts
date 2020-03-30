@@ -22,3 +22,5 @@ export enum Face {
   King = 'King',
   Ace = 'Ace',
 }
+
+export type Comparator<T> = (a: T, b: T) => number;

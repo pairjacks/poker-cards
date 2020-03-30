@@ -148,9 +148,7 @@ export const extractOnePair: RankExtractor = (hand) => {
     : null;
 };
 
-export const extractHighestCard: RankExtractor<RankExtractorResult> = (
-  hand,
-) => {
+export const extractHighCard: RankExtractor<RankExtractorResult> = (hand) => {
   const [highestCard, ...kickers] = getSortedCards(hand);
 
   return {

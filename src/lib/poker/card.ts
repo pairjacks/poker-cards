@@ -1,4 +1,4 @@
-import { Card, Face, Suite } from '~/lib/cards';
+import { Card, Face, Suite, Comparator } from '~/lib/cards';
 
 export const compareCards: CardComparator = (a, b) => {
   const facesResult = compareFaces(a, b);
@@ -42,5 +42,3 @@ const suiteValueMap = {
 } as const;
 
 export type CardComparator = Comparator<Card>;
-
-export type Comparator<T> = (a: T, b: T) => number;
