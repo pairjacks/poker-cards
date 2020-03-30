@@ -1,7 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   env: { es6: true, node: true, browser: false },
-  settings: { 'import/resolver': 'babel-module' },
   plugins: ['@typescript-eslint', 'filenames', 'import', 'prettier'],
   extends: [
     'eslint:recommended',
@@ -53,7 +52,6 @@ module.exports = {
           'internal',
           ['parent', 'sibling', 'index'],
         ],
-        'pathGroups': [{ pattern: '~/**', group: 'internal' }],
         'newlines-between': 'always',
       },
     ],

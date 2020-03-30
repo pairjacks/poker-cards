@@ -1,5 +1,4 @@
-import { Cards } from '~/cards';
-
+import { Cards } from '../../cards';
 import { HandRank } from '../types';
 
 export type Hand = Readonly<{

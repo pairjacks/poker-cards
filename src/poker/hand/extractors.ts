@@ -1,7 +1,6 @@
 import { uniqBy } from 'lodash/fp';
 
-import { Face } from '~/cards';
-
+import { Face } from '../../cards';
 import { HandRank } from '../types';
 import {
   omitAndSort,

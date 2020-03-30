@@ -1,4 +1,4 @@
-import { Card, Face, Suit, Comparator } from '~/cards';
+import { Card, Face, Suit, Comparator } from '../cards';
 
 export const compareCards: CardComparator = (a, b) => {
   const facesResult = compareFaces(a, b);

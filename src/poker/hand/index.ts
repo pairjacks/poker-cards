@@ -1,5 +1,5 @@
-import { Comparator } from '~/cards';
-
+import { Comparator } from '../../cards';
+import { HandRank } from '../types';
 import { extractInPreferenceOrder } from './util';
 import {
   extractRoyalFlush,
@@ -13,7 +13,6 @@ import {
   extractOnePair,
   extractHighCard,
 } from './extractors';
-import { HandRank } from '../types';
 import { Hand } from './types';
 
 export * from './types';

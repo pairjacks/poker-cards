@@ -1,5 +1,4 @@
-import { Face, Suit } from '~/cards';
-
+import { Face, Suit } from '../cards';
 import { compareCards } from './card';
 
 describe('poker/card', () => {

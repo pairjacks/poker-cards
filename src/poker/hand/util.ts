@@ -1,7 +1,6 @@
 import { groupBy, differenceWith, memoize, pipe } from 'lodash/fp';
 
-import { Card, isSameCard, Cards } from '~/cards';
-
+import { isSameCard, Card, Cards } from '../../cards';
 import { HandRank } from '../types';
 import { compareCards, compareFaces, compareSuits } from '../card';
 import { Hand, RankExtractor, RankExtractorResult } from './types';
