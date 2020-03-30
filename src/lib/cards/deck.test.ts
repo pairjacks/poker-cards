@@ -3,7 +3,7 @@ import { difference } from 'lodash/fp';
 import { Suite, Face } from './types';
 import { generateDeck, drawCardsFromDeck, Deck, shuffleDeck } from './deck';
 
-describe('cards', () => {
+describe('lib/cards/deck', () => {
   describe('generateDeck', () => {
     it('generates a deck', () => {
       expect(generateDeck()).toEqual(fullDeck);

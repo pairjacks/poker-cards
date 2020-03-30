@@ -1,5 +1,5 @@
 import { Suite, Face, Card } from './types';
-import { Shuffler, shuffleFisherYatesStack } from '../util/shuffle';
+import { Shuffler, shuffleFisherYatesStack } from './util/shuffle';
 
 export const generateDeck = (): Deck =>
   Object.values(Suite).flatMap((suite) =>
