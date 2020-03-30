@@ -25,8 +25,6 @@ describe('poker/hand', () => {
           { face: Face.Eight, suite: Suite.Spades },
           { face: Face.Six, suite: Suite.Diamonds },
           { face: Face.Four, suite: Suite.Clubs },
-          { face: Face.Three, suite: Suite.Clubs },
-          { face: Face.Two, suite: Suite.Diamonds },
         ],
       });
     });
@@ -42,8 +40,6 @@ describe('poker/hand', () => {
           { face: Face.Queen, suite: Suite.Diamonds },
           { face: Face.Jack, suite: Suite.Clubs },
           { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Four, suite: Suite.Clubs },
-          { face: Face.Two, suite: Suite.Diamonds },
         ],
       });
     });
@@ -57,11 +53,7 @@ describe('poker/hand', () => {
           { face: Face.Six, suite: Suite.Clubs },
           { face: Face.Six, suite: Suite.Diamonds },
         ],
-        kickers: [
-          { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Four, suite: Suite.Clubs },
-          { face: Face.Two, suite: Suite.Diamonds },
-        ],
+        kickers: [{ face: Face.Eight, suite: Suite.Spades }],
       });
 
       expect(evaluatePokerHand(ranksTwoPairFromThreePair)).toEqual({
@@ -72,11 +64,7 @@ describe('poker/hand', () => {
           { face: Face.Jack, suite: Suite.Clubs },
           { face: Face.Jack, suite: Suite.Diamonds },
         ],
-        kickers: [
-          { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Six, suite: Suite.Clubs },
-          { face: Face.Six, suite: Suite.Diamonds },
-        ],
+        kickers: [{ face: Face.Eight, suite: Suite.Spades }],
       });
     });
 
@@ -91,8 +79,6 @@ describe('poker/hand', () => {
         kickers: [
           { face: Face.Queen, suite: Suite.Clubs },
           { face: Face.Jack, suite: Suite.Diamonds },
-          { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Two, suite: Suite.Diamonds },
         ],
       });
     });
@@ -107,10 +93,7 @@ describe('poker/hand', () => {
           { face: Face.Three, suite: Suite.Diamonds },
           { face: Face.Two, suite: Suite.Clubs },
         ],
-        kickers: [
-          { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Six, suite: Suite.Diamonds },
-        ],
+        kickers: [],
       });
     });
 
@@ -124,10 +107,7 @@ describe('poker/hand', () => {
           { face: Face.Three, suite: Suite.Diamonds },
           { face: Face.Two, suite: Suite.Diamonds },
         ],
-        kickers: [
-          { face: Face.Jack, suite: Suite.Hearts },
-          { face: Face.Three, suite: Suite.Spades },
-        ],
+        kickers: [],
       });
     });
 
@@ -141,10 +121,7 @@ describe('poker/hand', () => {
           { face: Face.Jack, suite: Suite.Hearts },
           { face: Face.Jack, suite: Suite.Diamonds },
         ],
-        kickers: [
-          { face: Face.Five, suite: Suite.Diamonds },
-          { face: Face.Four, suite: Suite.Diamonds },
-        ],
+        kickers: [],
       });
 
       expect(evaluatePokerHand(ranksFullHouseAndTwoPair)).toEqual({
@@ -156,10 +133,7 @@ describe('poker/hand', () => {
           { face: Face.Four, suite: Suite.Hearts },
           { face: Face.Four, suite: Suite.Diamonds },
         ],
-        kickers: [
-          { face: Face.Three, suite: Suite.Clubs },
-          { face: Face.Three, suite: Suite.Diamonds },
-        ],
+        kickers: [],
       });
 
       expect(evaluatePokerHand(ranksFullHouseAndTwoThreeOfAKind)).toEqual({
@@ -171,10 +145,7 @@ describe('poker/hand', () => {
           { face: Face.Three, suite: Suite.Hearts },
           { face: Face.Three, suite: Suite.Clubs },
         ],
-        kickers: [
-          { face: Face.Four, suite: Suite.Diamonds },
-          { face: Face.Three, suite: Suite.Diamonds },
-        ],
+        kickers: [],
       });
     });
 
@@ -187,11 +158,7 @@ describe('poker/hand', () => {
           { face: Face.Six, suite: Suite.Clubs },
           { face: Face.Six, suite: Suite.Diamonds },
         ],
-        kickers: [
-          { face: Face.Jack, suite: Suite.Diamonds },
-          { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Two, suite: Suite.Diamonds },
-        ],
+        kickers: [{ face: Face.Jack, suite: Suite.Diamonds }],
       });
     });
 
@@ -205,10 +172,7 @@ describe('poker/hand', () => {
           { face: Face.Three, suite: Suite.Clubs },
           { face: Face.Two, suite: Suite.Clubs },
         ],
-        kickers: [
-          { face: Face.Eight, suite: Suite.Spades },
-          { face: Face.Six, suite: Suite.Spades },
-        ],
+        kickers: [],
       });
     });
 
@@ -222,14 +186,13 @@ describe('poker/hand', () => {
           { face: Face.Jack, suite: Suite.Clubs },
           { face: Face.Ten, suite: Suite.Clubs },
         ],
-        kickers: [
-          { face: Face.Jack, suite: Suite.Spades },
-          { face: Face.Eight, suite: Suite.Spades },
-        ],
+        kickers: [],
       });
     });
   });
 });
+
+// 7 cards evaluated: Community (full) + Pocket
 
 const ranksHighCard = [
   { face: Face.Six, suite: Suite.Diamonds },

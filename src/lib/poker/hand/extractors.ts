@@ -11,6 +11,7 @@ import {
   getSortedSuiteGroups,
   RankExtractor,
   RankExtractorResult,
+  createExtractorResult,
 } from './util';
 
 // https://www.cardschat.com/poker-hands/
@@ -39,11 +40,7 @@ export const extractStraightFlush: RankExtractor = (hand) => {
     ?.slice(0, 5);
 
   return rankCards
-    ? {
-        rankCards,
-        rank: PokerHandRank.StraightFlush,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.StraightFlush, rankCards, hand)
     : null;
 };
 
@@ -53,30 +50,21 @@ export const extractFourOfAKind: RankExtractor = (hand) => {
     ?.slice(0, 4);
 
   return rankCards
-    ? {
-        rankCards,
-        rank: PokerHandRank.FourOfAKind,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.FourOfAKind, rankCards, hand)
     : null;
 };
 
 export const extractFullHouse: RankExtractor = (hand) => {
-  const { rankCards: tok, kickers: tokKickers } = extractThreeOfAKind(hand) || {
+  const { rankCards: tok } = extractThreeOfAKind(hand) || {
     rankCards: null,
-    kickers: [],
   };
-  const { rankCards: pair } = extractOnePair(tokKickers) || { rankCards: null };
-
-  if (!(tok && pair)) return null;
-
-  const rankCards = [...tok, ...pair];
-
-  return {
-    rankCards,
-    rank: PokerHandRank.FullHouse,
-    kickers: omitAndSort(hand, rankCards),
+  const { rankCards: pair } = extractOnePair(omitAndSort(hand, tok || [])) || {
+    rankCards: null,
   };
+
+  return tok && pair
+    ? createExtractorResult(PokerHandRank.FullHouse, [...tok, ...pair], hand)
+    : null;
 };
 
 export const extractFlush: RankExtractor = (hand) => {
@@ -85,11 +73,7 @@ export const extractFlush: RankExtractor = (hand) => {
     ?.slice(0, 5);
 
   return rankCards
-    ? {
-        rankCards,
-        rank: PokerHandRank.Flush,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.Flush, rankCards, hand)
     : null;
 };
 
@@ -100,11 +84,7 @@ export const extractStraight: RankExtractor = (hand) => {
     ?.slice(-5);
 
   return rankCards?.length === 5
-    ? {
-        rankCards,
-        rank: PokerHandRank.Straight,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.Straight, rankCards, hand)
     : null;
 };
 
@@ -114,11 +94,7 @@ export const extractThreeOfAKind: RankExtractor = (hand) => {
     ?.slice(0, 3);
 
   return rankCards
-    ? {
-        rankCards,
-        rank: PokerHandRank.ThreeOfAKind,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.ThreeOfAKind, rankCards, hand)
     : null;
 };
 
@@ -128,11 +104,7 @@ export const extractTwoPair: RankExtractor = (hand) => {
     .flatMap((cards) => cards.slice(0, 2));
 
   return rankCards.length === 4
-    ? {
-        rankCards,
-        rank: PokerHandRank.TwoPair,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.TwoPair, rankCards, hand)
     : null;
 };
 
@@ -140,11 +112,7 @@ export const extractOnePair: RankExtractor = (hand) => {
   const rankCards = getSortedFaceGroups(hand)[0]?.slice(0, 2);
 
   return rankCards
-    ? {
-        rankCards,
-        rank: PokerHandRank.OnePair,
-        kickers: omitAndSort(hand, rankCards),
-      }
+    ? createExtractorResult(PokerHandRank.OnePair, rankCards, hand)
     : null;
 };
 
@@ -152,8 +120,8 @@ export const extractHighCard: RankExtractor<RankExtractorResult> = (hand) => {
   const [highestCard, ...kickers] = getSortedCards(hand);
 
   return {
-    kickers,
     rank: PokerHandRank.HighCard,
     rankCards: [highestCard],
+    kickers: kickers.slice(0, 4),
   };
 };

@@ -16,6 +16,20 @@ const pipeableExtractor = (hand: Hand) => (extractor: RankExtractor) => (
   previousResult: RankExtractorResult | null,
 ) => (previousResult ? previousResult : extractor(hand));
 
+export const createExtractorResult = (
+  rank: PokerHandRank,
+  rankCards: readonly Card[],
+  hand: Hand,
+): RankExtractorResult => ({
+  rank,
+  rankCards,
+  // Kickers are determined from a 5 card slice of the full hand
+  kickers: omitAndSort(hand, rankCards).slice(
+    0,
+    Math.max(0, 5 - rankCards.length),
+  ),
+});
+
 export const getSortedCards = memoize((hand: Hand): readonly Card[] =>
   [...hand].sort(compareCards),
 );
