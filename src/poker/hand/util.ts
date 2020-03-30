@@ -4,7 +4,7 @@ import { Card, isSameCard, Cards } from '~/cards';
 
 import { HandRank } from '../types';
 import { compareCards, compareFaces, compareSuits } from '../card';
-import { Hand } from './types';
+import { Hand, RankExtractor, RankExtractorResult } from './types';
 
 const flattenHand = ({ pocket, community }: Hand): Cards => [
   ...pocket,
@@ -75,11 +75,3 @@ export const getSortedConsequtiveFaceGroups = memoize(
 
 export const omitAndSort = (from: Cards, cards: Cards) =>
   getSortedCards(differenceWith(isSameCard, from, cards));
-
-export interface RankExtractorResult {
-  rank: HandRank;
-  rankCards: readonly Card[];
-  kickers: readonly Card[];
-}
-
-export type RankExtractor<T = RankExtractorResult | null> = (cards: Cards) => T;

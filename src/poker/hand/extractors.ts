@@ -9,10 +9,9 @@ import {
   getSortedFaceGroups,
   getSortedCards,
   getSortedSuitGroups,
-  RankExtractor,
-  RankExtractorResult,
   createExtractorResult,
 } from './util';
+import { RankExtractor, RankExtractorResult } from './types';
 
 // https://www.cardschat.com/poker-hands/
 

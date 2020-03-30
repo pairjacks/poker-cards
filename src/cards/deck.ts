@@ -1,7 +1,7 @@
 import randomNumberCsprng from 'random-number-csprng';
 import { range } from 'lodash/fp';
 
-import { Suit, Face, Card } from './types';
+import { Suit, Face, Cards } from './types';
 
 export const generateDeck = ({
   jokers = false,
@@ -44,9 +44,9 @@ export const shuffleDeck = (
   shuffleFn: Shuffler = shuffleFisherYatesStack,
 ): Promise<Deck> => shuffleFn(deck);
 
-export type DeckDrawResult = Readonly<{ cards: Card[]; deck: Deck }>;
+export type DeckDrawResult = Readonly<{ cards: Cards; deck: Deck }>;
 
-export type Deck = readonly Card[];
+export type Deck = Cards;
 
 // Based on fisher-yates using async crypto secure pseudo random numbers
 // Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d
