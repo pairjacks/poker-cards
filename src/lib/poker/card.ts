@@ -12,11 +12,9 @@ export const compareFaces: Comparator<Pick<Card, 'face'>> = (a, b) =>
 export const compareSuites: Comparator<Pick<Card, 'suite'>> = (a, b) =>
   getSuiteValue(b) - getSuiteValue(a);
 
-export const getFaceValue = ({ face }: Pick<Card, 'face'>) =>
-  faceValueMap[face];
+const getFaceValue = ({ face }: Pick<Card, 'face'>) => faceValueMap[face];
 
-export const getSuiteValue = ({ suite }: Pick<Card, 'suite'>) =>
-  suiteValueMap[suite];
+const getSuiteValue = ({ suite }: Pick<Card, 'suite'>) => suiteValueMap[suite];
 
 const faceValueMap = {
   [Face.Two]: 1,
