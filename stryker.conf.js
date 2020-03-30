@@ -1,6 +1,10 @@
 module.exports = (config) => {
   config.set({
-    mutate: ['src/**/*.ts', '!src/**/*@(.test|.spec|Spec).ts'],
+    mutate: [
+      'src/**/*.ts',
+      '!src/**/*@(.test|.spec|Spec).ts',
+      '!src/**/types.ts',
+    ],
     mutator: 'typescript',
     testRunner: 'jest',
     reporters: ['progress', 'clear-text', 'html'],

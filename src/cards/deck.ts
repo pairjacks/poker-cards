@@ -1,5 +1,5 @@
 import randomNumberCsprng from 'random-number-csprng';
-import { range } from 'lodash/fp';
+import { clamp, range } from 'lodash/fp';
 
 import { Suit, Face, Cards } from './types';
 
@@ -20,13 +20,11 @@ export const generateDeck = ({
 
 // index 0 represents 'top' of a deck
 export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
-  const drawCount = Math.min(count, deck.length);
+  const drawCount = clamp(0, deck.length, count);
 
-  if (!deck.length || !drawCount || drawCount < 0) return { deck, cards: [] };
+  if (!deck.length || !drawCount) return { deck, cards: [] };
 
   const nextDeck = [...deck];
-  const cards = nextDeck.splice(0, drawCount);
-
   // Reverse order to represent drawing cards one-by-one, as opposed to cutting
   // off a chunk of cards from the "top" of the deck, so that first drawn ends
   // up at "bottom" of drawn pile, e.g. when drawing 3:
@@ -34,7 +32,7 @@ export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
   // draw first card: [b, c, d] => [a]
   // then second: [c, d] => [b, a]
   // then third: [b] => [c, b, a]
-  cards.reverse();
+  const cards = nextDeck.splice(0, drawCount).reverse();
 
   return { cards, deck: nextDeck };
 };
