@@ -1,6 +1,6 @@
 import { difference } from 'lodash/fp';
 
-import { Suite, Face } from './types';
+import { Suit, Face } from './types';
 import { generateDeck, drawCardsFromDeck, Deck, shuffleDeck } from './deck';
 
 describe('lib/cards/deck', () => {
@@ -14,7 +14,7 @@ describe('lib/cards/deck', () => {
   describe('drawCardsFromDeck', () => {
     it('does not modify deck if no cards to be drawn', () => {
       const emptyDeck: Deck = [];
-      const initialDeck: Deck = [{ suite: Suite.Diamonds, face: Face.Two }];
+      const initialDeck: Deck = [{ suit: Suit.Diamonds, face: Face.Two }];
 
       let drawResult = drawCardsFromDeck(emptyDeck, 1);
 
@@ -34,20 +34,20 @@ describe('lib/cards/deck', () => {
 
     it('immutably draws cards from "top" of deck', () => {
       const initialDeck = [
-        { suite: Suite.Hearts, face: Face.Jack },
-        { suite: Suite.Diamonds, face: Face.Six },
-        { suite: Suite.Spades, face: Face.Nine },
-        { suite: Suite.Clubs, face: Face.Ten },
+        { suit: Suit.Hearts, face: Face.Jack },
+        { suit: Suit.Diamonds, face: Face.Six },
+        { suit: Suit.Spades, face: Face.Nine },
+        { suit: Suit.Clubs, face: Face.Ten },
       ];
 
       let drawResult = drawCardsFromDeck(initialDeck);
 
       expect(drawResult).toEqual({
-        cards: [{ suite: Suite.Hearts, face: Face.Jack }],
+        cards: [{ suit: Suit.Hearts, face: Face.Jack }],
         deck: [
-          { suite: Suite.Diamonds, face: Face.Six },
-          { suite: Suite.Spades, face: Face.Nine },
-          { suite: Suite.Clubs, face: Face.Ten },
+          { suit: Suit.Diamonds, face: Face.Six },
+          { suit: Suit.Spades, face: Face.Nine },
+          { suit: Suit.Clubs, face: Face.Ten },
         ],
       });
 
@@ -58,10 +58,10 @@ describe('lib/cards/deck', () => {
 
       expect(drawResult).toEqual({
         cards: [
-          { suite: Suite.Clubs, face: Face.Ten },
-          { suite: Suite.Spades, face: Face.Nine },
-          { suite: Suite.Diamonds, face: Face.Six },
-          { suite: Suite.Hearts, face: Face.Jack },
+          { suit: Suit.Clubs, face: Face.Ten },
+          { suit: Suit.Spades, face: Face.Nine },
+          { suit: Suit.Diamonds, face: Face.Six },
+          { suit: Suit.Hearts, face: Face.Jack },
         ],
         deck: [],
       });
@@ -99,64 +99,64 @@ describe('lib/cards/deck', () => {
 });
 
 const fullDeck = [
-  { suite: Suite.Diamonds, face: Face.Two },
-  { suite: Suite.Diamonds, face: Face.Three },
-  { suite: Suite.Diamonds, face: Face.Four },
-  { suite: Suite.Diamonds, face: Face.Five },
-  { suite: Suite.Diamonds, face: Face.Six },
-  { suite: Suite.Diamonds, face: Face.Seven },
-  { suite: Suite.Diamonds, face: Face.Eight },
-  { suite: Suite.Diamonds, face: Face.Nine },
-  { suite: Suite.Diamonds, face: Face.Ten },
-  { suite: Suite.Diamonds, face: Face.Jack },
-  { suite: Suite.Diamonds, face: Face.Queen },
-  { suite: Suite.Diamonds, face: Face.King },
-  { suite: Suite.Diamonds, face: Face.Ace },
-  { suite: Suite.Clubs, face: Face.Two },
-  { suite: Suite.Clubs, face: Face.Three },
-  { suite: Suite.Clubs, face: Face.Four },
-  { suite: Suite.Clubs, face: Face.Five },
-  { suite: Suite.Clubs, face: Face.Six },
-  { suite: Suite.Clubs, face: Face.Seven },
-  { suite: Suite.Clubs, face: Face.Eight },
-  { suite: Suite.Clubs, face: Face.Nine },
-  { suite: Suite.Clubs, face: Face.Ten },
-  { suite: Suite.Clubs, face: Face.Jack },
-  { suite: Suite.Clubs, face: Face.Queen },
-  { suite: Suite.Clubs, face: Face.King },
-  { suite: Suite.Clubs, face: Face.Ace },
-  { suite: Suite.Hearts, face: Face.Two },
-  { suite: Suite.Hearts, face: Face.Three },
-  { suite: Suite.Hearts, face: Face.Four },
-  { suite: Suite.Hearts, face: Face.Five },
-  { suite: Suite.Hearts, face: Face.Six },
-  { suite: Suite.Hearts, face: Face.Seven },
-  { suite: Suite.Hearts, face: Face.Eight },
-  { suite: Suite.Hearts, face: Face.Nine },
-  { suite: Suite.Hearts, face: Face.Ten },
-  { suite: Suite.Hearts, face: Face.Jack },
-  { suite: Suite.Hearts, face: Face.Queen },
-  { suite: Suite.Hearts, face: Face.King },
-  { suite: Suite.Hearts, face: Face.Ace },
-  { suite: Suite.Spades, face: Face.Two },
-  { suite: Suite.Spades, face: Face.Three },
-  { suite: Suite.Spades, face: Face.Four },
-  { suite: Suite.Spades, face: Face.Five },
-  { suite: Suite.Spades, face: Face.Six },
-  { suite: Suite.Spades, face: Face.Seven },
-  { suite: Suite.Spades, face: Face.Eight },
-  { suite: Suite.Spades, face: Face.Nine },
-  { suite: Suite.Spades, face: Face.Ten },
-  { suite: Suite.Spades, face: Face.Jack },
-  { suite: Suite.Spades, face: Face.Queen },
-  { suite: Suite.Spades, face: Face.King },
-  { suite: Suite.Spades, face: Face.Ace },
+  { suit: Suit.Diamonds, face: Face.Two },
+  { suit: Suit.Diamonds, face: Face.Three },
+  { suit: Suit.Diamonds, face: Face.Four },
+  { suit: Suit.Diamonds, face: Face.Five },
+  { suit: Suit.Diamonds, face: Face.Six },
+  { suit: Suit.Diamonds, face: Face.Seven },
+  { suit: Suit.Diamonds, face: Face.Eight },
+  { suit: Suit.Diamonds, face: Face.Nine },
+  { suit: Suit.Diamonds, face: Face.Ten },
+  { suit: Suit.Diamonds, face: Face.Jack },
+  { suit: Suit.Diamonds, face: Face.Queen },
+  { suit: Suit.Diamonds, face: Face.King },
+  { suit: Suit.Diamonds, face: Face.Ace },
+  { suit: Suit.Clubs, face: Face.Two },
+  { suit: Suit.Clubs, face: Face.Three },
+  { suit: Suit.Clubs, face: Face.Four },
+  { suit: Suit.Clubs, face: Face.Five },
+  { suit: Suit.Clubs, face: Face.Six },
+  { suit: Suit.Clubs, face: Face.Seven },
+  { suit: Suit.Clubs, face: Face.Eight },
+  { suit: Suit.Clubs, face: Face.Nine },
+  { suit: Suit.Clubs, face: Face.Ten },
+  { suit: Suit.Clubs, face: Face.Jack },
+  { suit: Suit.Clubs, face: Face.Queen },
+  { suit: Suit.Clubs, face: Face.King },
+  { suit: Suit.Clubs, face: Face.Ace },
+  { suit: Suit.Hearts, face: Face.Two },
+  { suit: Suit.Hearts, face: Face.Three },
+  { suit: Suit.Hearts, face: Face.Four },
+  { suit: Suit.Hearts, face: Face.Five },
+  { suit: Suit.Hearts, face: Face.Six },
+  { suit: Suit.Hearts, face: Face.Seven },
+  { suit: Suit.Hearts, face: Face.Eight },
+  { suit: Suit.Hearts, face: Face.Nine },
+  { suit: Suit.Hearts, face: Face.Ten },
+  { suit: Suit.Hearts, face: Face.Jack },
+  { suit: Suit.Hearts, face: Face.Queen },
+  { suit: Suit.Hearts, face: Face.King },
+  { suit: Suit.Hearts, face: Face.Ace },
+  { suit: Suit.Spades, face: Face.Two },
+  { suit: Suit.Spades, face: Face.Three },
+  { suit: Suit.Spades, face: Face.Four },
+  { suit: Suit.Spades, face: Face.Five },
+  { suit: Suit.Spades, face: Face.Six },
+  { suit: Suit.Spades, face: Face.Seven },
+  { suit: Suit.Spades, face: Face.Eight },
+  { suit: Suit.Spades, face: Face.Nine },
+  { suit: Suit.Spades, face: Face.Ten },
+  { suit: Suit.Spades, face: Face.Jack },
+  { suit: Suit.Spades, face: Face.Queen },
+  { suit: Suit.Spades, face: Face.King },
+  { suit: Suit.Spades, face: Face.Ace },
 ] as const;
 
 const fullDeckWithJokers = [
   ...fullDeck,
-  { face: Face.Joker, suite: Suite.Joker },
-  { face: Face.Joker, suite: Suite.Joker },
-  { face: Face.Joker, suite: Suite.Joker },
-  { face: Face.Joker, suite: Suite.Joker },
+  { suit: Suit.Joker, face: Face.Joker },
+  { suit: Suit.Joker, face: Face.Joker },
+  { suit: Suit.Joker, face: Face.Joker },
+  { suit: Suit.Joker, face: Face.Joker },
 ] as const;

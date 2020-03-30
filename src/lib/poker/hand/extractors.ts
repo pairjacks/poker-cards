@@ -8,7 +8,7 @@ import {
   getSortedConsequtiveFaceGroups,
   getSortedFaceGroups,
   getSortedCards,
-  getSortedSuiteGroups,
+  getSortedSuitGroups,
   RankExtractor,
   RankExtractorResult,
   createExtractorResult,
@@ -32,7 +32,7 @@ export const extractRoyalFlush: RankExtractor = (hand) => {
 };
 
 export const extractStraightFlush: RankExtractor = (hand) => {
-  const rankCards = getSortedSuiteGroups(
+  const rankCards = getSortedSuitGroups(
     getSortedConsequtiveFaceGroups(hand).find((group) => group.length > 4) ||
       [],
   )
@@ -58,9 +58,11 @@ export const extractFullHouse: RankExtractor = (hand) => {
   const { rankCards: tok } = extractThreeOfAKind(hand) || {
     rankCards: null,
   };
-  const { rankCards: pair } = extractOnePair(omitAndSort(hand, tok || [])) || {
-    rankCards: null,
-  };
+
+  const pair = getSortedFaceGroups(omitAndSort(hand, tok || []))[0]?.slice(
+    0,
+    2,
+  );
 
   return tok && pair
     ? createExtractorResult(PokerHandRank.FullHouse, [...tok, ...pair], hand)
@@ -68,7 +70,7 @@ export const extractFullHouse: RankExtractor = (hand) => {
 };
 
 export const extractFlush: RankExtractor = (hand) => {
-  const rankCards = getSortedSuiteGroups(hand)
+  const rankCards = getSortedSuitGroups(hand)
     .find((g) => g.length > 4)
     ?.slice(0, 5);
 

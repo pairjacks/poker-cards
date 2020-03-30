@@ -1,6 +1,6 @@
-export type Card = Readonly<{ suite: Suite; face: Face }>;
+export type Card = Readonly<{ suit: Suit; face: Face }>;
 
-export enum Suite {
+export enum Suit {
   Diamonds = 'Diamonds',
   Clubs = 'Clubs',
   Hearts = 'Hearts',

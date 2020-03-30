@@ -3,7 +3,7 @@ import { groupBy, differenceWith, memoize, pipe } from 'lodash/fp';
 import { Card, isSameCard } from '~/lib/cards';
 
 import { PokerHandRank } from '../types';
-import { compareCards, compareFaces, compareSuites } from '../card';
+import { compareCards, compareFaces, compareSuits } from '../card';
 import { Hand } from './types';
 
 export const extractInPreferenceOrder = (
@@ -30,25 +30,28 @@ export const createExtractorResult = (
   ),
 });
 
-export const getSortedCards = memoize((hand: Hand): readonly Card[] =>
-  [...hand].sort(compareCards),
+export const getSortedCards = memoize(
+  (hand: Hand | readonly Card[]): readonly Card[] =>
+    [...flattenHand(hand)].sort(compareCards),
 );
 
-export const getSortedFaceGroups = memoize((hand: Hand): readonly Card[][] =>
-  Object.entries(groupBy('face', getSortedCards(hand)))
-    .filter(([_, cards]) => cards?.length > 1)
-    .map(([_, cards]) => cards),
+export const getSortedFaceGroups = memoize(
+  (hand: Hand | readonly Card[]): readonly Card[][] =>
+    Object.entries(groupBy('face', getSortedCards(hand)))
+      .filter(([_, cards]) => cards?.length > 1)
+      .map(([_, cards]) => cards),
 );
 
-export const getSortedSuiteGroups = memoize((hand: Hand): readonly Card[][] =>
-  Object.entries(groupBy('suite', getSortedCards(hand)))
-    .filter(([_, cards]) => cards?.length > 1)
-    .map(([_, cards]) => cards)
-    .sort((a, b) => compareSuites(a[0], b[0])),
+export const getSortedSuitGroups = memoize(
+  (hand: Hand | readonly Card[]): readonly Card[][] =>
+    Object.entries(groupBy('suit', getSortedCards(hand)))
+      .filter(([_, cards]) => cards?.length > 1)
+      .map(([_, cards]) => cards)
+      .sort((a, b) => compareSuits(a[0], b[0])),
 );
 
 export const getSortedConsequtiveFaceGroups = memoize(
-  (hand: Hand): readonly Card[][] =>
+  (hand: Hand | readonly Card[]): readonly Card[][] =>
     getSortedCards(hand).reduce((groups: Card[][], card) => {
       if (!groups.length) return [[card]];
 
@@ -63,10 +66,17 @@ export const getSortedConsequtiveFaceGroups = memoize(
     }, []),
 );
 
-export const omitAndSort: (
-  hand: Hand,
+const flattenHand = (hand: Hand | readonly Card[]): readonly Card[] =>
+  isHand(hand) ? [...hand.pocket, ...hand.community] : hand;
+
+export const omitAndSort = (
+  hand: Hand | readonly Card[],
   cards: readonly Card[],
-) => readonly Card[] = pipe(differenceWith(isSameCard), getSortedCards);
+) => getSortedCards(differenceWith(isSameCard, flattenHand(hand), cards));
+
+const isHand = (value: unknown): value is Hand =>
+  Array.isArray((value as Hand).pocket) &&
+  Array.isArray((value as Hand).community);
 
 export interface RankExtractorResult {
   rank: PokerHandRank;

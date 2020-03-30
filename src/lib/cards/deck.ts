@@ -1,19 +1,19 @@
 import { range } from 'lodash/fp';
 
-import { Suite, Face, Card } from './types';
+import { Suit, Face, Card } from './types';
 import { Shuffler, shuffleFisherYatesStack } from './util/shuffle';
 
 export const generateDeck = ({
   jokers = false,
 }: { jokers?: boolean } = {}): Deck => {
-  const suites = Object.values(Suite).filter((suite) => suite !== Suite.Joker);
+  const suits = Object.values(Suit).filter((suit) => suit !== Suit.Joker);
   const faces = Object.values(Face).filter((face) => face !== Face.Joker);
 
-  return suites
-    .flatMap((suite) => faces.map((face) => ({ suite, face })))
+  return suits
+    .flatMap((suit) => faces.map((face) => ({ face, suit })))
     .concat(
       jokers
-        ? range(0, 4).map(() => ({ face: Face.Joker, suite: Suite.Joker }))
+        ? range(0, 4).map(() => ({ face: Face.Joker, suit: Suit.Joker }))
         : [],
     );
 };
