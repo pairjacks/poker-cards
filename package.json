@@ -16,13 +16,11 @@
     "lint": "tsc && eslint . --ext .ts,.js",
     "prebuild": "rm -rf lib && rm -rf dist",
     "build:js": "NODE_ENV=production rollup --config",
-    "build:declarations": "tsc --project ./tsconfig.build.json",
+    "build:declarations": "tsc --project ./tsconfig.declarations.json",
     "build:extract_api": "api-extractor run --local",
     "build:bundle_package_json": "ts-node -P tsconfig.tsnode.json scripts/bundle-package-json.ts",
     "build": "npm run build:js && npm run build:declarations && npm run build:extract_api && npm run build:bundle_package_json",
-    "postbuild": "rm -rf lib",
-    "prepublish": "npm run build",
-    "publish": "cd dist && npm publish"
+    "postbuild": "rm -rf lib"
   },
   "dependencies": {
     "core-js": "3.6.4",
@@ -39,6 +37,7 @@
     "@microsoft/api-extractor": "7.7.12",
     "@rollup/plugin-commonjs": "11.0.2",
     "@rollup/plugin-node-resolve": "7.1.1",
+    "@rollup/plugin-typescript": "4.0.0",
     "@stryker-mutator/core": "3.1.0",
     "@stryker-mutator/jest-runner": "3.1.0",
     "@stryker-mutator/typescript": "3.1.0",
@@ -47,7 +46,7 @@
     "@types/node": "13.9.5",
     "@typescript-eslint/eslint-plugin": "2.25.0",
     "@typescript-eslint/parser": "2.25.0",
-    "babel-jest": "25.2.3",
+    "babel-jest": "25.2.4",
     "babel-plugin-module-resolver": "4.0.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.1",
@@ -57,13 +56,13 @@
     "eslint-plugin-jest": "23.8.2",
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-tsdoc": "0.2.4",
-    "jest": "25.2.3",
+    "jest": "25.2.4",
     "prettier": "2.0.2",
-    "rollup": "2.2.0",
+    "rollup": "2.3.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-cleanup": "3.1.1",
-    "rollup-plugin-typescript2": "0.27.0",
     "ts-node": "8.8.1",
+    "tslib": "1.11.1",
     "typescript": "3.8.3"
   }
 }

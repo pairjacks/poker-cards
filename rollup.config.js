@@ -1,5 +1,5 @@
 import babel from 'rollup-plugin-babel';
-import typescript2 from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import cleanup from 'rollup-plugin-cleanup';
@@ -14,8 +14,8 @@ export default {
   ],
   plugins: [
     resolve({ extensions }),
-    commonjs(),
-    typescript2(),
+    commonjs({ include: 'node_modules/**' }),
+    typescript(),
     babel({
       extensions,
       runtimeHelpers: true,
@@ -24,5 +24,5 @@ export default {
     }),
     cleanup({ comments: ['license', 'jsdoc'], maxEmptyLines: 1 }),
   ],
-  external: [],
+  external: ['lodash', 'lodash/fp', 'random-number-csprng'],
 };

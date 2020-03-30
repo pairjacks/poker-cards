@@ -7,12 +7,13 @@
     "isolatedModules": false,
     "listEmittedFiles": true,
     "noEmit": false,
-    "outDir": "./lib"
+    "outDir": "./lib",
   },
   "exclude": [
-    "**/node_modules/**"
+    "**/node_modules"
   ],
   "include": [
-    "./src/index.ts"
+    "./src/index.ts",
+    "./src/typings"
   ]
 }
