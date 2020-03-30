@@ -1,6 +1,6 @@
 import { uniqBy } from 'lodash/fp';
 
-import { Face } from '~/lib/cards';
+import { Face } from '~/cards';
 
 import { HandRank } from '../types';
 import {

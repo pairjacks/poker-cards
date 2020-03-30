@@ -1,4 +1,4 @@
-import { Face, Suit } from '~/lib/cards';
+import { Face, Suit } from '~/cards';
 
 import { compareCards } from './card';
 

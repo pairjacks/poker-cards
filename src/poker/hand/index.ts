@@ -1,4 +1,4 @@
-import { Comparator } from '~/lib/cards';
+import { Comparator } from '~/cards';
 
 import { extractInPreferenceOrder } from './util';
 import {
