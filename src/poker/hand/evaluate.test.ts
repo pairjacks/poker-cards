@@ -14,7 +14,7 @@ import {
   ranksFourOfAKind,
   ranksStraightFlushAndOnePair,
   ranksRoyalFlushAndOnePair,
-} from '../__fixtures__/hand';
+} from './__fixtures__/hand';
 import { evaluatePokerHand, comparePokerHands } from './evaluate';
 
 describe('poker/hand/evaluate', () => {
