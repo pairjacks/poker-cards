@@ -1,21 +1,5 @@
 import { Card, Face, Suit, Comparator } from '../cards';
 
-export const compareCards: CardComparator = (a, b) => {
-  const facesResult = compareFaces(a, b);
-
-  return facesResult === 0 ? compareSuits(a, b) : facesResult;
-};
-
-export const compareFaces: Comparator<Pick<Card, 'face'>> = (a, b) =>
-  getFaceValue(b) - getFaceValue(a);
-
-export const compareSuits: Comparator<Pick<Card, 'suit'>> = (a, b) =>
-  getSuitValue(b) - getSuitValue(a);
-
-const getFaceValue = ({ face }: Pick<Card, 'face'>) => faceValueMap[face];
-
-const getSuitValue = ({ suit }: Pick<Card, 'suit'>) => suitValueMap[suit];
-
 const faceValueMap = {
   [Face.Joker]: 0,
   [Face.Two]: 1,
@@ -40,5 +24,21 @@ const suitValueMap = {
   [Suit.Hearts]: 3,
   [Suit.Spades]: 4,
 } as const;
+
+const getFaceValue = ({ face }: Pick<Card, 'face'>) => faceValueMap[face];
+
+const getSuitValue = ({ suit }: Pick<Card, 'suit'>) => suitValueMap[suit];
+
+export const compareFaces: Comparator<Pick<Card, 'face'>> = (a, b) =>
+  getFaceValue(b) - getFaceValue(a);
+
+export const compareSuits: Comparator<Pick<Card, 'suit'>> = (a, b) =>
+  getSuitValue(b) - getSuitValue(a);
+
+export const compareCards: CardComparator = (a, b) => {
+  const facesResult = compareFaces(a, b);
+
+  return facesResult === 0 ? compareSuits(a, b) : facesResult;
+};
 
 export type CardComparator = Comparator<Card>;

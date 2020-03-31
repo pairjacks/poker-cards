@@ -4,5 +4,10 @@ module.exports = {
   moduleDirectories: ['node_modules', 'src'],
   moduleFileExtensions: ['ts', 'js', 'json'],
   coverageReporters: ['lcov'],
-  coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '^types.ts$'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/__fixtures__/',
+    '^types.ts$',
+  ],
 };

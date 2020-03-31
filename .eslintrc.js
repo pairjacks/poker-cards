@@ -23,12 +23,6 @@ module.exports = {
       'error',
       { argsIgnorePattern: '^_', varsIgnorePattern: '[iI]gnored' },
     ],
-    '@typescript-eslint/no-use-before-define': [
-      'error',
-      // Allows us to order root level exports by importance
-      // Keep an eye on this for undefined behaviour
-      { functions: false, classes: false, variables: false },
-    ],
     'filenames/match-regex': ['error', '^[a-z-.]+$', true],
     'filenames/match-exported': ['error', 'kebab'],
     'import/no-cycle': 'error',

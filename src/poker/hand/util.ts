@@ -10,6 +10,17 @@ const flattenHand = ({ pocket, community }: Hand): Cards => [
   ...community,
 ];
 
+const pipeableExtractor = (cards: Cards) => (extractor: RankExtractor) => (
+  previousResult: RankExtractorResult | null,
+) => (previousResult ? previousResult : extractor(cards));
+
+export const getSortedCards = memoize(
+  (cards: Cards): Cards => [...cards].sort(compareCards),
+);
+
+export const omitAndSort = (from: Cards, cards: Cards) =>
+  getSortedCards(differenceWith(isSameCard, from, cards));
+
 export const extractInPreferenceOrder = (
   extractors: RankExtractor[],
   fallback: RankExtractor<RankExtractorResult>,
@@ -20,10 +31,6 @@ export const extractInPreferenceOrder = (
     pipe(...extractors.map(pipeableExtractor(cards)))(null) || fallback(cards)
   );
 };
-
-const pipeableExtractor = (cards: Cards) => (extractor: RankExtractor) => (
-  previousResult: RankExtractorResult | null,
-) => (previousResult ? previousResult : extractor(cards));
 
 export const createExtractorResult = (
   rank: HandRank,
@@ -38,10 +45,6 @@ export const createExtractorResult = (
     Math.max(0, 5 - rankCards.length),
   ),
 });
-
-export const getSortedCards = memoize(
-  (cards: Cards): Cards => [...cards].sort(compareCards),
-);
 
 export const getSortedFaceGroups = memoize((cards: Cards): readonly Cards[] =>
   Object.entries(groupBy('face', getSortedCards(cards)))
@@ -71,6 +74,3 @@ export const getSortedConsequtiveFaceGroups = memoize(
       return groups;
     }, []),
 );
-
-export const omitAndSort = (from: Cards, cards: Cards) =>
-  getSortedCards(differenceWith(isSameCard, from, cards));

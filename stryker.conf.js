@@ -4,6 +4,7 @@ module.exports = (config) => {
       'src/**/*.ts',
       '!src/**/*@(.test|.spec|Spec).ts',
       '!src/**/types.ts',
+      '!src/**/__fixtures__/*',
     ],
     mutator: 'typescript',
     testRunner: 'jest',
