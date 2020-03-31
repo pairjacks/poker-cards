@@ -184,6 +184,20 @@ export const ranksStraightFlushAndOnePair = {
   ],
 };
 
+export const ranksStraightFlushAceLow = {
+  pocket: [
+    { face: Face.Ace, suit: Suit.Spades },
+    { face: Face.Eight, suit: Suit.Hearts },
+  ],
+  community: [
+    { face: Face.Four, suit: Suit.Spades },
+    { face: Face.Two, suit: Suit.Spades },
+    { face: Face.Three, suit: Suit.Spades },
+    { face: Face.Five, suit: Suit.Spades },
+    { face: Face.Eight, suit: Suit.Diamonds },
+  ],
+};
+
 export const ranksRoyalFlushAndOnePair = {
   pocket: [
     { face: Face.King, suit: Suit.Clubs },

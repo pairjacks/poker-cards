@@ -52,13 +52,21 @@ export const extractThreeOfAKind: RankExtractor = (cards) => {
 };
 
 export const extractStraight: RankExtractor = (cards) => {
-  const rankCards = getSortedConsequtiveFaceGroups(cards)
+  const candidate = getSortedConsequtiveFaceGroups(cards)
     .map((group) => uniqBy(({ face }) => face, group))
-    .find((group) => group.length > 4)
+    .find((group) => group.length > 3)
     ?.slice(-5);
 
-  return rankCards?.length === 5
-    ? createExtractorResult(HandRank.Straight, rankCards, cards)
+  if (!candidate) return null;
+
+  if (candidate.length === 5) {
+    return createExtractorResult(HandRank.Straight, candidate, cards);
+  }
+
+  const ace = getSortedCards(cards).find(({ face }) => face === Face.Ace);
+
+  return ace
+    ? createExtractorResult(HandRank.Straight, [...candidate, ace], cards)
     : null;
 };
 
@@ -98,15 +106,23 @@ export const extractFourOfAKind: RankExtractor = (cards) => {
 };
 
 export const extractStraightFlush: RankExtractor = (cards) => {
-  const rankCards = getSortedSuitGroups(
-    getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 4) ||
+  const candidate = getSortedSuitGroups(
+    getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 3) ||
       [],
   )
-    .find((group) => group.length > 4)
+    .find((group) => group.length > 3)
     ?.slice(0, 5);
 
-  return rankCards
-    ? createExtractorResult(HandRank.StraightFlush, rankCards, cards)
+  if (!candidate) return null;
+
+  if (candidate.length === 5) {
+    return createExtractorResult(HandRank.StraightFlush, candidate, cards);
+  }
+
+  const ace = getSortedCards(cards).find(({ face }) => face === Face.Ace);
+
+  return ace
+    ? createExtractorResult(HandRank.StraightFlush, [...candidate, ace], cards)
     : null;
 };
 

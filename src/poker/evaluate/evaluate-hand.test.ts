@@ -14,6 +14,8 @@ import {
   ranksFourOfAKind,
   ranksStraightFlushAndOnePair,
   ranksRoyalFlushAndOnePair,
+  ranksStraightAceLow,
+  ranksStraightFlushAceLow,
 } from './__fixtures__/hands';
 import { evaluateHand } from './evaluate-hand';
 
@@ -98,6 +100,18 @@ describe('evaluate hand', () => {
         ],
         kickers: [],
       });
+
+      expect(evaluateHand(ranksStraightAceLow)).toEqual({
+        rank: HandRank.Straight,
+        rankCards: [
+          { face: Face.Five, suit: Suit.Clubs },
+          { face: Face.Four, suit: Suit.Diamonds },
+          { face: Face.Three, suit: Suit.Diamonds },
+          { face: Face.Two, suit: Suit.Clubs },
+          { face: Face.Ace, suit: Suit.Spades },
+        ],
+        kickers: [],
+      });
     });
 
     it('evaluates flush', () => {
@@ -174,6 +188,18 @@ describe('evaluate hand', () => {
           { face: Face.Four, suit: Suit.Clubs },
           { face: Face.Three, suit: Suit.Clubs },
           { face: Face.Two, suit: Suit.Clubs },
+        ],
+        kickers: [],
+      });
+
+      expect(evaluateHand(ranksStraightFlushAceLow)).toEqual({
+        rank: HandRank.StraightFlush,
+        rankCards: [
+          { face: Face.Five, suit: Suit.Spades },
+          { face: Face.Four, suit: Suit.Spades },
+          { face: Face.Three, suit: Suit.Spades },
+          { face: Face.Two, suit: Suit.Spades },
+          { face: Face.Ace, suit: Suit.Spades },
         ],
         kickers: [],
       });
