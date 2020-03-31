@@ -5,6 +5,9 @@ export type { Deck, Card, Cards, Comparator } from './core/types';
 export type { DeckDrawResult } from './core/deck';
 
 export { HandRank } from './poker/constants';
-export { evaluatePokerHand, comparePokerHands } from './poker/hand/evaluate';
+export { evaluateHand } from './poker/evaluate/evaluate-hand';
 export type { Hand } from './poker/types';
-export type { RankExtractorResult, RankExtractor } from './poker/hand/types';
+export type {
+  RankExtractorResult,
+  RankExtractor,
+} from './poker/evaluate/types';
