@@ -1,5 +1,5 @@
-import { groupBy, differenceWith, memoize, pipe } from 'lodash/fp';
-
+import { pipe, memoizeWeakMap } from '../../util/function';
+import { differenceBy, groupBy } from '../../util/array';
 import { isSameCard } from '../../core/card';
 import { HandRank } from '../constants';
 import { compareCards, compareFaces, compareSuits } from '../card';
@@ -16,22 +16,21 @@ const pipeableExtractor = (cards: Cards) => (extractor: RankExtractor) => (
   previousResult: RankExtractorResult | null,
 ) => (previousResult ? previousResult : extractor(cards));
 
-export const getSortedCards = memoize(
+export const getSortedCards = memoizeWeakMap(
   (cards: Cards): Cards => [...cards].sort(compareCards),
 );
 
 export const omitAndSort = (from: Cards, cards: Cards) =>
-  getSortedCards(differenceWith(isSameCard, from, cards));
+  getSortedCards(differenceBy(isSameCard, from, cards));
 
 export const extractInPreferenceOrder = (
   extractors: RankExtractor[],
   fallback: RankExtractor<RankExtractorResult>,
 ) => (hand: Hand): RankExtractorResult => {
   const cards = flattenHand(hand);
+  const [e, ...es] = extractors.map(pipeableExtractor(cards));
 
-  return (
-    pipe(...extractors.map(pipeableExtractor(cards)))(null) || fallback(cards)
-  );
+  return pipe<RankExtractorResult | null>(e, ...es)(null) || fallback(cards);
 };
 
 export const createExtractorResult = (
@@ -48,20 +47,22 @@ export const createExtractorResult = (
   ),
 });
 
-export const getSortedFaceGroups = memoize((cards: Cards): readonly Cards[] =>
-  Object.entries(groupBy('face', getSortedCards(cards)))
-    .filter(([_, cards]) => cards?.length > 1)
-    .map(([_, cards]) => cards),
+export const getSortedFaceGroups = memoizeWeakMap(
+  (cards: Cards): readonly Cards[] =>
+    Object.entries(groupBy(({ face }) => face, getSortedCards(cards)))
+      .filter(([_, cards]) => cards?.length > 1)
+      .map(([_, cards]) => cards),
 );
 
-export const getSortedSuitGroups = memoize((cards: Cards): readonly Cards[] =>
-  Object.entries(groupBy('suit', getSortedCards(cards)))
-    .filter(([_, cards]) => cards?.length > 1)
-    .map(([_, cards]) => cards)
-    .sort((a, b) => compareSuits(a[0], b[0])),
+export const getSortedSuitGroups = memoizeWeakMap(
+  (cards: Cards): readonly Cards[] =>
+    Object.entries(groupBy(({ suit }) => suit, getSortedCards(cards)))
+      .filter(([_, cards]) => cards?.length > 1)
+      .map(([_, cards]) => cards)
+      .sort((a, b) => compareSuits(a[0], b[0])),
 );
 
-export const getSortedConsequtiveFaceGroups = memoize(
+export const getSortedConsequtiveFaceGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
     getSortedCards(cards).reduce((groups: Card[][], card) => {
       if (!groups.length) return [[card]];

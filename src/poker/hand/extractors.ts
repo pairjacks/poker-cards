@@ -1,5 +1,4 @@
-import { uniqBy } from 'lodash/fp';
-
+import { uniqBy } from '../../util/array';
 import { Face } from '../../core/constants';
 import { HandRank } from '../constants';
 import {
@@ -54,8 +53,8 @@ export const extractThreeOfAKind: RankExtractor = (cards) => {
 
 export const extractStraight: RankExtractor = (cards) => {
   const rankCards = getSortedConsequtiveFaceGroups(cards)
-    .map(uniqBy(({ face }) => face))
-    .find((g) => g.length > 4)
+    .map((group) => uniqBy(({ face }) => face, group))
+    .find((group) => group.length > 4)
     ?.slice(-5);
 
   return rankCards?.length === 5

@@ -1,6 +1,6 @@
 import randomNumberCsprng from 'random-number-csprng';
-import { clamp, range } from 'lodash/fp';
 
+import { clamp, range } from '../util/number';
 import { Suit, Face } from './constants';
 import type { Cards, Deck } from './types';
 

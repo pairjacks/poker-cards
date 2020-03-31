@@ -1,8 +1,8 @@
-import { difference } from 'lodash/fp';
-
-import { Suit, Face } from './constants';
-import { generateDeck, drawCardsFromDeck, shuffleDeck } from './deck';
+import { differenceBy } from '../util/array';
 import { fullDeck, fullDeckWithJokers } from './__fixtures__/deck';
+import { Suit, Face } from './constants';
+import { isSameCard } from './card';
+import { generateDeck, drawCardsFromDeck, shuffleDeck } from './deck';
 import type { Deck } from './types';
 
 describe('lib/cards/deck', () => {
@@ -79,7 +79,7 @@ describe('lib/cards/deck', () => {
 
       expect(shuffled).not.toBe(deck);
       expect(shuffled).not.toEqual(deck);
-      expect(difference(deck, shuffled)).toHaveLength(0);
+      expect(differenceBy(isSameCard, deck, shuffled)).toHaveLength(0);
     });
 
     it('uses passed in shuffle function', async () => {

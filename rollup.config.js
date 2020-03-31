@@ -24,5 +24,5 @@ export default {
     }),
     cleanup({ comments: ['license', 'jsdoc'], maxEmptyLines: 1 }),
   ],
-  external: ['lodash', 'lodash/fp', 'random-number-csprng'],
+  external: ['random-number-csprng'],
 };
