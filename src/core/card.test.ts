@@ -1,5 +1,5 @@
 import { isSameCard } from './card';
-import { Face, Suit } from './types';
+import { Face, Suit } from './constants';
 
 describe('cards/card', () => {
   describe('isSameCard', () => {

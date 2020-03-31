@@ -1,10 +1,5 @@
-import { Cards } from '../../cards';
-import { HandRank } from '../types';
-
-export type Hand = Readonly<{
-  pocket: Cards;
-  community: Cards;
-}>;
+import { HandRank } from '../constants';
+import type { Cards } from '../../core/types';
 
 export interface RankExtractorResult {
   rank: HandRank;

@@ -1,6 +1,5 @@
-import { Face, Suit } from '../cards';
-import { evaluatePokerHand, comparePokerHands } from './hand';
-import { HandRank } from './types';
+import { Face, Suit } from '../../core/constants';
+import { HandRank } from '../constants';
 import {
   ranksHighCard,
   ranksFullHouse,
@@ -15,9 +14,10 @@ import {
   ranksFourOfAKind,
   ranksStraightFlushAndOnePair,
   ranksRoyalFlushAndOnePair,
-} from './__fixtures__/hand';
+} from '../__fixtures__/hand';
+import { evaluatePokerHand, comparePokerHands } from './evaluate';
 
-describe('poker/hand', () => {
+describe('poker/hand/evaluate', () => {
   describe('comparePokerHands', () => {
     it('compares hands', () => {
       expect(comparePokerHands(ranksOnePair, ranksOnePair)).toBe(0);

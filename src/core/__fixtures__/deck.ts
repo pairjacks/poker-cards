@@ -1,4 +1,4 @@
-import { Suit, Face } from '../types';
+import { Suit, Face } from '../constants';
 
 export const fullDeck = [
   { suit: Suit.Diamonds, face: Face.Two },

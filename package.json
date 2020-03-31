@@ -23,7 +23,6 @@
     "postbuild": "rm -rf lib"
   },
   "dependencies": {
-    "core-js": "3.6.4",
     "lodash": "4.17.15",
     "random-number-csprng": "1.0.2"
   },
@@ -46,6 +45,7 @@
     "@types/node": "13.9.5",
     "@typescript-eslint/eslint-plugin": "2.25.0",
     "@typescript-eslint/parser": "2.25.0",
+    "core-js": "3.6.4",
     "babel-jest": "25.2.4",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.1",

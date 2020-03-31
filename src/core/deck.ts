@@ -1,7 +1,8 @@
 import randomNumberCsprng from 'random-number-csprng';
 import { clamp, range } from 'lodash/fp';
 
-import { Suit, Face, Cards } from './types';
+import { Suit, Face } from './constants';
+import type { Cards, Deck } from './types';
 
 export const generateDeck = ({
   jokers = false,
@@ -34,6 +35,11 @@ const shuffleFisherYatesStack: Shuffler = async (arr) => {
   return shuffled;
 };
 
+export const shuffleDeck = (
+  deck: Deck,
+  shuffleFn: Shuffler = shuffleFisherYatesStack,
+): Promise<Deck> => shuffleFn(deck);
+
 // index 0 represents 'top' of a deck
 export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
   const drawCount = clamp(0, deck.length, count);
@@ -53,13 +59,6 @@ export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
   return { cards, deck: nextDeck };
 };
 
-export const shuffleDeck = (
-  deck: Deck,
-  shuffleFn: Shuffler = shuffleFisherYatesStack,
-): Promise<Deck> => shuffleFn(deck);
-
 export type DeckDrawResult = Readonly<{ cards: Cards; deck: Deck }>;
-
-export type Deck = Cards;
 
 type Shuffler = <T>(arr: readonly T[]) => Promise<readonly T[]>;

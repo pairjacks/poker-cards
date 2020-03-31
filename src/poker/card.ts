@@ -1,4 +1,5 @@
-import { Card, Face, Suit, Comparator } from '../cards';
+import { Face, Suit } from '../core/constants';
+import type { Card, Comparator } from '../core/types';
 
 const faceValueMap = {
   [Face.Joker]: 0,

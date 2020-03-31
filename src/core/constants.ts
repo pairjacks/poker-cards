@@ -1,7 +1,3 @@
-export type Cards = readonly Card[];
-
-export type Card = Readonly<{ suit: Suit; face: Face }>;
-
 export enum Suit {
   Diamonds = 'Diamonds',
   Clubs = 'Clubs',
@@ -26,5 +22,3 @@ export enum Face {
   Ace = 'Ace',
   Joker = 'Joker',
 }
-
-export type Comparator<T> = (a: T, b: T) => number;

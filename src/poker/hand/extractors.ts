@@ -1,7 +1,7 @@
 import { uniqBy } from 'lodash/fp';
 
-import { Face } from '../../cards';
-import { HandRank } from '../types';
+import { Face } from '../../core/constants';
+import { HandRank } from '../constants';
 import {
   omitAndSort,
   getSortedConsequtiveFaceGroups,
@@ -10,7 +10,7 @@ import {
   getSortedSuitGroups,
   createExtractorResult,
 } from './util';
-import { RankExtractor, RankExtractorResult } from './types';
+import type { RankExtractor, RankExtractorResult } from './types';
 
 // https://www.cardschat.com/poker-hands/
 

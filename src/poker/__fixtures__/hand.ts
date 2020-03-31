@@ -1,4 +1,4 @@
-import { Face, Suit } from '../../cards';
+import { Face, Suit } from '../../core/constants';
 
 export const ranksHighCard = {
   pocket: [

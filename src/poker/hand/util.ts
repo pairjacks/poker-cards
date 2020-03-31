@@ -1,9 +1,11 @@
 import { groupBy, differenceWith, memoize, pipe } from 'lodash/fp';
 
-import { isSameCard, Card, Cards } from '../../cards';
-import { HandRank } from '../types';
+import { isSameCard } from '../../core/card';
+import { HandRank } from '../constants';
 import { compareCards, compareFaces, compareSuits } from '../card';
-import { Hand, RankExtractor, RankExtractorResult } from './types';
+import type { Card, Cards } from '../../core/types';
+import type { Hand } from '../types';
+import type { RankExtractor, RankExtractorResult } from './types';
 
 const flattenHand = ({ pocket, community }: Hand): Cards => [
   ...pocket,

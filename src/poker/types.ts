@@ -1,12 +1,6 @@
-export enum HandRank {
-  HighCard = 'HighCard',
-  OnePair = 'OnePair',
-  TwoPair = 'TwoPair',
-  ThreeOfAKind = 'ThreeOfAKind',
-  Straight = 'Straight',
-  Flush = 'Flush',
-  FullHouse = 'FullHouse',
-  FourOfAKind = 'FourOfAKind',
-  StraightFlush = 'StraightFlush',
-  RoyalFlush = 'RoyalFlush',
-}
+import type { Cards } from '../core/types';
+
+export type Hand = Readonly<{
+  pocket: Cards;
+  community: Cards;
+}>;

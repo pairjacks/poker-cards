@@ -1,8 +1,9 @@
 import { difference } from 'lodash/fp';
 
-import { Suit, Face } from './types';
-import { generateDeck, drawCardsFromDeck, Deck, shuffleDeck } from './deck';
+import { Suit, Face } from './constants';
+import { generateDeck, drawCardsFromDeck, shuffleDeck } from './deck';
 import { fullDeck, fullDeckWithJokers } from './__fixtures__/deck';
+import type { Deck } from './types';
 
 describe('lib/cards/deck', () => {
   describe('generateDeck', () => {

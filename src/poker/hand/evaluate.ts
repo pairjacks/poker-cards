@@ -1,5 +1,4 @@
-import { Comparator } from '../../cards';
-import { HandRank } from '../types';
+import { HandRank } from '../constants';
 import { extractInPreferenceOrder } from './util';
 import {
   extractRoyalFlush,
@@ -13,9 +12,8 @@ import {
   extractOnePair,
   extractHighCard,
 } from './extractors';
-import { Hand } from './types';
-
-export * from './types';
+import type { Comparator } from '../../core/types';
+import type { Hand } from '../types';
 
 const rankValueMap = {
   [HandRank.RoyalFlush]: 10,
