@@ -1,4 +1,4 @@
-import { Face, Suit } from '../../core/constants';
+import { Face, Suit } from '../../../core/constants';
 
 export const ranksHighCard = {
   pocket: [
@@ -81,6 +81,20 @@ export const ranksStraightAndPair = {
     { face: Face.Three, suit: Suit.Diamonds },
     { face: Face.Five, suit: Suit.Clubs },
     { face: Face.Six, suit: Suit.Diamonds },
+  ],
+};
+
+export const ranksStraightAceLow = {
+  pocket: [
+    { face: Face.Ace, suit: Suit.Spades },
+    { face: Face.Eight, suit: Suit.Hearts },
+  ],
+  community: [
+    { face: Face.Four, suit: Suit.Diamonds },
+    { face: Face.Two, suit: Suit.Clubs },
+    { face: Face.Three, suit: Suit.Diamonds },
+    { face: Face.Five, suit: Suit.Clubs },
+    { face: Face.Eight, suit: Suit.Diamonds },
   ],
 };
 
