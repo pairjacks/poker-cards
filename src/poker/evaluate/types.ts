@@ -13,5 +13,5 @@ export type RankExtractor<T = RankExtractorResult | null> = (cards: Cards) => T;
 
 export interface HighestHandResult {
   readonly hand: Hand;
-  readonly rankData: RankExtractorResult;
+  readonly ranked: RankExtractorResult;
 }

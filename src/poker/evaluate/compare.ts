@@ -14,7 +14,7 @@ const tieBreak = (hands: readonly HighestHandResult[]) => {
 
   const uniqueRanks = uniqBy(
     identity,
-    hands.map(({ rankData }) => rankData.rank),
+    hands.map(({ ranked }) => ranked.rank),
   );
 
   if (uniqueRanks.length > 1) {
@@ -33,11 +33,11 @@ export const findHighestHand = (
   hands: readonly Hand[],
 ): HighestHandResult | null => {
   const evaluated = hands
-    .map((hand) => ({ hand, rankData: evaluateHand(hand) }))
-    .sort((a, b) => b.rankData.rankValue - a.rankData.rankValue);
-  const maxRankValue = evaluated[0].rankData.rankValue;
+    .map((hand): HighestHandResult => ({ hand, ranked: evaluateHand(hand) }))
+    .sort((a, b) => b.ranked.rankValue - a.ranked.rankValue);
+  const maxRankValue = evaluated[0].ranked.rankValue;
   const hasMaxRankValue = evaluated.filter(
-    ({ rankData }) => rankData.rankValue === maxRankValue,
+    ({ ranked }) => ranked.rankValue === maxRankValue,
   );
 
   if (hasMaxRankValue.length === 1) return hasMaxRankValue[0];

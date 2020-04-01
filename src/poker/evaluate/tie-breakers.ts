@@ -4,8 +4,6 @@ import { getFaceValue } from '../card';
 import type { Cards } from '../../core/types';
 import type { HighestHandResult } from './types';
 
-// Assumes all hands have the same number of cards
-
 type TieBreaker = (results: readonly HighestHandResult[]) => number;
 
 const highestNumberIndex = (xs: readonly number[]) => {
@@ -17,6 +15,9 @@ const highestNumberIndex = (xs: readonly number[]) => {
 // Assumes xs are sorted highest first
 const withHighestNumberIndex = (xss: readonly (readonly number[])[]) => {
   const maxLength = Math.min(...xss.map((xs) => xs.length));
+
+  if (maxLength === 0) return -1;
+
   let index = 0;
 
   while (index < maxLength) {
@@ -30,51 +31,32 @@ const withHighestNumberIndex = (xss: readonly (readonly number[])[]) => {
   return -1;
 };
 
+const alwaysTied = () => -1;
+
 const withHighestFaceIndex = (cardChunks: readonly Cards[]) =>
   withHighestNumberIndex(cardChunks.map((cards) => cards.map(getFaceValue)));
 
-const withHighestKickerIndex = (results: readonly HighestHandResult[]) =>
-  withHighestFaceIndex(results.map(({ rankData }) => rankData.kickers));
+const highestKicker: TieBreaker = (results) =>
+  withHighestFaceIndex(results.map(({ ranked }) => ranked.kickers));
 
-const withHighestRankCardIndex = (results: readonly HighestHandResult[]) =>
-  withHighestFaceIndex(results.map(({ rankData }) => rankData.rankCards));
+const highestRankCard: TieBreaker = (results) =>
+  withHighestFaceIndex(results.map(({ ranked }) => ranked.rankCards));
 
-const tieBreakerHighestHand: TieBreaker = withHighestKickerIndex;
+const highestRankCardThenKicker: TieBreaker = (results) => {
+  const rankResult = highestRankCard(results);
 
-const tieBreakerOnePair: TieBreaker = (results) => {
-  const pairValueResult = withHighestRankCardIndex(results);
-
-  return pairValueResult === -1
-    ? withHighestKickerIndex(results)
-    : pairValueResult;
+  return rankResult === -1 ? highestKicker(results) : rankResult;
 };
 
-const tieBreakerTwoPair: TieBreaker = () => -1;
-
-const tieBreakerThreeOfAKind: TieBreaker = () => -1;
-
-const tieBreakerStraight: TieBreaker = () => -1;
-
-const tieBreakerFlush: TieBreaker = () => -1;
-
-const tieBreakerFullHouse: TieBreaker = () => -1;
-
-const tieBreakerFourOfAKind: TieBreaker = () => -1;
-
-const tieBreakerStraightFlush: TieBreaker = () => -1;
-
-// Royal flushes will always tie
-const tieBreakerRoyalFlush: TieBreaker = () => -1;
-
 export const tieBreakers: { [key in HandRank]: TieBreaker } = {
-  [HandRank.HighCard]: tieBreakerHighestHand,
-  [HandRank.OnePair]: tieBreakerOnePair,
-  [HandRank.TwoPair]: tieBreakerTwoPair,
-  [HandRank.ThreeOfAKind]: tieBreakerThreeOfAKind,
-  [HandRank.Straight]: tieBreakerStraight,
-  [HandRank.Flush]: tieBreakerFlush,
-  [HandRank.FullHouse]: tieBreakerFullHouse,
-  [HandRank.FourOfAKind]: tieBreakerFourOfAKind,
-  [HandRank.StraightFlush]: tieBreakerStraightFlush,
-  [HandRank.RoyalFlush]: tieBreakerRoyalFlush,
+  [HandRank.HighCard]: highestKicker,
+  [HandRank.OnePair]: highestRankCardThenKicker,
+  [HandRank.TwoPair]: highestRankCardThenKicker,
+  [HandRank.ThreeOfAKind]: highestRankCardThenKicker,
+  [HandRank.Straight]: highestRankCard,
+  [HandRank.Flush]: highestRankCard,
+  [HandRank.FullHouse]: highestRankCardThenKicker,
+  [HandRank.FourOfAKind]: highestRankCardThenKicker,
+  [HandRank.StraightFlush]: highestRankCard,
+  [HandRank.RoyalFlush]: alwaysTied,
 };
