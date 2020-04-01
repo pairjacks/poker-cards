@@ -191,7 +191,7 @@ describe('compare', () => {
       });
 
       test('two pair', () => {
-        const twoPairThreeFive = {
+        const twoPairFivesOverThrees = {
           pocket: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -205,7 +205,7 @@ describe('compare', () => {
           ],
         };
 
-        const twoPairThreeSix = {
+        const twoPairSixesOverThrees = {
           pocket: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
@@ -219,12 +219,14 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHand([twoPairThreeFive, twoPairThreeSix])).toEqual({
-          hand: twoPairThreeSix,
+        expect(
+          findHighestHand([twoPairFivesOverThrees, twoPairSixesOverThrees]),
+        ).toEqual({
+          hand: twoPairSixesOverThrees,
           ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
         });
 
-        const twoPairFourFive = {
+        const twoPairFivesOverFours = {
           pocket: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Four, suit: Suit.Spades },
@@ -238,12 +240,14 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHand([twoPairThreeFive, twoPairFourFive])).toEqual({
-          hand: twoPairFourFive,
+        expect(
+          findHighestHand([twoPairFivesOverThrees, twoPairFivesOverFours]),
+        ).toEqual({
+          hand: twoPairFivesOverFours,
           ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
         });
 
-        const twoPairThreeFourHighKicker = {
+        const twoPairFoursOverThreesHighKicker = {
           pocket: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -257,7 +261,7 @@ describe('compare', () => {
           ],
         };
 
-        const twoPairThreeFourLowKicker = {
+        const twoPairFoursOverThreesLowKicker = {
           pocket: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
@@ -273,11 +277,11 @@ describe('compare', () => {
 
         expect(
           findHighestHand([
-            twoPairThreeFourLowKicker,
-            twoPairThreeFourHighKicker,
+            twoPairFoursOverThreesLowKicker,
+            twoPairFoursOverThreesHighKicker,
           ]),
         ).toEqual({
-          hand: twoPairThreeFourHighKicker,
+          hand: twoPairFoursOverThreesHighKicker,
           ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
         });
 
