@@ -3,9 +3,9 @@ import { identity } from '../../util/function';
 import { extractHand } from './hand';
 import { tieBreakers } from './tie-breakers';
 import type { HandCandidate } from '../types';
-import type { HighestHandResult } from './types';
+import type { HandComparisonResult } from './types';
 
-const tieBreak = (results: readonly HighestHandResult[]) => {
+const tieBreak = (results: readonly HandComparisonResult[]) => {
   if (results.length < 2) {
     throw new Error(
       `Expected two or more hands in tie break, got ${results.length}`,
@@ -28,13 +28,13 @@ const tieBreak = (results: readonly HighestHandResult[]) => {
   return highestHandIndex === -1 ? results : [results[highestHandIndex]];
 };
 
-// finds highest value hands, multiple hand means they are tied
+// finds highest value hands, multiple values are tied
 export const findHighestHands = (
   candidates: readonly HandCandidate[],
-): readonly HighestHandResult[] => {
+): readonly HandComparisonResult[] => {
   const evaluated = candidates
     .map(
-      (candidate): HighestHandResult => ({
+      (candidate): HandComparisonResult => ({
         candidate,
         hand: extractHand(candidate),
       }),

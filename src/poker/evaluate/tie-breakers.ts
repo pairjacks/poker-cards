@@ -2,9 +2,9 @@ import { uniqBy } from '../../util/array';
 import { HandRank } from '../constants';
 import { getFaceValue } from '../card';
 import type { Cards } from '../../core/types';
-import type { HighestHandResult } from './types';
+import type { HandComparisonResult } from './types';
 
-type TieBreaker = (results: readonly HighestHandResult[]) => number;
+type TieBreaker = (results: readonly HandComparisonResult[]) => number;
 
 const highestNumberIndex = (xs: readonly number[]) => {
   if (xs.length > 1 && uniqBy((x) => x, xs).length === 1) return -1;
