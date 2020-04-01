@@ -808,6 +808,126 @@ describe('compare', () => {
           },
         ]);
       });
+
+      test('straight flush', () => {
+        const straightFlushEightHigh = {
+          pocket: [
+            { face: Face.Two, suit: Suit.Clubs },
+            { face: Face.Six, suit: Suit.Clubs },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Eight, suit: Suit.Spades },
+            { face: Face.Five, suit: Suit.Clubs },
+            { face: Face.Six, suit: Suit.Spades },
+          ],
+        };
+        const straightFlushAceLow = {
+          pocket: [
+            { face: Face.Ace, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Hearts },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Spades },
+            { face: Face.Two, suit: Suit.Spades },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Five, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Diamonds },
+          ],
+        };
+
+        expect(
+          findHighestHands([straightFlushEightHigh, straightFlushAceLow]),
+        ).toEqual([
+          {
+            hand: straightFlushEightHigh,
+            ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
+          },
+        ]);
+
+        const straightFlushEqualA = {
+          pocket: [
+            { face: Face.Two, suit: Suit.Clubs },
+            { face: Face.Six, suit: Suit.Clubs },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Eight, suit: Suit.Spades },
+            { face: Face.Five, suit: Suit.Clubs },
+            { face: Face.Six, suit: Suit.Spades },
+          ],
+        };
+        const straightFlushEqualB = {
+          pocket: [
+            { face: Face.Two, suit: Suit.Spades },
+            { face: Face.Six, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Spades },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Hearts },
+            { face: Face.Five, suit: Suit.Spades },
+            { face: Face.Six, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(
+          findHighestHands([straightFlushEqualA, straightFlushEqualB]),
+        ).toEqual([
+          {
+            hand: straightFlushEqualA,
+            ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
+          },
+          {
+            hand: straightFlushEqualB,
+            ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
+          },
+        ]);
+      });
+
+      test('royal flush', () => {
+        const royalFlushDiamonds = {
+          pocket: [
+            { face: Face.King, suit: Suit.Diamonds },
+            { face: Face.Queen, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.Ace, suit: Suit.Diamonds },
+            { face: Face.Ten, suit: Suit.Diamonds },
+            { face: Face.Eight, suit: Suit.Spades },
+            { face: Face.Jack, suit: Suit.Diamonds },
+            { face: Face.Jack, suit: Suit.Spades },
+          ],
+        };
+        const royalFlushSpades = {
+          pocket: [
+            { face: Face.King, suit: Suit.Spades },
+            { face: Face.Queen, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.Ace, suit: Suit.Spades },
+            { face: Face.Ten, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Spades },
+            { face: Face.Jack, suit: Suit.Spades },
+            { face: Face.Jack, suit: Suit.Spades },
+          ],
+        };
+
+        expect(
+          findHighestHands([royalFlushDiamonds, royalFlushSpades]),
+        ).toEqual([
+          {
+            hand: royalFlushDiamonds,
+            ranked: expect.objectContaining({ rank: HandRank.RoyalFlush }),
+          },
+          {
+            hand: royalFlushSpades,
+            ranked: expect.objectContaining({ rank: HandRank.RoyalFlush }),
+          },
+        ]);
+      });
     });
   });
 });
