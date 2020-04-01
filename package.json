@@ -1,13 +1,13 @@
 {
-  "name": "@namespace/package-name",
+  "name": "poker-lib",
   "version": "0.0.1",
   "description": "Does something",
   "repository": {
     "type": "git",
-    "url": "https://github.com/namespace/package-name.git"
+    "url": "https://github.com/kavsingh/poker-lib.git"
   },
   "license": "MIT",
-  "author": "Author Name <author@email.com> https://author.com",
+  "author": "Kav Singh <flakisms@gmail.com>",
   "contributors": [],
   "typings": "./lib/src/index.d.ts",
   "scripts": {
