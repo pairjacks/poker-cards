@@ -358,6 +358,10 @@ describe('compare', () => {
       });
 
       test('three of a kind', () => {
+        // It should be impossible for two hands to have the same
+        // value three of a kind, so a natural higher hand should
+        // be determined by high rank card
+
         const threeOfAKindThrees = {
           pocket: [
             { face: Face.Three, suit: Suit.Clubs },
@@ -394,91 +398,10 @@ describe('compare', () => {
             ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
           },
         ]);
-
-        const threeOfAKindThreesHighKicker = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
-          ],
-          community: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
-          ],
-        };
-
-        const threeOfAKindThreesLowKicker = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-          ],
-          community: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
-          ],
-        };
-
-        expect(
-          findHighestHands([
-            threeOfAKindThreesLowKicker,
-            threeOfAKindThreesHighKicker,
-          ]),
-        ).toEqual([
-          {
-            hand: threeOfAKindThreesHighKicker,
-            ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
-          },
-        ]);
-
-        const threeOfAKindEqualA = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
-          ],
-          community: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
-          ],
-        };
-
-        const threeOfAKindEqualB = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-          ],
-          community: [
-            { face: Face.King, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
-          ],
-        };
-
-        expect(
-          findHighestHands([threeOfAKindEqualA, threeOfAKindEqualB]),
-        ).toEqual([
-          {
-            hand: threeOfAKindEqualA,
-            ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
-          },
-          {
-            hand: threeOfAKindEqualB,
-            ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
-          },
-        ]);
       });
 
       test('straight', () => {
-        const straightEightHigh = {
+        const straightEightSpadesHigh = {
           pocket: [
             { face: Face.Eight, suit: Suit.Spades },
             { face: Face.Six, suit: Suit.Hearts },
@@ -491,7 +414,7 @@ describe('compare', () => {
             { face: Face.Six, suit: Suit.Diamonds },
           ],
         };
-        const straightAceLow = {
+        const straightAceSpadesLow = {
           pocket: [
             { face: Face.Ace, suit: Suit.Spades },
             { face: Face.Eight, suit: Suit.Hearts },
@@ -505,14 +428,16 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHands([straightEightHigh, straightAceLow])).toEqual([
+        expect(
+          findHighestHands([straightEightSpadesHigh, straightAceSpadesLow]),
+        ).toEqual([
           {
-            hand: straightEightHigh,
+            hand: straightEightSpadesHigh,
             ranked: expect.objectContaining({ rank: HandRank.Straight }),
           },
         ]);
 
-        const straightEqualA = {
+        const straightEightClubsHigh = {
           pocket: [
             { face: Face.Eight, suit: Suit.Clubs },
             { face: Face.Six, suit: Suit.Diamonds },
@@ -525,34 +450,23 @@ describe('compare', () => {
             { face: Face.Six, suit: Suit.Hearts },
           ],
         };
-        const straightEqualB = {
-          pocket: [
-            { face: Face.Eight, suit: Suit.Spades },
-            { face: Face.Six, suit: Suit.Hearts },
-          ],
-          community: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Diamonds },
-          ],
-        };
 
-        expect(findHighestHands([straightEqualA, straightEqualB])).toEqual([
+        expect(
+          findHighestHands([straightEightClubsHigh, straightEightSpadesHigh]),
+        ).toEqual([
           {
-            hand: straightEqualA,
+            hand: straightEightClubsHigh,
             ranked: expect.objectContaining({ rank: HandRank.Straight }),
           },
           {
-            hand: straightEqualB,
+            hand: straightEightSpadesHigh,
             ranked: expect.objectContaining({ rank: HandRank.Straight }),
           },
         ]);
       });
 
       test('flush', () => {
-        const flushJackHigh = {
+        const flushJackHighDiamonds = {
           pocket: [
             { face: Face.Three, suit: Suit.Diamonds },
             { face: Face.Jack, suit: Suit.Diamonds },
@@ -565,7 +479,7 @@ describe('compare', () => {
             { face: Face.Jack, suit: Suit.Hearts },
           ],
         };
-        const flushNineHigh = {
+        const flushNineHighHearts = {
           pocket: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Nine, suit: Suit.Hearts },
@@ -579,27 +493,16 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHands([flushJackHigh, flushNineHigh])).toEqual([
+        expect(
+          findHighestHands([flushJackHighDiamonds, flushNineHighHearts]),
+        ).toEqual([
           {
-            hand: flushJackHigh,
+            hand: flushJackHighDiamonds,
             ranked: expect.objectContaining({ rank: HandRank.Flush }),
           },
         ]);
 
-        const flushEqualA = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Diamonds },
-            { face: Face.Jack, suit: Suit.Diamonds },
-          ],
-          community: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Jack, suit: Suit.Hearts },
-          ],
-        };
-        const flushEqualB = {
+        const flushJackHighSpades = {
           pocket: [
             { face: Face.Three, suit: Suit.Spades },
             { face: Face.Jack, suit: Suit.Spades },
@@ -613,19 +516,25 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHands([flushEqualA, flushEqualB])).toEqual([
+        expect(
+          findHighestHands([flushJackHighDiamonds, flushJackHighSpades]),
+        ).toEqual([
           {
-            hand: flushEqualA,
+            hand: flushJackHighDiamonds,
             ranked: expect.objectContaining({ rank: HandRank.Flush }),
           },
           {
-            hand: flushEqualB,
+            hand: flushJackHighSpades,
             ranked: expect.objectContaining({ rank: HandRank.Flush }),
           },
         ]);
       });
 
       test('full house', () => {
+        // It should be impossible for two hands to contain
+        // the same three high cards in a full house, so there should
+        // always be a natural higher hand on high card value
+
         const fullHouseFivesOverThrees = {
           pocket: [
             { face: Face.Three, suit: Suit.Clubs },
@@ -648,7 +557,7 @@ describe('compare', () => {
           community: [
             { face: Face.Six, suit: Suit.Diamonds },
             { face: Face.Six, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Clubs },
+            { face: Face.Six, suit: Suit.Hearts },
             { face: Face.Eight, suit: Suit.Diamonds },
             { face: Face.Seven, suit: Suit.Hearts },
           ],
@@ -665,71 +574,13 @@ describe('compare', () => {
             ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
           },
         ]);
-
-        const fullHouseFivesOverFours = {
-          pocket: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Four, suit: Suit.Spades },
-          ],
-          community: [
-            { face: Face.Five, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
-          ],
-        };
-
-        expect(
-          findHighestHands([fullHouseFivesOverThrees, fullHouseFivesOverFours]),
-        ).toEqual([
-          {
-            hand: fullHouseFivesOverFours,
-            ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
-          },
-        ]);
-
-        const fullHouseEqualA = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
-          ],
-          community: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
-          ],
-        };
-
-        const fullHouseEqualB = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-          ],
-          community: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
-          ],
-        };
-
-        expect(findHighestHands([fullHouseEqualA, fullHouseEqualB])).toEqual([
-          {
-            hand: fullHouseEqualA,
-            ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
-          },
-          {
-            hand: fullHouseEqualB,
-            ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
-          },
-        ]);
       });
 
       test('four of a kind', () => {
+        // It should be impossible for two hands to contain equal value
+        // four-of-a-kinds, so there should always be a natural better hand
+        // on highest rank cards.
+
         const fourOfAKindThrees = {
           pocket: [
             { face: Face.Three, suit: Suit.Clubs },
@@ -766,47 +617,6 @@ describe('compare', () => {
             },
           ],
         );
-
-        const fourOfAKindEqualA = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
-          ],
-          community: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
-          ],
-        };
-
-        const fourOfAKindEqualB = {
-          pocket: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-          ],
-          community: [
-            { face: Face.King, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
-          ],
-        };
-
-        expect(
-          findHighestHands([fourOfAKindEqualA, fourOfAKindEqualB]),
-        ).toEqual([
-          {
-            hand: fourOfAKindEqualA,
-            ranked: expect.objectContaining({ rank: HandRank.FourOfAKind }),
-          },
-          {
-            hand: fourOfAKindEqualB,
-            ranked: expect.objectContaining({ rank: HandRank.FourOfAKind }),
-          },
-        ]);
       });
 
       test('straight flush', () => {
@@ -846,7 +656,7 @@ describe('compare', () => {
           },
         ]);
 
-        const straightFlushEqualA = {
+        const straightFlushSixHighClubs = {
           pocket: [
             { face: Face.Two, suit: Suit.Clubs },
             { face: Face.Six, suit: Suit.Clubs },
@@ -859,7 +669,7 @@ describe('compare', () => {
             { face: Face.Six, suit: Suit.Spades },
           ],
         };
-        const straightFlushEqualB = {
+        const straightFlushSixHighSpades = {
           pocket: [
             { face: Face.Two, suit: Suit.Spades },
             { face: Face.Six, suit: Suit.Spades },
@@ -874,14 +684,17 @@ describe('compare', () => {
         };
 
         expect(
-          findHighestHands([straightFlushEqualA, straightFlushEqualB]),
+          findHighestHands([
+            straightFlushSixHighClubs,
+            straightFlushSixHighSpades,
+          ]),
         ).toEqual([
           {
-            hand: straightFlushEqualA,
+            hand: straightFlushSixHighClubs,
             ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
           },
           {
-            hand: straightFlushEqualB,
+            hand: straightFlushSixHighSpades,
             ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
           },
         ]);

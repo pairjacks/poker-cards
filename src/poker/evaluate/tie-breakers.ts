@@ -48,17 +48,27 @@ const highestRankCardThenHighestKicker: TieBreaker = (results) => {
   return rankResult === -1 ? highestKicker(results) : rankResult;
 };
 
-// Really these could all just be highestRankCardThenHighestKicker
-// TODO: single fn export?
 export const tieBreakers: { [key in HandRank]: TieBreaker } = {
   [HandRank.HighCard]: highestKicker,
   [HandRank.OnePair]: highestRankCardThenHighestKicker,
   [HandRank.TwoPair]: highestRankCardThenHighestKicker,
-  [HandRank.ThreeOfAKind]: highestRankCardThenHighestKicker,
+  // It should be impossible for two hands to have the same
+  // value three of a kind, so a natural higher hand should
+  // be determined by high rank card.
+  [HandRank.ThreeOfAKind]: highestRankCard,
+  // No kickers in a straight.
   [HandRank.Straight]: highestRankCard,
+  // No kickers in a flush.
   [HandRank.Flush]: highestRankCard,
+  // No kickers in a full house.
   [HandRank.FullHouse]: highestRankCard,
-  [HandRank.FourOfAKind]: highestRankCardThenHighestKicker,
+  // It should be impossible for two hands to contain equal value
+  // four-of-a-kinds, so there should always be a natural better hand
+  // on highest rank card.
+  [HandRank.FourOfAKind]: highestRankCard,
+  // No kickers in a straight.
   [HandRank.StraightFlush]: highestRankCard,
+  // Straight flushes always draw since high card is the same and they
+  // have no kickers.
   [HandRank.RoyalFlush]: alwaysTied,
 };
