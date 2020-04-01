@@ -1,6 +1,6 @@
 import { HandRank } from '../constants';
-import type { Cards } from '../../core/types';
-import type { HandCandidate } from '../types';
+import { Cards } from '../../core/types'; // type
+import { HandCandidate } from '../types'; // type
 
 export interface Hand {
   rank: HandRank;

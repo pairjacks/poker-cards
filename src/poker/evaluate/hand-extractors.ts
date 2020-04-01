@@ -10,7 +10,7 @@ import {
   createExtractorResult,
   getHandRankValue,
 } from './util';
-import type { HandExtractor, Hand } from './types';
+import { HandExtractor, Hand } from './types'; // type
 
 // https://www.cardschat.com/poker-hands/
 

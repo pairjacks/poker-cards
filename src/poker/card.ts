@@ -1,5 +1,5 @@
 import { Face, Suit } from '../core/constants';
-import type { Card, Comparator } from '../core/types';
+import { Card, Comparator } from '../core/types'; // type
 
 const faceValueMap = {
   [Face.Two]: 1,

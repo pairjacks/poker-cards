@@ -1,4 +1,4 @@
-import type { Cards } from '../core/types';
+import { Cards } from '../core/types'; // type
 
 export type HandCandidate = Readonly<{
   pocket: Cards;

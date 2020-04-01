@@ -2,8 +2,8 @@ import { uniqBy } from '../../util/array';
 import { identity } from '../../util/function';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
-import type { HandCandidate } from '../types';
-import type { HandComparisonResult } from './types';
+import { HandCandidate } from '../types'; // type
+import { HandComparisonResult } from './types'; // type
 
 const tieBreak = (results: readonly HandComparisonResult[]) => {
   if (results.length < 2) {

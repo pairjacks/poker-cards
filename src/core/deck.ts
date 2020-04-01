@@ -2,7 +2,7 @@ import randomNumberCsprng from 'random-number-csprng';
 
 import { clamp } from '../util/number';
 import { Suit, Face } from './constants';
-import type { Cards, Deck } from './types';
+import { Cards, Deck } from './types'; // type
 
 export const generateDeck = (): Deck =>
   Object.values(Suit).flatMap((suit) =>

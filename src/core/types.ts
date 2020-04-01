@@ -1,4 +1,4 @@
-import type { Suit, Face } from './constants';
+import { Suit, Face } from './constants'; // type
 
 export type Deck = Cards;
 

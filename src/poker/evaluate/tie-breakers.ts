@@ -1,8 +1,8 @@
 import { uniqBy } from '../../util/array';
 import { HandRank } from '../constants';
 import { getFaceValue } from '../card';
-import type { Cards } from '../../core/types';
-import type { HandComparisonResult } from './types';
+import { Cards } from '../../core/types'; // type
+import { HandComparisonResult } from './types'; // type
 
 type TieBreaker = (results: readonly HandComparisonResult[]) => number;
 

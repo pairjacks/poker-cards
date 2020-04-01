@@ -3,7 +3,7 @@ import { fullDeck } from './__fixtures__/deck';
 import { Suit, Face } from './constants';
 import { isSameCard } from './card';
 import { generateDeck, drawCardsFromDeck, shuffleDeck } from './deck';
-import type { Deck } from './types';
+import { Deck } from './types'; // type
 
 describe('lib/cards/deck', () => {
   describe('generateDeck', () => {
