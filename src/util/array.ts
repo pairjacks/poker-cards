@@ -36,14 +36,14 @@ export const chunkPreviousWith = <X>(
   predicate: (current: Readonly<X>, previous: Readonly<X>) => boolean,
   xs: readonly X[],
 ) =>
-  xs.reduce((groups, item) => {
-    if (!groups.length) return [[item]];
+  xs.reduce((chunks, item) => {
+    if (!chunks.length) return [[item]];
 
-    const currentGroup = groups[groups.length - 1];
-    const previousItem = currentGroup[currentGroup.length - 1];
+    const currentChunk = chunks[chunks.length - 1];
+    const previousItem = currentChunk[currentChunk.length - 1];
 
-    if (predicate(item, previousItem)) currentGroup.push(item);
-    else groups.push([item]);
+    if (predicate(item, previousItem)) currentChunk.push(item);
+    else chunks.push([item]);
 
-    return groups;
+    return chunks;
   }, [] as X[][]);

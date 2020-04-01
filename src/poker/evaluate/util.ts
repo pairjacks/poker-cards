@@ -8,11 +8,6 @@ import type { Hand } from '../types';
 import type { RankExtractor, RankExtractorResult } from './types';
 import { isInRangeInclusive } from '../../util/number';
 
-const flattenHand = ({ pocket, community }: Hand): Cards => [
-  ...pocket,
-  ...community,
-];
-
 export const getHandRankValue = (rank: HandRank) =>
   Object.values(HandRank).indexOf(rank) + 1;
 
@@ -26,8 +21,8 @@ export const omitAndSort = (from: Cards, cards: Cards) =>
 export const extractInPreferenceOrder = (
   extractors: RankExtractor[],
   fallbackExtractor: RankExtractor<RankExtractorResult>,
-) => (hand: Hand) => {
-  const cards = flattenHand(hand);
+) => ({ pocket, community }: Hand) => {
+  const cards: Cards = [...pocket, ...community];
 
   return (
     extractors.reduce(
