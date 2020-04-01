@@ -24,7 +24,7 @@ describe('compare', () => {
       });
     });
 
-    describe('resolve tied hands', () => {
+    describe('resolve tied hand ranks', () => {
       test('high card', () => {
         const highCardHighKicker = {
           pocket: [
@@ -547,6 +547,94 @@ describe('compare', () => {
         };
 
         expect(findHighestHand([flushEqualA, flushEqualB])).toBeNull();
+      });
+
+      test('full house', () => {
+        const fullHouseFivesOverThrees = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.Five, suit: Suit.Diamonds },
+            { face: Face.Five, suit: Suit.Clubs },
+            { face: Face.Five, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Hearts },
+            { face: Face.Seven, suit: Suit.Diamonds },
+          ],
+        };
+
+        const fullHouseSixesOverThrees = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Hearts },
+            { face: Face.Three, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.Six, suit: Suit.Diamonds },
+            { face: Face.Six, suit: Suit.Clubs },
+            { face: Face.Six, suit: Suit.Clubs },
+            { face: Face.Eight, suit: Suit.Diamonds },
+            { face: Face.Seven, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(
+          findHighestHand([fullHouseFivesOverThrees, fullHouseSixesOverThrees]),
+        ).toEqual({
+          hand: fullHouseSixesOverThrees,
+          ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
+        });
+
+        const fullHouseFivesOverFours = {
+          pocket: [
+            { face: Face.Four, suit: Suit.Hearts },
+            { face: Face.Four, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.Five, suit: Suit.Hearts },
+            { face: Face.Five, suit: Suit.Spades },
+            { face: Face.Five, suit: Suit.Clubs },
+            { face: Face.Eight, suit: Suit.Diamonds },
+            { face: Face.Seven, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(
+          findHighestHand([fullHouseFivesOverThrees, fullHouseFivesOverFours]),
+        ).toEqual({
+          hand: fullHouseFivesOverFours,
+          ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
+        });
+
+        const fullHouseEqualA = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Diamonds },
+            { face: Face.Four, suit: Suit.Clubs },
+            { face: Face.Four, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Hearts },
+            { face: Face.Seven, suit: Suit.Diamonds },
+          ],
+        };
+
+        const fullHouseEqualB = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Hearts },
+            { face: Face.Three, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Hearts },
+            { face: Face.Four, suit: Suit.Spades },
+            { face: Face.Four, suit: Suit.Clubs },
+            { face: Face.Eight, suit: Suit.Diamonds },
+            { face: Face.Seven, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(findHighestHand([fullHouseEqualA, fullHouseEqualB])).toBeNull();
       });
     });
   });

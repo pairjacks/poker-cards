@@ -57,7 +57,7 @@ export const tieBreakers: { [key in HandRank]: TieBreaker } = {
   [HandRank.ThreeOfAKind]: highestRankCardThenHighestKicker,
   [HandRank.Straight]: highestRankCard,
   [HandRank.Flush]: highestRankCard,
-  [HandRank.FullHouse]: highestRankCardThenHighestKicker,
+  [HandRank.FullHouse]: highestRankCard,
   [HandRank.FourOfAKind]: highestRankCardThenHighestKicker,
   [HandRank.StraightFlush]: highestRankCard,
   [HandRank.RoyalFlush]: alwaysTied,
