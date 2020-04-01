@@ -1,14 +1,37 @@
-import { groupBy } from '../../util/array';
-import type { Hand } from '../types';
+import { uniqBy } from '../../util/array';
+import { identity } from '../../util/function';
 import { evaluateHand } from './evaluate-hand';
-import { RankExtractorResult } from './types';
+import { tieBreakers } from './tie-breakers';
+import type { Hand } from '../types';
+import type { HighestHandResult } from './types';
 
-export interface HighestHandResult {
-  readonly hand: Hand;
-  readonly rankData: RankExtractorResult;
-}
+const tieBreak = (hands: readonly HighestHandResult[]) => {
+  if (hands.length < 2) {
+    throw new Error(
+      `Expected two or more hands in tie break, got ${hands.length}`,
+    );
+  }
 
-export const findHighestHand = (hands: readonly Hand[]): HighestHandResult => {
+  const uniqueRanks = uniqBy(
+    identity,
+    hands.map(({ rankData }) => rankData.rank),
+  );
+
+  if (uniqueRanks.length > 1) {
+    throw new Error(
+      `Expected same rank for hands in tie break, got ${uniqueRanks}`,
+    );
+  }
+
+  const highestHandIndex = tieBreakers[uniqueRanks[0]](hands);
+
+  return highestHandIndex === -1 ? null : hands[highestHandIndex];
+};
+
+// finds highest value hand, null means draw
+export const findHighestHand = (
+  hands: readonly Hand[],
+): HighestHandResult | null => {
   const evaluated = hands
     .map((hand) => ({ hand, rankData: evaluateHand(hand) }))
     .sort((a, b) => b.rankData.rankValue - a.rankData.rankValue);
@@ -19,5 +42,5 @@ export const findHighestHand = (hands: readonly Hand[]): HighestHandResult => {
 
   if (hasMaxRankValue.length === 1) return hasMaxRankValue[0];
 
-  const rankGroups = groupBy(({ rankData }) => rankData.rank, evaluated);
+  return tieBreak(hasMaxRankValue);
 };

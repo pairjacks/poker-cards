@@ -1,3 +1,5 @@
+export const identity = <T>(x: T) => x;
+
 export const memoizeWeakMap = <A extends object, R>(fn: (a: A) => R) => {
   const cache = new WeakMap();
 

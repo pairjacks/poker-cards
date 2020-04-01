@@ -24,9 +24,10 @@ const suitValueMap = {
   [Suit.Spades]: 4,
 } as const;
 
-const getFaceValue = ({ face }: Pick<Card, 'face'>) => faceValueMap[face];
-
 const getSuitValue = ({ suit }: Pick<Card, 'suit'>) => suitValueMap[suit];
+
+export const getFaceValue = ({ face }: Pick<Card, 'face'>) =>
+  faceValueMap[face];
 
 export const compareFaces: Comparator<Pick<Card, 'face'>> = (a, b) =>
   getFaceValue(b) - getFaceValue(a);
