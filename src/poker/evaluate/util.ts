@@ -28,9 +28,8 @@ export const extractInPreferenceOrder = (
 
   return (
     extractors.reduce(
-      (result: RankExtractorResult | null, extractor) =>
-        result || extractor(cards),
-      null,
+      (result, extractor) => result || extractor(cards),
+      null as RankExtractorResult | null,
     ) || fallbackExtractor(cards)
   );
 };
