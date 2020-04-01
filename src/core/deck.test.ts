@@ -1,4 +1,4 @@
-import { differenceBy } from '../util/array';
+import { differenceWith } from '../util/array';
 import { fullDeck } from './__fixtures__/deck';
 import { Suit, Face } from './constants';
 import { isSameCard } from './card';
@@ -78,7 +78,7 @@ describe('lib/cards/deck', () => {
 
       expect(shuffled).not.toBe(deck);
       expect(shuffled).not.toEqual(deck);
-      expect(differenceBy(isSameCard, deck, shuffled)).toHaveLength(0);
+      expect(differenceWith(isSameCard, deck, shuffled)).toHaveLength(0);
     });
 
     it('uses passed in shuffle function', async () => {

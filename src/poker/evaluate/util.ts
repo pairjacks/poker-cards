@@ -1,5 +1,5 @@
 import { memoizeWeakMap } from '../../util/function';
-import { differenceBy, groupBy, chunkWithPreviousBy } from '../../util/array';
+import { groupBy, differenceWith, chunkPreviousWith } from '../../util/array';
 import { isSameCard } from '../../core/card';
 import { HandRank } from '../constants';
 import { compareCards, compareFaces, compareSuits } from '../card';
@@ -18,7 +18,7 @@ export const getSortedCards = memoizeWeakMap(
 );
 
 export const omitAndSort = (from: Cards, cards: Cards) =>
-  getSortedCards(differenceBy(isSameCard, from, cards));
+  getSortedCards(differenceWith(isSameCard, from, cards));
 
 export const extractInPreferenceOrder = (
   extractors: RankExtractor[],
@@ -65,7 +65,7 @@ export const getSortedSuitGroups = memoizeWeakMap(
 
 export const getSortedConsequtiveFaceGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
-    chunkWithPreviousBy(
+    chunkPreviousWith(
       (curr, prev) => isInRangeInclusive(0, 1, compareFaces(curr, prev)),
       getSortedCards(cards),
     ),
