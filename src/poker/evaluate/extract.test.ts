@@ -17,7 +17,7 @@ import {
   ranksStraightAceLowContainsPair,
   ranksStraightFlushAceLow,
 } from './__fixtures__/hands';
-import { extractHand } from './hand';
+import { extractHand } from './extract';
 
 describe('evaluate hand', () => {
   describe('extractHand', () => {

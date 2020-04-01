@@ -1,6 +1,6 @@
 import { uniqBy } from '../../util/array';
 import { identity } from '../../util/function';
-import { extractHand } from './hand';
+import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
 import type { HandCandidate } from '../types';
 import type { HandComparisonResult } from './types';
