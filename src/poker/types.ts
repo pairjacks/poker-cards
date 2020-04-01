@@ -1,6 +1,6 @@
 import type { Cards } from '../core/types';
 
-export type Hand = Readonly<{
+export type HandCandidate = Readonly<{
   pocket: Cards;
   community: Cards;
 }>;

@@ -17,13 +17,14 @@ import {
   ranksStraightAceLowContainsPair,
   ranksStraightFlushAceLow,
 } from './__fixtures__/hands';
-import { evaluateHand } from './evaluate-hand';
+import { extractHand } from './hand';
 
 describe('evaluate hand', () => {
-  describe('evaluateHand', () => {
-    it('evaluates high card', () => {
-      expect(evaluateHand(ranksHighCard)).toEqual({
+  describe('extractHand', () => {
+    it('extracts high card', () => {
+      expect(extractHand(ranksHighCard)).toEqual({
         rank: HandRank.HighCard,
+        rankValue: 1,
         rankCards: [{ face: Face.Queen, suit: Suit.Diamonds }],
         kickers: [
           { face: Face.Jack, suit: Suit.Clubs },
@@ -34,9 +35,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates one pair', () => {
-      expect(evaluateHand(ranksOnePair)).toEqual({
+    it('extracts one pair', () => {
+      expect(extractHand(ranksOnePair)).toEqual({
         rank: HandRank.OnePair,
+        rankValue: 2,
         rankCards: [
           { face: Face.Six, suit: Suit.Clubs },
           { face: Face.Six, suit: Suit.Diamonds },
@@ -49,9 +51,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates two pair', () => {
-      expect(evaluateHand(ranksTwoPair)).toEqual({
+    it('extracts two pair', () => {
+      expect(extractHand(ranksTwoPair)).toEqual({
         rank: HandRank.TwoPair,
+        rankValue: 3,
         rankCards: [
           { face: Face.Jack, suit: Suit.Clubs },
           { face: Face.Jack, suit: Suit.Diamonds },
@@ -61,8 +64,9 @@ describe('evaluate hand', () => {
         kickers: [{ face: Face.Eight, suit: Suit.Spades }],
       });
 
-      expect(evaluateHand(ranksTwoPairContainsThreePair)).toEqual({
+      expect(extractHand(ranksTwoPairContainsThreePair)).toEqual({
         rank: HandRank.TwoPair,
+        rankValue: 3,
         rankCards: [
           { face: Face.Queen, suit: Suit.Spades },
           { face: Face.Queen, suit: Suit.Clubs },
@@ -73,9 +77,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates three of a kind', () => {
-      expect(evaluateHand(ranksThreeOfAKind)).toEqual({
+    it('extracts three of a kind', () => {
+      expect(extractHand(ranksThreeOfAKind)).toEqual({
         rank: HandRank.ThreeOfAKind,
+        rankValue: 4,
         rankCards: [
           { face: Face.Six, suit: Suit.Hearts },
           { face: Face.Six, suit: Suit.Clubs },
@@ -88,9 +93,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates straight', () => {
-      expect(evaluateHand(ranksStraightContainsPair)).toEqual({
+    it('extracts straight', () => {
+      expect(extractHand(ranksStraightContainsPair)).toEqual({
         rank: HandRank.Straight,
+        rankValue: 5,
         rankCards: [
           { face: Face.Six, suit: Suit.Hearts },
           { face: Face.Five, suit: Suit.Clubs },
@@ -101,8 +107,9 @@ describe('evaluate hand', () => {
         kickers: [],
       });
 
-      expect(evaluateHand(ranksStraightAceLowContainsPair)).toEqual({
+      expect(extractHand(ranksStraightAceLowContainsPair)).toEqual({
         rank: HandRank.Straight,
+        rankValue: 5,
         rankCards: [
           { face: Face.Five, suit: Suit.Clubs },
           { face: Face.Four, suit: Suit.Diamonds },
@@ -114,9 +121,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates flush', () => {
-      expect(evaluateHand(ranksFlushContainsTwoPair)).toEqual({
+    it('extracts flush', () => {
+      expect(extractHand(ranksFlushContainsTwoPair)).toEqual({
         rank: HandRank.Flush,
+        rankValue: 6,
         rankCards: [
           { face: Face.Jack, suit: Suit.Diamonds },
           { face: Face.Five, suit: Suit.Diamonds },
@@ -128,9 +136,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates full house', () => {
-      expect(evaluateHand(ranksFullHouse)).toEqual({
+    it('extracts full house', () => {
+      expect(extractHand(ranksFullHouse)).toEqual({
         rank: HandRank.FullHouse,
+        rankValue: 7,
         rankCards: [
           { face: Face.Three, suit: Suit.Spades },
           { face: Face.Three, suit: Suit.Clubs },
@@ -141,8 +150,9 @@ describe('evaluate hand', () => {
         kickers: [],
       });
 
-      expect(evaluateHand(ranksFullHouseContainsTwoPair)).toEqual({
+      expect(extractHand(ranksFullHouseContainsTwoPair)).toEqual({
         rank: HandRank.FullHouse,
+        rankValue: 7,
         rankCards: [
           { face: Face.Jack, suit: Suit.Spades },
           { face: Face.Jack, suit: Suit.Hearts },
@@ -153,8 +163,9 @@ describe('evaluate hand', () => {
         kickers: [],
       });
 
-      expect(evaluateHand(ranksFullHouseContainsTwoThreeOfAKind)).toEqual({
+      expect(extractHand(ranksFullHouseContainsTwoThreeOfAKind)).toEqual({
         rank: HandRank.FullHouse,
+        rankValue: 7,
         rankCards: [
           { face: Face.Jack, suit: Suit.Spades },
           { face: Face.Jack, suit: Suit.Hearts },
@@ -166,9 +177,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates four of a kind', () => {
-      expect(evaluateHand(ranksFourOfAKind)).toEqual({
+    it('extracts four of a kind', () => {
+      expect(extractHand(ranksFourOfAKind)).toEqual({
         rank: HandRank.FourOfAKind,
+        rankValue: 8,
         rankCards: [
           { face: Face.Six, suit: Suit.Spades },
           { face: Face.Six, suit: Suit.Hearts },
@@ -179,9 +191,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates straight flush', () => {
-      expect(evaluateHand(ranksStraightFlushContainsOnePair)).toEqual({
+    it('extracts straight flush', () => {
+      expect(extractHand(ranksStraightFlushContainsOnePair)).toEqual({
         rank: HandRank.StraightFlush,
+        rankValue: 9,
         rankCards: [
           { face: Face.Six, suit: Suit.Clubs },
           { face: Face.Five, suit: Suit.Clubs },
@@ -192,8 +205,9 @@ describe('evaluate hand', () => {
         kickers: [],
       });
 
-      expect(evaluateHand(ranksStraightFlushAceLow)).toEqual({
+      expect(extractHand(ranksStraightFlushAceLow)).toEqual({
         rank: HandRank.StraightFlush,
+        rankValue: 9,
         rankCards: [
           { face: Face.Five, suit: Suit.Spades },
           { face: Face.Four, suit: Suit.Spades },
@@ -205,9 +219,10 @@ describe('evaluate hand', () => {
       });
     });
 
-    it('evaluates royal flush', () => {
-      expect(evaluateHand(ranksRoyalFlushContainsOnePair)).toEqual({
+    it('extracts royal flush', () => {
+      expect(extractHand(ranksRoyalFlushContainsOnePair)).toEqual({
         rank: HandRank.RoyalFlush,
+        rankValue: 10,
         rankCards: [
           { face: Face.Ace, suit: Suit.Clubs },
           { face: Face.King, suit: Suit.Clubs },

@@ -4,8 +4,8 @@ import { isSameCard } from '../../core/card';
 import { HandRank } from '../constants';
 import { compareCards, compareFaces, compareSuits } from '../card';
 import type { Cards } from '../../core/types';
-import type { Hand } from '../types';
-import type { RankExtractor, RankExtractorResult } from './types';
+import type { HandCandidate } from '../types';
+import type { HandExtractor, Hand } from './types';
 import { isInRangeInclusive } from '../../util/number';
 
 export const getHandRankValue = (rank: HandRank) =>
@@ -19,15 +19,15 @@ export const omitAndSort = (from: Cards, cards: Cards) =>
   getSortedCards(differenceWith(isSameCard, from, cards));
 
 export const extractInPreferenceOrder = (
-  extractors: RankExtractor[],
-  fallbackExtractor: RankExtractor<RankExtractorResult>,
-) => ({ pocket, community }: Hand) => {
+  extractors: HandExtractor[],
+  fallbackExtractor: HandExtractor<Hand>,
+) => ({ pocket, community }: HandCandidate) => {
   const cards: Cards = [...pocket, ...community];
 
   return (
     extractors.reduce(
       (result, extractor) => result || extractor(cards),
-      null as RankExtractorResult | null,
+      null as Hand | null,
     ) || fallbackExtractor(cards)
   );
 };
@@ -36,7 +36,7 @@ export const createExtractorResult = (
   rank: HandRank,
   rankCards: Cards,
   cards: Cards,
-): RankExtractorResult => ({
+): Hand => ({
   rank,
   rankCards,
   // Kickers are determined from a 5 card slice of the full hand

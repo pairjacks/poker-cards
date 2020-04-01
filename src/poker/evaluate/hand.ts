@@ -10,9 +10,9 @@ import {
   extractTwoPair,
   extractOnePair,
   extractHighCard,
-} from './rank-extractors';
+} from './hand-extractors';
 
-export const evaluateHand = extractInPreferenceOrder(
+export const extractHand = extractInPreferenceOrder(
   [
     extractRoyalFlush,
     extractStraightFlush,

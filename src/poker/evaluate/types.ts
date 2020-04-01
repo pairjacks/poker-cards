@@ -1,17 +1,17 @@
 import { HandRank } from '../constants';
 import type { Cards } from '../../core/types';
-import type { Hand } from '../types';
+import type { HandCandidate } from '../types';
 
-export interface RankExtractorResult {
+export interface Hand {
   rank: HandRank;
   rankValue: number;
   rankCards: Cards;
   kickers: Cards;
 }
 
-export type RankExtractor<T = RankExtractorResult | null> = (cards: Cards) => T;
+export type HandExtractor<T = Hand | null> = (cards: Cards) => T;
 
 export interface HighestHandResult {
+  readonly candidate: HandCandidate;
   readonly hand: Hand;
-  readonly ranked: RankExtractorResult;
 }

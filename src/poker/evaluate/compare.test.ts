@@ -20,8 +20,8 @@ describe('compare', () => {
         ]),
       ).toEqual([
         {
-          hand: ranksRoyalFlushContainsOnePair,
-          ranked: expect.objectContaining({ rank: HandRank.RoyalFlush }),
+          candidate: ranksRoyalFlushContainsOnePair,
+          hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
         },
       ]);
     });
@@ -59,8 +59,8 @@ describe('compare', () => {
           findHighestHands([highCardHighKicker, highCardLowKicker]),
         ).toEqual([
           {
-            hand: highCardHighKicker,
-            ranked: expect.objectContaining({ rank: HandRank.HighCard }),
+            candidate: highCardHighKicker,
+            hand: expect.objectContaining({ rank: HandRank.HighCard }),
           },
         ]);
 
@@ -93,12 +93,12 @@ describe('compare', () => {
 
         expect(findHighestHands([highCardEqualA, highCardEqualB])).toEqual([
           {
-            hand: highCardEqualA,
-            ranked: expect.objectContaining({ rank: HandRank.HighCard }),
+            candidate: highCardEqualA,
+            hand: expect.objectContaining({ rank: HandRank.HighCard }),
           },
           {
-            hand: highCardEqualB,
-            ranked: expect.objectContaining({ rank: HandRank.HighCard }),
+            candidate: highCardEqualB,
+            hand: expect.objectContaining({ rank: HandRank.HighCard }),
           },
         ]);
       });
@@ -134,8 +134,8 @@ describe('compare', () => {
 
         expect(findHighestHands([onePairThrees, onePairFives])).toEqual([
           {
-            hand: onePairFives,
-            ranked: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: onePairFives,
+            hand: expect.objectContaining({ rank: HandRank.OnePair }),
           },
         ]);
 
@@ -171,8 +171,8 @@ describe('compare', () => {
           findHighestHands([onePairThreesLowKicker, onePairThreesHighKicker]),
         ).toEqual([
           {
-            hand: onePairThreesHighKicker,
-            ranked: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: onePairThreesHighKicker,
+            hand: expect.objectContaining({ rank: HandRank.OnePair }),
           },
         ]);
 
@@ -206,12 +206,12 @@ describe('compare', () => {
 
         expect(findHighestHands([onePairEqualA, onePairEqualB])).toEqual([
           {
-            hand: onePairEqualA,
-            ranked: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: onePairEqualA,
+            hand: expect.objectContaining({ rank: HandRank.OnePair }),
           },
           {
-            hand: onePairEqualB,
-            ranked: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: onePairEqualB,
+            hand: expect.objectContaining({ rank: HandRank.OnePair }),
           },
         ]);
       });
@@ -249,8 +249,8 @@ describe('compare', () => {
           findHighestHands([twoPairFivesOverThrees, twoPairSixesOverThrees]),
         ).toEqual([
           {
-            hand: twoPairSixesOverThrees,
-            ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+            candidate: twoPairSixesOverThrees,
+            hand: expect.objectContaining({ rank: HandRank.TwoPair }),
           },
         ]);
 
@@ -272,8 +272,8 @@ describe('compare', () => {
           findHighestHands([twoPairFivesOverThrees, twoPairFivesOverFours]),
         ).toEqual([
           {
-            hand: twoPairFivesOverFours,
-            ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+            candidate: twoPairFivesOverFours,
+            hand: expect.objectContaining({ rank: HandRank.TwoPair }),
           },
         ]);
 
@@ -312,8 +312,8 @@ describe('compare', () => {
           ]),
         ).toEqual([
           {
-            hand: twoPairFoursOverThreesHighKicker,
-            ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+            candidate: twoPairFoursOverThreesHighKicker,
+            hand: expect.objectContaining({ rank: HandRank.TwoPair }),
           },
         ]);
 
@@ -347,12 +347,12 @@ describe('compare', () => {
 
         expect(findHighestHands([twoPairEqualA, twoPairEqualB])).toEqual([
           {
-            hand: twoPairEqualA,
-            ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+            candidate: twoPairEqualA,
+            hand: expect.objectContaining({ rank: HandRank.TwoPair }),
           },
           {
-            hand: twoPairEqualB,
-            ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+            candidate: twoPairEqualB,
+            hand: expect.objectContaining({ rank: HandRank.TwoPair }),
           },
         ]);
       });
@@ -394,8 +394,8 @@ describe('compare', () => {
           findHighestHands([threeOfAKindThrees, threeOfAKindFives]),
         ).toEqual([
           {
-            hand: threeOfAKindFives,
-            ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
+            candidate: threeOfAKindFives,
+            hand: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
           },
         ]);
       });
@@ -432,8 +432,8 @@ describe('compare', () => {
           findHighestHands([straightEightSpadesHigh, straightAceSpadesLow]),
         ).toEqual([
           {
-            hand: straightEightSpadesHigh,
-            ranked: expect.objectContaining({ rank: HandRank.Straight }),
+            candidate: straightEightSpadesHigh,
+            hand: expect.objectContaining({ rank: HandRank.Straight }),
           },
         ]);
 
@@ -455,12 +455,12 @@ describe('compare', () => {
           findHighestHands([straightEightClubsHigh, straightEightSpadesHigh]),
         ).toEqual([
           {
-            hand: straightEightClubsHigh,
-            ranked: expect.objectContaining({ rank: HandRank.Straight }),
+            candidate: straightEightClubsHigh,
+            hand: expect.objectContaining({ rank: HandRank.Straight }),
           },
           {
-            hand: straightEightSpadesHigh,
-            ranked: expect.objectContaining({ rank: HandRank.Straight }),
+            candidate: straightEightSpadesHigh,
+            hand: expect.objectContaining({ rank: HandRank.Straight }),
           },
         ]);
       });
@@ -497,8 +497,8 @@ describe('compare', () => {
           findHighestHands([flushJackHighDiamonds, flushNineHighHearts]),
         ).toEqual([
           {
-            hand: flushJackHighDiamonds,
-            ranked: expect.objectContaining({ rank: HandRank.Flush }),
+            candidate: flushJackHighDiamonds,
+            hand: expect.objectContaining({ rank: HandRank.Flush }),
           },
         ]);
 
@@ -520,12 +520,12 @@ describe('compare', () => {
           findHighestHands([flushJackHighDiamonds, flushJackHighSpades]),
         ).toEqual([
           {
-            hand: flushJackHighDiamonds,
-            ranked: expect.objectContaining({ rank: HandRank.Flush }),
+            candidate: flushJackHighDiamonds,
+            hand: expect.objectContaining({ rank: HandRank.Flush }),
           },
           {
-            hand: flushJackHighSpades,
-            ranked: expect.objectContaining({ rank: HandRank.Flush }),
+            candidate: flushJackHighSpades,
+            hand: expect.objectContaining({ rank: HandRank.Flush }),
           },
         ]);
       });
@@ -570,8 +570,8 @@ describe('compare', () => {
           ]),
         ).toEqual([
           {
-            hand: fullHouseSixesOverThrees,
-            ranked: expect.objectContaining({ rank: HandRank.FullHouse }),
+            candidate: fullHouseSixesOverThrees,
+            hand: expect.objectContaining({ rank: HandRank.FullHouse }),
           },
         ]);
       });
@@ -612,8 +612,8 @@ describe('compare', () => {
         expect(findHighestHands([fourOfAKindThrees, fourOfAKindFives])).toEqual(
           [
             {
-              hand: fourOfAKindFives,
-              ranked: expect.objectContaining({ rank: HandRank.FourOfAKind }),
+              candidate: fourOfAKindFives,
+              hand: expect.objectContaining({ rank: HandRank.FourOfAKind }),
             },
           ],
         );
@@ -651,8 +651,8 @@ describe('compare', () => {
           findHighestHands([straightFlushEightHigh, straightFlushAceLow]),
         ).toEqual([
           {
-            hand: straightFlushEightHigh,
-            ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
+            candidate: straightFlushEightHigh,
+            hand: expect.objectContaining({ rank: HandRank.StraightFlush }),
           },
         ]);
 
@@ -690,12 +690,12 @@ describe('compare', () => {
           ]),
         ).toEqual([
           {
-            hand: straightFlushSixHighClubs,
-            ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
+            candidate: straightFlushSixHighClubs,
+            hand: expect.objectContaining({ rank: HandRank.StraightFlush }),
           },
           {
-            hand: straightFlushSixHighSpades,
-            ranked: expect.objectContaining({ rank: HandRank.StraightFlush }),
+            candidate: straightFlushSixHighSpades,
+            hand: expect.objectContaining({ rank: HandRank.StraightFlush }),
           },
         ]);
       });
@@ -732,12 +732,12 @@ describe('compare', () => {
           findHighestHands([royalFlushDiamonds, royalFlushSpades]),
         ).toEqual([
           {
-            hand: royalFlushDiamonds,
-            ranked: expect.objectContaining({ rank: HandRank.RoyalFlush }),
+            candidate: royalFlushDiamonds,
+            hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
           },
           {
-            hand: royalFlushSpades,
-            ranked: expect.objectContaining({ rank: HandRank.RoyalFlush }),
+            candidate: royalFlushSpades,
+            hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
           },
         ]);
       });
