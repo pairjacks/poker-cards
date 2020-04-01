@@ -25,13 +25,13 @@ const tieBreak = (hands: readonly HighestHandResult[]) => {
 
   const highestHandIndex = tieBreakers[uniqueRanks[0]](hands);
 
-  return highestHandIndex === -1 ? null : hands[highestHandIndex];
+  return highestHandIndex === -1 ? hands : [hands[highestHandIndex]];
 };
 
-// finds highest value hand, null means draw
-export const findHighestHand = (
+// finds highest value hands, multiple hand means they are tied
+export const findHighestHands = (
   hands: readonly Hand[],
-): HighestHandResult | null => {
+): readonly HighestHandResult[] => {
   const evaluated = hands
     .map((hand): HighestHandResult => ({ hand, ranked: evaluateHand(hand) }))
     .sort((a, b) => b.ranked.rankValue - a.ranked.rankValue);
@@ -40,7 +40,7 @@ export const findHighestHand = (
     ({ ranked }) => ranked.rankValue === maxRankValue,
   );
 
-  if (hasMaxRankValue.length === 1) return hasMaxRankValue[0];
+  if (hasMaxRankValue.length === 1) return hasMaxRankValue;
 
   return tieBreak(hasMaxRankValue);
 };
