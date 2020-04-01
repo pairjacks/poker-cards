@@ -728,6 +728,86 @@ describe('compare', () => {
           },
         ]);
       });
+
+      test('four of a kind', () => {
+        const fourOfAKindThrees = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.King, suit: Suit.Diamonds },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Three, suit: Suit.Hearts },
+            { face: Face.Eight, suit: Suit.Hearts },
+            { face: Face.Seven, suit: Suit.Diamonds },
+          ],
+        };
+
+        const fourOfAKindFives = {
+          pocket: [
+            { face: Face.Five, suit: Suit.Hearts },
+            { face: Face.Five, suit: Suit.Clubs },
+          ],
+          community: [
+            { face: Face.King, suit: Suit.Diamonds },
+            { face: Face.Five, suit: Suit.Diamonds },
+            { face: Face.Five, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Diamonds },
+            { face: Face.Seven, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(findHighestHands([fourOfAKindThrees, fourOfAKindFives])).toEqual(
+          [
+            {
+              hand: fourOfAKindFives,
+              ranked: expect.objectContaining({ rank: HandRank.FourOfAKind }),
+            },
+          ],
+        );
+
+        const fourOfAKindEqualA = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.King, suit: Suit.Diamonds },
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Eight, suit: Suit.Hearts },
+            { face: Face.Seven, suit: Suit.Diamonds },
+          ],
+        };
+
+        const fourOfAKindEqualB = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Hearts },
+            { face: Face.Three, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.King, suit: Suit.Hearts },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Eight, suit: Suit.Diamonds },
+            { face: Face.Seven, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(
+          findHighestHands([fourOfAKindEqualA, fourOfAKindEqualB]),
+        ).toEqual([
+          {
+            hand: fourOfAKindEqualA,
+            ranked: expect.objectContaining({ rank: HandRank.FourOfAKind }),
+          },
+          {
+            hand: fourOfAKindEqualB,
+            ranked: expect.objectContaining({ rank: HandRank.FourOfAKind }),
+          },
+        ]);
+      });
     });
   });
 });
