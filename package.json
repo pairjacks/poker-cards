@@ -12,6 +12,9 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@kavsingh"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "typings": "./lib/src/index.d.ts",
   "scripts": {
     "test": "jest",
