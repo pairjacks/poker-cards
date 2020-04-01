@@ -7,11 +7,12 @@ export const pipe = <R>(fn: any, ...fns: any[]) => (...args: any[]): R =>
 export const memoizeWeakMap = <A extends object, R>(fn: (a: A) => R) => {
   const cache = new WeakMap();
 
-  const memoized = (a: A) => {
+  return function memoizedWeakMap(a: A): R {
     if (!cache.has(a)) cache.set(a, fn(a));
 
-    return cache.get(a) as R;
+    return cache.get(a);
   };
-
-  return memoized;
 };
+
+export const times = <R>(x: number, fn: (nth: number) => R) =>
+  Array.from({ length: x }, (_, i) => fn(i));

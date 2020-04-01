@@ -1,6 +1,7 @@
 import randomNumberCsprng from 'random-number-csprng';
 
-import { clamp, range } from '../util/number';
+import { clamp } from '../util/number';
+import { times } from '../util/function';
 import { Suit, Face } from './constants';
 import type { Cards, Deck } from './types';
 
@@ -13,9 +14,7 @@ export const generateDeck = ({
   return suits
     .flatMap((suit) => faces.map((face) => ({ face, suit })))
     .concat(
-      jokers
-        ? range(0, 4).map(() => ({ face: Face.Joker, suit: Suit.Joker }))
-        : [],
+      jokers ? times(4, () => ({ face: Face.Joker, suit: Suit.Joker })) : [],
     );
 };
 

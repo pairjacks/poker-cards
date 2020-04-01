@@ -1,11 +1,12 @@
 import { pipe, memoizeWeakMap } from '../../util/function';
-import { differenceBy, groupBy } from '../../util/array';
+import { differenceBy, groupBy, chunkWithPreviousBy } from '../../util/array';
 import { isSameCard } from '../../core/card';
 import { HandRank } from '../constants';
 import { compareCards, compareFaces, compareSuits } from '../card';
-import type { Card, Cards } from '../../core/types';
+import type { Cards } from '../../core/types';
 import type { Hand } from '../types';
 import type { RankExtractor, RankExtractorResult } from './types';
+import { isInRangeInclusive } from '../../util/number';
 
 const flattenHand = ({ pocket, community }: Hand): Cards => [
   ...pocket,
@@ -50,30 +51,22 @@ export const createExtractorResult = (
 export const getSortedFaceGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
     Object.entries(groupBy(({ face }) => face, getSortedCards(cards)))
-      .filter(([_, cards]) => cards?.length > 1)
-      .map(([_, cards]) => cards),
+      .filter(([, cards]) => cards?.length > 1)
+      .map(([, cards]) => cards),
 );
 
 export const getSortedSuitGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
     Object.entries(groupBy(({ suit }) => suit, getSortedCards(cards)))
-      .filter(([_, cards]) => cards?.length > 1)
-      .map(([_, cards]) => cards)
+      .filter(([, cards]) => cards?.length > 1)
+      .map(([, cards]) => cards)
       .sort((a, b) => compareSuits(a[0], b[0])),
 );
 
 export const getSortedConsequtiveFaceGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
-    getSortedCards(cards).reduce((groups: Card[][], card) => {
-      if (!groups.length) return [[card]];
-
-      const currentGroup = groups[groups.length - 1];
-      const previousCard = currentGroup[currentGroup.length - 1];
-      const diff = compareFaces(card, previousCard);
-
-      if (diff === 0 || diff === 1) currentGroup.push(card);
-      else groups.push([card]);
-
-      return groups;
-    }, []),
+    chunkWithPreviousBy(
+      (curr, prev) => isInRangeInclusive(0, 1, compareFaces(curr, prev)),
+      getSortedCards(cards),
+    ),
 );
