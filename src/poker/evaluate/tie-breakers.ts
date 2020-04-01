@@ -42,21 +42,23 @@ const highestKicker: TieBreaker = (results) =>
 const highestRankCard: TieBreaker = (results) =>
   withHighestFaceIndex(results.map(({ ranked }) => ranked.rankCards));
 
-const highestRankCardThenKicker: TieBreaker = (results) => {
+const highestRankCardThenHighestKicker: TieBreaker = (results) => {
   const rankResult = highestRankCard(results);
 
   return rankResult === -1 ? highestKicker(results) : rankResult;
 };
 
+// Really these could all just be highestRankCardThenHighestKicker
+// TODO: single fn export?
 export const tieBreakers: { [key in HandRank]: TieBreaker } = {
   [HandRank.HighCard]: highestKicker,
-  [HandRank.OnePair]: highestRankCardThenKicker,
-  [HandRank.TwoPair]: highestRankCardThenKicker,
-  [HandRank.ThreeOfAKind]: highestRankCardThenKicker,
+  [HandRank.OnePair]: highestRankCardThenHighestKicker,
+  [HandRank.TwoPair]: highestRankCardThenHighestKicker,
+  [HandRank.ThreeOfAKind]: highestRankCardThenHighestKicker,
   [HandRank.Straight]: highestRankCard,
   [HandRank.Flush]: highestRankCard,
-  [HandRank.FullHouse]: highestRankCardThenKicker,
-  [HandRank.FourOfAKind]: highestRankCardThenKicker,
+  [HandRank.FullHouse]: highestRankCardThenHighestKicker,
+  [HandRank.FourOfAKind]: highestRankCardThenHighestKicker,
   [HandRank.StraightFlush]: highestRankCard,
   [HandRank.RoyalFlush]: alwaysTied,
 };

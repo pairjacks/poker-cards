@@ -481,6 +481,69 @@ describe('compare', () => {
 
         expect(findHighestHand([straightEqualA, straightEqualB])).toBeNull();
       });
+
+      test('flush', () => {
+        const flushJackHigh = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Diamonds },
+            { face: Face.Jack, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Diamonds },
+            { face: Face.Two, suit: Suit.Diamonds },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Five, suit: Suit.Diamonds },
+            { face: Face.Jack, suit: Suit.Hearts },
+          ],
+        };
+        const flushNineHigh = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Hearts },
+            { face: Face.Nine, suit: Suit.Hearts },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Hearts },
+            { face: Face.Two, suit: Suit.Hearts },
+            { face: Face.Three, suit: Suit.Clubs },
+            { face: Face.Five, suit: Suit.Hearts },
+            { face: Face.Nine, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(findHighestHand([flushJackHigh, flushNineHigh])).toEqual({
+          hand: flushJackHigh,
+          ranked: expect.objectContaining({ rank: HandRank.Flush }),
+        });
+
+        const flushEqualA = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Diamonds },
+            { face: Face.Jack, suit: Suit.Diamonds },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Diamonds },
+            { face: Face.Two, suit: Suit.Diamonds },
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Five, suit: Suit.Diamonds },
+            { face: Face.Jack, suit: Suit.Hearts },
+          ],
+        };
+        const flushEqualB = {
+          pocket: [
+            { face: Face.Three, suit: Suit.Spades },
+            { face: Face.Jack, suit: Suit.Spades },
+          ],
+          community: [
+            { face: Face.Four, suit: Suit.Spades },
+            { face: Face.Two, suit: Suit.Spades },
+            { face: Face.Three, suit: Suit.Diamonds },
+            { face: Face.Five, suit: Suit.Spades },
+            { face: Face.Jack, suit: Suit.Hearts },
+          ],
+        };
+
+        expect(findHighestHand([flushEqualA, flushEqualB])).toBeNull();
+      });
     });
   });
 });
