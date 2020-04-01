@@ -13,6 +13,9 @@ const flattenHand = ({ pocket, community }: Hand): Cards => [
   ...community,
 ];
 
+export const getHandRankValue = (rank: HandRank) =>
+  Object.values(HandRank).indexOf(rank) + 1;
+
 export const getSortedCards = memoizeWeakMap(
   (cards: Cards): Cards => [...cards].sort(compareCards),
 );
@@ -46,6 +49,7 @@ export const createExtractorResult = (
     0,
     Math.max(0, 5 - rankCards.length),
   ),
+  rankValue: getHandRankValue(rank),
 });
 
 export const getSortedFaceGroups = memoizeWeakMap(

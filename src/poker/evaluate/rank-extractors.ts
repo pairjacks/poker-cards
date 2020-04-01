@@ -8,6 +8,7 @@ import {
   getSortedCards,
   getSortedSuitGroups,
   createExtractorResult,
+  getHandRankValue,
 } from './util';
 import type { RankExtractor, RankExtractorResult } from './types';
 
@@ -18,6 +19,7 @@ export const extractHighCard: RankExtractor<RankExtractorResult> = (cards) => {
 
   return {
     rank: HandRank.HighCard,
+    rankValue: getHandRankValue(HandRank.HighCard),
     rankCards: [highestCard],
     kickers: kickers.slice(0, 4),
   };
@@ -134,9 +136,10 @@ export const extractRoyalFlush: RankExtractor = (cards) => {
 
   return rankCards?.[0]?.face === Face.Ace
     ? {
-        rankCards,
         kickers,
+        rankCards,
         rank: HandRank.RoyalFlush,
+        rankValue: getHandRankValue(HandRank.RoyalFlush),
       }
     : null;
 };

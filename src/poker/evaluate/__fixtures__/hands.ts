@@ -42,7 +42,7 @@ export const ranksTwoPair = {
   ],
 };
 
-export const ranksTwoPairAndThreePair = {
+export const ranksTwoPairContainsThreePair = {
   pocket: [
     { face: Face.Queen, suit: Suit.Clubs },
     { face: Face.Jack, suit: Suit.Clubs },
@@ -70,7 +70,7 @@ export const ranksThreeOfAKind = {
   ],
 };
 
-export const ranksStraightAndPair = {
+export const ranksStraightContainsPair = {
   pocket: [
     { face: Face.Eight, suit: Suit.Spades },
     { face: Face.Six, suit: Suit.Hearts },
@@ -84,7 +84,7 @@ export const ranksStraightAndPair = {
   ],
 };
 
-export const ranksStraightAceLow = {
+export const ranksStraightAceLowContainsPair = {
   pocket: [
     { face: Face.Ace, suit: Suit.Spades },
     { face: Face.Eight, suit: Suit.Hearts },
@@ -98,7 +98,7 @@ export const ranksStraightAceLow = {
   ],
 };
 
-export const ranksFlushAndTwoPair = {
+export const ranksFlushContainsTwoPair = {
   pocket: [
     { face: Face.Three, suit: Suit.Diamonds },
     { face: Face.Jack, suit: Suit.Diamonds },
@@ -126,7 +126,7 @@ export const ranksFullHouse = {
   ],
 };
 
-export const ranksFullHouseAndTwoPair = {
+export const ranksFullHouseContainsTwoPair = {
   pocket: [
     { face: Face.Four, suit: Suit.Diamonds },
     { face: Face.Jack, suit: Suit.Hearts },
@@ -140,7 +140,7 @@ export const ranksFullHouseAndTwoPair = {
   ],
 };
 
-export const ranksFullHouseAndTwoThreeOfAKind = {
+export const ranksFullHouseContainsTwoThreeOfAKind = {
   pocket: [
     { face: Face.Four, suit: Suit.Diamonds },
     { face: Face.Three, suit: Suit.Clubs },
@@ -170,7 +170,7 @@ export const ranksFourOfAKind = {
 };
 [];
 
-export const ranksStraightFlushAndOnePair = {
+export const ranksStraightFlushContainsOnePair = {
   pocket: [
     { face: Face.Two, suit: Suit.Clubs },
     { face: Face.Six, suit: Suit.Clubs },
@@ -198,7 +198,7 @@ export const ranksStraightFlushAceLow = {
   ],
 };
 
-export const ranksRoyalFlushAndOnePair = {
+export const ranksRoyalFlushContainsOnePair = {
   pocket: [
     { face: Face.King, suit: Suit.Clubs },
     { face: Face.Queen, suit: Suit.Clubs },

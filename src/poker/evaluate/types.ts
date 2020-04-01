@@ -3,6 +3,7 @@ import type { Cards } from '../../core/types';
 
 export interface RankExtractorResult {
   rank: HandRank;
+  rankValue: number;
   rankCards: Cards;
   kickers: Cards;
 }
