@@ -1,4 +1,4 @@
-import { pipe, memoizeWeakMap } from '../../util/function';
+import { memoizeWeakMap } from '../../util/function';
 import { differenceBy, groupBy, chunkWithPreviousBy } from '../../util/array';
 import { isSameCard } from '../../core/card';
 import { HandRank } from '../constants';
@@ -13,10 +13,6 @@ const flattenHand = ({ pocket, community }: Hand): Cards => [
   ...community,
 ];
 
-const pipeableExtractor = (cards: Cards) => (extractor: RankExtractor) => (
-  previousResult: RankExtractorResult | null,
-) => (previousResult ? previousResult : extractor(cards));
-
 export const getSortedCards = memoizeWeakMap(
   (cards: Cards): Cards => [...cards].sort(compareCards),
 );
@@ -26,12 +22,17 @@ export const omitAndSort = (from: Cards, cards: Cards) =>
 
 export const extractInPreferenceOrder = (
   extractors: RankExtractor[],
-  fallback: RankExtractor<RankExtractorResult>,
-) => (hand: Hand): RankExtractorResult => {
+  fallbackExtractor: RankExtractor<RankExtractorResult>,
+) => (hand: Hand) => {
   const cards = flattenHand(hand);
-  const [e, ...es] = extractors.map(pipeableExtractor(cards));
 
-  return pipe<RankExtractorResult | null>(e, ...es)(null) || fallback(cards);
+  return (
+    extractors.reduce(
+      (result: RankExtractorResult | null, extractor) =>
+        result || extractor(cards),
+      null,
+    ) || fallbackExtractor(cards)
+  );
 };
 
 export const createExtractorResult = (
