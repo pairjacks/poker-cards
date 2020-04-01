@@ -54,8 +54,11 @@ describe('compare', () => {
         };
 
         expect(
-          findHighestHand([highCardHighKicker, highCardLowKicker])?.hand,
-        ).toBe(highCardHighKicker);
+          findHighestHand([highCardHighKicker, highCardLowKicker]),
+        ).toEqual({
+          hand: highCardHighKicker,
+          ranked: expect.objectContaining({ rank: HandRank.HighCard }),
+        });
 
         const highCardEqualA = {
           pocket: [
@@ -116,9 +119,10 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHand([onePairThrees, onePairFives])?.hand).toBe(
-          onePairFives,
-        );
+        expect(findHighestHand([onePairThrees, onePairFives])).toEqual({
+          hand: onePairFives,
+          ranked: expect.objectContaining({ rank: HandRank.OnePair }),
+        });
 
         const onePairThreesHighKicker = {
           pocket: [
@@ -149,9 +153,11 @@ describe('compare', () => {
         };
 
         expect(
-          findHighestHand([onePairThreesLowKicker, onePairThreesHighKicker])
-            ?.hand,
-        ).toBe(onePairThreesHighKicker);
+          findHighestHand([onePairThreesLowKicker, onePairThreesHighKicker]),
+        ).toEqual({
+          hand: onePairThreesHighKicker,
+          ranked: expect.objectContaining({ rank: HandRank.OnePair }),
+        });
 
         const onePairEqualA = {
           pocket: [
@@ -213,9 +219,10 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHand([twoPairThreeFive, twoPairThreeSix])?.hand).toBe(
-          twoPairThreeSix,
-        );
+        expect(findHighestHand([twoPairThreeFive, twoPairThreeSix])).toEqual({
+          hand: twoPairThreeSix,
+          ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+        });
 
         const twoPairFourFive = {
           pocket: [
@@ -231,9 +238,10 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHand([twoPairThreeFive, twoPairFourFive])?.hand).toBe(
-          twoPairFourFive,
-        );
+        expect(findHighestHand([twoPairThreeFive, twoPairFourFive])).toEqual({
+          hand: twoPairFourFive,
+          ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+        });
 
         const twoPairThreeFourHighKicker = {
           pocket: [
@@ -267,8 +275,11 @@ describe('compare', () => {
           findHighestHand([
             twoPairThreeFourLowKicker,
             twoPairThreeFourHighKicker,
-          ])?.hand,
-        ).toBe(twoPairThreeFourHighKicker);
+          ]),
+        ).toEqual({
+          hand: twoPairThreeFourHighKicker,
+          ranked: expect.objectContaining({ rank: HandRank.TwoPair }),
+        });
 
         const twoPairEqualA = {
           pocket: [
@@ -331,8 +342,11 @@ describe('compare', () => {
         };
 
         expect(
-          findHighestHand([threeOfAKindThrees, threeOfAKindFives])?.hand,
-        ).toBe(threeOfAKindFives);
+          findHighestHand([threeOfAKindThrees, threeOfAKindFives]),
+        ).toEqual({
+          hand: threeOfAKindFives,
+          ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
+        });
 
         const threeOfAKindThreesHighKicker = {
           pocket: [
@@ -366,8 +380,11 @@ describe('compare', () => {
           findHighestHand([
             threeOfAKindThreesLowKicker,
             threeOfAKindThreesHighKicker,
-          ])?.hand,
-        ).toBe(threeOfAKindThreesHighKicker);
+          ]),
+        ).toEqual({
+          hand: threeOfAKindThreesHighKicker,
+          ranked: expect.objectContaining({ rank: HandRank.ThreeOfAKind }),
+        });
 
         const threeOfAKindEqualA = {
           pocket: [
@@ -430,9 +447,10 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHand([straightEightHigh, straightAceLow])?.hand).toBe(
-          straightEightHigh,
-        );
+        expect(findHighestHand([straightEightHigh, straightAceLow])).toEqual({
+          hand: straightEightHigh,
+          ranked: expect.objectContaining({ rank: HandRank.Straight }),
+        });
 
         const straightEqualA = {
           pocket: [
