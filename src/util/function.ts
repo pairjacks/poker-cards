@@ -13,6 +13,3 @@ export const memoizeWeakMap = <A extends object, R>(fn: (a: A) => R) => {
     return cache.get(a);
   };
 };
-
-export const times = <R>(x: number, fn: (nth: number) => R) =>
-  Array.from({ length: x }, (_, i) => fn(i));

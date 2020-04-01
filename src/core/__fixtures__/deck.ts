@@ -54,11 +54,3 @@ export const fullDeck = [
   { suit: Suit.Spades, face: Face.King },
   { suit: Suit.Spades, face: Face.Ace },
 ] as const;
-
-export const fullDeckWithJokers = [
-  ...fullDeck,
-  { suit: Suit.Joker, face: Face.Joker },
-  { suit: Suit.Joker, face: Face.Joker },
-  { suit: Suit.Joker, face: Face.Joker },
-  { suit: Suit.Joker, face: Face.Joker },
-] as const;

@@ -1,5 +1,5 @@
 import { differenceBy } from '../util/array';
-import { fullDeck, fullDeckWithJokers } from './__fixtures__/deck';
+import { fullDeck } from './__fixtures__/deck';
 import { Suit, Face } from './constants';
 import { isSameCard } from './card';
 import { generateDeck, drawCardsFromDeck, shuffleDeck } from './deck';
@@ -9,7 +9,6 @@ describe('lib/cards/deck', () => {
   describe('generateDeck', () => {
     it('generates a deck', () => {
       expect(generateDeck()).toEqual(fullDeck);
-      expect(generateDeck({ jokers: true })).toEqual(fullDeckWithJokers);
     });
   });
 

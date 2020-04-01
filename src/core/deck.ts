@@ -1,22 +1,13 @@
 import randomNumberCsprng from 'random-number-csprng';
 
 import { clamp } from '../util/number';
-import { times } from '../util/function';
 import { Suit, Face } from './constants';
 import type { Cards, Deck } from './types';
 
-export const generateDeck = ({
-  jokers = false,
-}: { jokers?: boolean } = {}): Deck => {
-  const suits = Object.values(Suit).filter((suit) => suit !== Suit.Joker);
-  const faces = Object.values(Face).filter((face) => face !== Face.Joker);
-
-  return suits
-    .flatMap((suit) => faces.map((face) => ({ face, suit })))
-    .concat(
-      jokers ? times(4, () => ({ face: Face.Joker, suit: Suit.Joker })) : [],
-    );
-};
+export const generateDeck = (): Deck =>
+  Object.values(Suit).flatMap((suit) =>
+    Object.values(Face).map((face) => ({ face, suit })),
+  );
 
 // Based on fisher-yates using async crypto secure pseudo random numbers
 // Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d

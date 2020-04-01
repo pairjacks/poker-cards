@@ -2,7 +2,6 @@ import { Face, Suit } from '../core/constants';
 import type { Card, Comparator } from '../core/types';
 
 const faceValueMap = {
-  [Face.Joker]: 0,
   [Face.Two]: 1,
   [Face.Three]: 2,
   [Face.Four]: 3,
@@ -19,7 +18,6 @@ const faceValueMap = {
 } as const;
 
 const suitValueMap = {
-  [Suit.Joker]: 0,
   [Suit.Diamonds]: 1,
   [Suit.Clubs]: 2,
   [Suit.Hearts]: 3,
