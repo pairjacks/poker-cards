@@ -9,6 +9,9 @@
   "license": "MIT",
   "author": "Kav Singh <flakisms@gmail.com>",
   "contributors": [],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@kavsingh"
+  },
   "typings": "./lib/src/index.d.ts",
   "scripts": {
     "test": "jest",
