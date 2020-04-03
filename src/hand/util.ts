@@ -1,6 +1,6 @@
-import { memoizeWeakMap } from '../core/util/function';
-import { isInRangeInclusive } from '../core/util/number';
-import { groupBy, differenceWith, chunkPreviousWith } from '../core/util/array';
+import { memoizeWeakMap } from '../util/function';
+import { isInRangeInclusive } from '../util/number';
+import { groupBy, differenceWith, chunkPreviousWith } from '../util/array';
 import { isSameCard } from '../core/compare';
 import { HandRank } from './constants';
 import { compareCards, compareFaces, compareSuits } from './card';

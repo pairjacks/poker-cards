@@ -1,4 +1,4 @@
-import { clamp } from '../core/util/number';
+import { clamp } from '../util/number';
 import { Cards } from '../core/types'; // type
 
 export type DeckDrawResult = Readonly<{ cards: Cards; deck: Cards }>;
