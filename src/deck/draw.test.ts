@@ -1,19 +1,12 @@
-import { fullDeck } from './__fixtures__/deck';
-import { Suit, Face } from './constants';
-import { generateDeck, drawCardsFromDeck } from './deck';
-import { Deck } from './types'; // type
+import { Suit, Face } from '../core/constants';
+import { drawCardsFromDeck } from './draw';
+import { Cards } from '../core/types'; // import type
 
-describe('lib/cards/deck', () => {
-  describe('generateDeck', () => {
-    it('generates a deck', () => {
-      expect(generateDeck()).toEqual(fullDeck);
-    });
-  });
-
+describe('draw', () => {
   describe('drawCardsFromDeck', () => {
     it('does not modify deck if no cards to be drawn', () => {
-      const emptyDeck: Deck = [];
-      const initialDeck: Deck = [{ suit: Suit.Diamonds, face: Face.Two }];
+      const emptyDeck: Cards = [];
+      const initialDeck = [{ suit: Suit.Diamonds, face: Face.Two }];
 
       let drawResult = drawCardsFromDeck(emptyDeck, 1);
 

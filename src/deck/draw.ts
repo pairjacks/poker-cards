@@ -1,16 +1,10 @@
-import { clamp } from './util/number';
-import { Suit, Face } from './constants';
-import { Cards, Deck } from './types'; // type
+import { clamp } from '../core/util/number';
+import { Cards } from '../core/types'; // type
 
-export const generateDeck = (): Deck =>
-  Object.values(Suit).flatMap((suit) =>
-    Object.values(Face).map((face) => ({ face, suit })),
-  );
-
-export type DeckDrawResult = Readonly<{ cards: Cards; deck: Deck }>;
+export type DeckDrawResult = Readonly<{ cards: Cards; deck: Cards }>;
 
 // index 0 represents 'top' of a deck
-export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
+export const drawCardsFromDeck = (deck: Cards, count = 1): DeckDrawResult => {
   const drawCount = clamp(0, deck.length, count);
 
   if (!deck.length || !drawCount) return { deck, cards: [] };

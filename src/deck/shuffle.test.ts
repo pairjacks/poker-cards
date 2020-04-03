@@ -1,9 +1,9 @@
-import { differenceWith } from './util/array';
+import { differenceWith } from '../core/util/array';
+import { isSameCard } from '../core/compare';
 import { fullDeck } from './__fixtures__/deck';
-import { isSameCard } from './card';
 import { createDeckShuffler } from './shuffle';
 
-describe('core/shuffle', () => {
+describe('shuffle', () => {
   it('asynchronously shuffles a deck using default shuffler', async () => {
     const deck = fullDeck;
     const shuffle = createDeckShuffler();

@@ -1,16 +1,11 @@
-import { memoizeWeakMap } from '../../core/util/function';
-import { isInRangeInclusive } from '../../core/util/number';
-import {
-  groupBy,
-  differenceWith,
-  chunkPreviousWith,
-} from '../../core/util/array';
-import { isSameCard } from '../../core/card';
-import { HandRank } from '../constants';
-import { compareCards, compareFaces, compareSuits } from '../card';
-import { Cards } from '../../core/types'; // type
-import { HandCandidate } from '../types'; // type
-import { HandExtractor, Hand } from './types'; // type
+import { memoizeWeakMap } from '../core/util/function';
+import { isInRangeInclusive } from '../core/util/number';
+import { groupBy, differenceWith, chunkPreviousWith } from '../core/util/array';
+import { isSameCard } from '../core/compare';
+import { HandRank } from './constants';
+import { compareCards, compareFaces, compareSuits } from './card';
+import { Cards } from '../core/types'; // import type
+import { HandCandidate, Hand, HandExtractor } from './types'; // import type
 
 export const getHandRankValue = (rank: HandRank) =>
   Object.values(HandRank).indexOf(rank) + 1;

@@ -1,7 +1,7 @@
 import { Face, Suit } from '../core/constants';
 import { compareCards } from './card';
 
-describe('poker/card', () => {
+describe('card', () => {
   describe('compareCards', () => {
     it('compares card values', () => {
       expect(

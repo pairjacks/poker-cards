@@ -1,3 +1,4 @@
+import { Suit, Face } from '../core/constants';
 import { findHighestHands } from './compare';
 import {
   ranksFourOfAKind,
@@ -5,8 +6,7 @@ import {
   ranksTwoPair,
   ranksRoyalFlushContainsOnePair,
 } from './__fixtures__/hands';
-import { HandRank } from '../constants';
-import { Suit, Face } from '../../core/constants';
+import { HandRank } from './constants';
 
 describe('compare', () => {
   describe('findHighestHands', () => {

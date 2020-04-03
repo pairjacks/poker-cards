@@ -1,4 +1,4 @@
-import { Deck } from './types'; // type
+import { Cards } from '../core/types'; // import type
 
 export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 
@@ -20,24 +20,6 @@ export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
   randomIntGenerator,
 ) => async (arr) => {
   const shuffled = [...arr];
-  let m = arr.length;
-
-  // While there remain elements to shuffle…
-  while (m) {
-    // Pick a remaining element…
-    const i = await randomIntGenerator(0, m);
-
-    m -= 1;
-
-    // And swap it with the current element.
-    const temp = shuffled[m];
-    shuffled[m] = shuffled[i];
-    shuffled[i] = temp;
-  }
-
-  return shuffled;
-
-  /*
   let count = shuffled.length;
 
   while (count) {
@@ -48,11 +30,12 @@ export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
   }
 
   return shuffled;
-  */
 };
 
 export const createDeckShuffler = (shuffleFn?: ShuffleFunction) => {
   const shuffle = shuffleFn || createFisherYatesStackShuffle(randomIntNaive);
 
-  return (deck: Deck) => shuffle(deck);
+  return (deck: Cards) => shuffle(deck);
 };
+
+export type DeckShuffler = ReturnType<typeof createDeckShuffler>;

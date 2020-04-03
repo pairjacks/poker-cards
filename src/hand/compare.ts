@@ -1,11 +1,10 @@
-import { uniqBy } from '../../core/util/array';
-import { identity } from '../../core/util/function';
+import { uniqBy } from '../core/util/array';
+import { identity } from '../core/util/function';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
-import { HandCandidate } from '../types'; // type
-import { HandComparisonResult } from './types'; // type
+import { HandCandidate, HandComparisonResult } from './types'; // import type
 
-const tieBreak = (results: readonly HandComparisonResult[]) => {
+const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
   if (results.length < 2) {
     throw new Error(
       `Expected two or more hands in tie break, got ${results.length}`,
@@ -47,5 +46,5 @@ export const findHighestHands = (
 
   if (hasMaxRankValue.length === 1) return hasMaxRankValue;
 
-  return tieBreak(hasMaxRankValue);
+  return resolveTiedRank(hasMaxRankValue);
 };

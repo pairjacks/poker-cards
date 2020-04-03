@@ -1,6 +1,6 @@
-import { uniqBy } from '../../core/util/array';
-import { Face } from '../../core/constants';
-import { HandRank } from '../constants';
+import { uniqBy } from '../core/util/array';
+import { Face } from '../core/constants';
+import { HandRank } from './constants';
 import {
   omitAndSort,
   getSortedConsequtiveFaceGroups,
@@ -10,7 +10,7 @@ import {
   createExtractorResult,
   getHandRankValue,
 } from './util';
-import { HandExtractor, Hand } from './types'; // type
+import { Hand, HandExtractor } from './types'; // import type
 
 // https://www.cardschat.com/poker-hands/
 

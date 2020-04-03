@@ -1,7 +1,7 @@
-import { isSameCard } from './card';
 import { Face, Suit } from './constants';
+import { isSameCard } from './compare';
 
-describe('cards/card', () => {
+describe('compare', () => {
   describe('isSameCard', () => {
     it('determines if two cards are the same', () => {
       expect(

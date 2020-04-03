@@ -1,5 +1,5 @@
-import { Face, Suit } from '../../core/constants';
-import { HandRank } from '../constants';
+import { Face, Suit } from '../core/constants';
+import { HandRank } from './constants';
 import {
   ranksHighCard,
   ranksFullHouse,
@@ -19,7 +19,7 @@ import {
 } from './__fixtures__/hands';
 import { extractHand } from './extract';
 
-describe('evaluate hand', () => {
+describe('evaluate/extract', () => {
   describe('extractHand', () => {
     it('extracts high card', () => {
       expect(extractHand(ranksHighCard)).toEqual({

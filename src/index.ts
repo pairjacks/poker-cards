@@ -1,21 +1,19 @@
 export { Face, Suit } from './core/constants';
-export { isSameCard } from './core/card';
-export { generateDeck, drawCardsFromDeck } from './core/deck';
-export { createDeckShuffler } from './core/shuffle';
-export type { Deck, Card, Cards, Comparator } from './core/types';
+export { isSameCard } from './core/compare';
+export type { Card, Cards } from './core/types';
+
+export { createDeck } from './deck/create';
+export { drawCardsFromDeck } from './deck/draw';
+export { createDeckShuffler } from './deck/shuffle';
+export type { DeckDrawResult } from './deck/draw';
+export type { DeckShuffler } from './deck/shuffle';
 export type {
   RandomIntGenerator,
   ShuffleFunction,
   ShuffleFunctionCreator,
-} from './core/shuffle';
-export type { DeckDrawResult } from './core/deck';
+} from './deck/shuffle';
 
-export { HandRank } from './poker/constants';
-export { extractHand } from './poker/evaluate/extract';
-export { findHighestHands } from './poker/evaluate/compare';
-export type { HandCandidate } from './poker/types';
-export type {
-  Hand,
-  HandExtractor,
-  HandComparisonResult,
-} from './poker/evaluate/types';
+export { HandRank } from './hand/constants';
+export { extractHand } from './hand/extract';
+export { findHighestHands } from './hand/compare';
+export type { HandCandidate, Hand, HandComparisonResult } from './hand/types';
