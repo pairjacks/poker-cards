@@ -1,5 +1,3 @@
-import randomNumberCsprng from 'random-number-csprng';
-
 import { clamp } from '../util/number';
 import { Suit, Face } from './constants';
 import { Cards, Deck } from './types'; // type
@@ -9,26 +7,7 @@ export const generateDeck = (): Deck =>
     Object.values(Face).map((face) => ({ face, suit })),
   );
 
-// Based on fisher-yates using async crypto secure pseudo random numbers
-// Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d
-const shuffleFisherYatesStack: Shuffler = async (arr) => {
-  const shuffled = [...arr];
-  let count = shuffled.length;
-
-  while (count) {
-    const sampleIndex = await randomNumberCsprng(0, count);
-
-    shuffled.push(shuffled.splice(sampleIndex, 1)[0]);
-    count -= 1;
-  }
-
-  return shuffled;
-};
-
-export const shuffleDeck = (
-  deck: Deck,
-  shuffleFn: Shuffler = shuffleFisherYatesStack,
-): Promise<Deck> => shuffleFn(deck);
+export type DeckDrawResult = Readonly<{ cards: Cards; deck: Deck }>;
 
 // index 0 represents 'top' of a deck
 export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
@@ -48,7 +27,3 @@ export const drawCardsFromDeck = (deck: Deck, count = 1): DeckDrawResult => {
 
   return { cards, deck: nextDeck };
 };
-
-export type DeckDrawResult = Readonly<{ cards: Cards; deck: Deck }>;
-
-type Shuffler = <T>(arr: readonly T[]) => Promise<readonly T[]>;

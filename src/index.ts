@@ -1,7 +1,13 @@
 export { Face, Suit } from './core/constants';
 export { isSameCard } from './core/card';
-export { generateDeck, shuffleDeck, drawCardsFromDeck } from './core/deck';
+export { generateDeck, drawCardsFromDeck } from './core/deck';
+export { createDeckShuffler } from './core/shuffle';
 export type { Deck, Card, Cards, Comparator } from './core/types';
+export type {
+  RandomIntGenerator,
+  ShuffleFunction,
+  ShuffleFunctionCreator,
+} from './core/shuffle';
 export type { DeckDrawResult } from './core/deck';
 
 export { HandRank } from './poker/constants';

@@ -1,8 +1,6 @@
-import { differenceWith } from '../util/array';
 import { fullDeck } from './__fixtures__/deck';
 import { Suit, Face } from './constants';
-import { isSameCard } from './card';
-import { generateDeck, drawCardsFromDeck, shuffleDeck } from './deck';
+import { generateDeck, drawCardsFromDeck } from './deck';
 import { Deck } from './types'; // type
 
 describe('lib/cards/deck', () => {
@@ -68,33 +66,6 @@ describe('lib/cards/deck', () => {
       });
       expect(drawResult.deck).not.toBe(initialDeck);
       expect(initialDeck).toHaveLength(4);
-    });
-  });
-
-  describe('shuffleDeck', () => {
-    it('asynchronously shuffles a deck', async () => {
-      const deck = fullDeck;
-      const shuffled = await shuffleDeck(deck);
-
-      expect(shuffled).not.toBe(deck);
-      expect(shuffled).not.toEqual(deck);
-      expect(differenceWith(isSameCard, deck, shuffled)).toHaveLength(0);
-    });
-
-    it('uses passed in shuffle function', async () => {
-      const deck = fullDeck;
-      const shuffled = await shuffleDeck(deck, async (d) => {
-        const result = [...d];
-
-        result.reverse();
-
-        return result;
-      });
-
-      expect(shuffled).not.toBe(deck);
-      expect(shuffled).not.toEqual(deck);
-      expect(shuffled[0]).toEqual(deck[deck.length - 1]);
-      expect(shuffled[shuffled.length - 1]).toEqual(deck[0]);
     });
   });
 });
