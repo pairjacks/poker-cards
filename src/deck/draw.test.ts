@@ -1,6 +1,6 @@
-import { Suit, Face } from '../core/constants';
+import { Suit, Face } from '../card/constants';
 import { drawCardsFromDeck } from './draw';
-import { Cards } from '../core/types'; // import type
+import { Cards } from '../card/types'; // import type
 
 describe('draw', () => {
   describe('drawCardsFromDeck', () => {

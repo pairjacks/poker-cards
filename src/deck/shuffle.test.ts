@@ -1,5 +1,5 @@
 import { differenceWith } from '../util/array';
-import { isSameCard } from '../core/compare';
+import { isSameCard } from '../card/compare';
 import { fullDeck } from './__fixtures__/deck';
 import { createDeckShuffler } from './shuffle';
 

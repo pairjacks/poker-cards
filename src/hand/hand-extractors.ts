@@ -1,5 +1,5 @@
 import { uniqBy } from '../util/array';
-import { Face } from '../core/constants';
+import { Face } from '../card/constants';
 import { HandRank } from './constants';
 import {
   omitAndSort,

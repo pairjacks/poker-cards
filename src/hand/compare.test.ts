@@ -1,4 +1,4 @@
-import { Suit, Face } from '../core/constants';
+import { Suit, Face } from '../card/constants';
 import { findHighestHands } from './compare';
 import {
   ranksFourOfAKind,

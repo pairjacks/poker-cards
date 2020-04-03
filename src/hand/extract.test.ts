@@ -1,4 +1,4 @@
-import { Face, Suit } from '../core/constants';
+import { Face, Suit } from '../card/constants';
 import { HandRank } from './constants';
 import {
   ranksHighCard,

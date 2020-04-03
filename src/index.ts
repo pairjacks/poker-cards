@@ -1,6 +1,6 @@
-export { Face, Suit } from './core/constants';
-export { isSameCard } from './core/compare';
-export type { Card, Cards } from './core/types';
+export { Face, Suit } from './card/constants';
+export { isSameCard } from './card/compare';
+export type { Card, Cards } from './card/types';
 
 export { createDeck } from './deck/create';
 export { drawCardsFromDeck } from './deck/draw';

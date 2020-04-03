@@ -1,5 +1,5 @@
-import { Face, Suit } from '../core/constants';
-import { Card } from '../core/types'; // type
+import { Face, Suit } from '../card/constants';
+import { Card } from '../card/types'; // type
 
 const getSuitValue = ({ suit }: Card) => Object.values(Suit).indexOf(suit) + 1;
 

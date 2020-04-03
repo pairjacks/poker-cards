@@ -1,4 +1,4 @@
-import { Cards } from '../core/types'; // import type
+import { Cards } from '../card/types'; // import type
 
 export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 

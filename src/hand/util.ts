@@ -1,10 +1,10 @@
 import { memoizeWeakMap } from '../util/function';
 import { isInRangeInclusive } from '../util/number';
 import { groupBy, differenceWith, chunkPreviousWith } from '../util/array';
-import { isSameCard } from '../core/compare';
+import { isSameCard } from '../card/compare';
 import { HandRank } from './constants';
 import { compareCards, compareFaces, compareSuits } from './card';
-import { Cards } from '../core/types'; // import type
+import { Cards } from '../card/types'; // import type
 import { HandCandidate, Hand, HandExtractor } from './types'; // import type
 
 export const getHandRankValue = (rank: HandRank) =>

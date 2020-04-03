@@ -1,5 +1,5 @@
-import { Suit, Face } from '../core/constants';
-import { Cards } from '../core/types'; // type
+import { Suit, Face } from '../card/constants';
+import { Cards } from '../card/types'; // type
 
 export const createDeck = (): Cards =>
   Object.values(Suit).flatMap((suit) =>

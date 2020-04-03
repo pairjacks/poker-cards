@@ -1,5 +1,5 @@
 import { HandRank } from './constants';
-import { Cards } from '../core/types'; // import type
+import { Cards } from '../card/types'; // import type
 
 export interface HandCandidate {
   readonly pocket: Cards;
