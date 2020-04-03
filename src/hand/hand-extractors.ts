@@ -25,11 +25,11 @@ export const extractHighCard: HandExtractor<Hand> = (cards) => {
   };
 };
 
-export const extractOnePair: HandExtractor = (cards) => {
+export const extractPair: HandExtractor = (cards) => {
   const rankCards = getSortedFaceGroups(cards)[0]?.slice(0, 2);
 
   return rankCards
-    ? createExtractorResult(HandRank.OnePair, rankCards, cards)
+    ? createExtractorResult(HandRank.Pair, rankCards, cards)
     : null;
 };
 

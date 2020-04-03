@@ -50,7 +50,7 @@ const highestRankCardThenHighestKicker: TieBreaker = (results) => {
 
 export const tieBreakers: { [key in HandRank]: TieBreaker } = {
   [HandRank.HighCard]: highestKicker,
-  [HandRank.OnePair]: highestRankCardThenHighestKicker,
+  [HandRank.Pair]: highestRankCardThenHighestKicker,
   [HandRank.TwoPair]: highestRankCardThenHighestKicker,
   // It should be impossible for two hands to have the same
   // value three of a kind, so a natural higher hand should

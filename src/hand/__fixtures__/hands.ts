@@ -14,7 +14,7 @@ export const ranksHighCard = {
   ],
 };
 
-export const ranksOnePair = {
+export const ranksPair = {
   pocketCards: [
     { face: Face.Six, suit: Suit.Clubs },
     { face: Face.Two, suit: Suit.Diamonds },
@@ -170,7 +170,7 @@ export const ranksFourOfAKind = {
 };
 [];
 
-export const ranksStraightFlushContainsOnePair = {
+export const ranksStraightFlushContainsPair = {
   pocketCards: [
     { face: Face.Two, suit: Suit.Clubs },
     { face: Face.Six, suit: Suit.Clubs },
@@ -198,7 +198,7 @@ export const ranksStraightFlushAceLow = {
   ],
 };
 
-export const ranksRoyalFlushContainsOnePair = {
+export const ranksRoyalFlushContainsPair = {
   pocketCards: [
     { face: Face.King, suit: Suit.Clubs },
     { face: Face.Queen, suit: Suit.Clubs },

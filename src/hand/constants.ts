@@ -1,6 +1,6 @@
 export enum HandRank {
   HighCard = 'HighCard',
-  OnePair = 'OnePair',
+  Pair = 'Pair',
   TwoPair = 'TwoPair',
   ThreeOfAKind = 'ThreeOfAKind',
   Straight = 'Straight',

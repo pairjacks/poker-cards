@@ -8,7 +8,7 @@ import {
   extractStraight,
   extractThreeOfAKind,
   extractTwoPair,
-  extractOnePair,
+  extractPair,
   extractHighCard,
 } from './hand-extractors';
 
@@ -22,7 +22,7 @@ export const extractHand = extractInPreferenceOrder(
     extractStraight,
     extractThreeOfAKind,
     extractTwoPair,
-    extractOnePair,
+    extractPair,
   ],
   extractHighCard,
 );

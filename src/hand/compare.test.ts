@@ -4,7 +4,7 @@ import {
   ranksFourOfAKind,
   ranksFullHouse,
   ranksTwoPair,
-  ranksRoyalFlushContainsOnePair,
+  ranksRoyalFlushContainspair,
 } from './__fixtures__/hands';
 import { HandRank } from './constants';
 
@@ -16,11 +16,11 @@ describe('compare', () => {
           ranksFourOfAKind,
           ranksFullHouse,
           ranksTwoPair,
-          ranksRoyalFlushContainsOnePair,
+          ranksRoyalFlushContainspair,
         ]),
       ).toEqual([
         {
-          candidate: ranksRoyalFlushContainsOnePair,
+          candidate: ranksRoyalFlushContainspair,
           hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
         },
       ]);
@@ -103,8 +103,8 @@ describe('compare', () => {
         ]);
       });
 
-      test('one pair', () => {
-        const onePairThrees = {
+      test('pair', () => {
+        const pairThrees = {
           pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -118,7 +118,7 @@ describe('compare', () => {
           ],
         };
 
-        const onePairFives = {
+        const pairFives = {
           pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Clubs },
@@ -132,14 +132,14 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHands([onePairThrees, onePairFives])).toEqual([
+        expect(findHighestHands([pairThrees, pairFives])).toEqual([
           {
-            candidate: onePairFives,
-            hand: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: pairFives,
+            hand: expect.objectContaining({ rank: HandRank.Pair }),
           },
         ]);
 
-        const onePairThreesHighKicker = {
+        const pairThreesHighKicker = {
           pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -153,7 +153,7 @@ describe('compare', () => {
           ],
         };
 
-        const onePairThreesLowKicker = {
+        const pairThreesLowKicker = {
           pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
@@ -168,15 +168,15 @@ describe('compare', () => {
         };
 
         expect(
-          findHighestHands([onePairThreesLowKicker, onePairThreesHighKicker]),
+          findHighestHands([pairThreesLowKicker, pairThreesHighKicker]),
         ).toEqual([
           {
-            candidate: onePairThreesHighKicker,
-            hand: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: pairThreesHighKicker,
+            hand: expect.objectContaining({ rank: HandRank.Pair }),
           },
         ]);
 
-        const onePairEqualA = {
+        const pairEqualA = {
           pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -190,7 +190,7 @@ describe('compare', () => {
           ],
         };
 
-        const onePairEqualB = {
+        const pairEqualB = {
           pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
@@ -204,14 +204,14 @@ describe('compare', () => {
           ],
         };
 
-        expect(findHighestHands([onePairEqualA, onePairEqualB])).toEqual([
+        expect(findHighestHands([pairEqualA, pairEqualB])).toEqual([
           {
-            candidate: onePairEqualA,
-            hand: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: pairEqualA,
+            hand: expect.objectContaining({ rank: HandRank.Pair }),
           },
           {
-            candidate: onePairEqualB,
-            hand: expect.objectContaining({ rank: HandRank.OnePair }),
+            candidate: pairEqualB,
+            hand: expect.objectContaining({ rank: HandRank.Pair }),
           },
         ]);
       });
