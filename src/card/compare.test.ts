@@ -1,5 +1,5 @@
 import { Face, Suit } from './constants';
-import { isSameCard } from './compare';
+import { isSameCard, compareCards } from './compare';
 
 describe('compare', () => {
   describe('isSameCard', () => {
@@ -24,6 +24,45 @@ describe('compare', () => {
           { face: Face.Four, suit: Suit.Clubs },
         ),
       ).toBe(false);
+    });
+  });
+
+  describe('compareCards', () => {
+    it('compares card values', () => {
+      expect(
+        compareCards(
+          { face: Face.Two, suit: Suit.Clubs },
+          { face: Face.Two, suit: Suit.Clubs },
+        ),
+      ).toBe(0);
+
+      expect(
+        compareCards(
+          { face: Face.Two, suit: Suit.Clubs },
+          { face: Face.Three, suit: Suit.Clubs },
+        ),
+      ).toBeGreaterThan(0);
+
+      expect(
+        compareCards(
+          { face: Face.Two, suit: Suit.Clubs },
+          { face: Face.Two, suit: Suit.Hearts },
+        ),
+      ).toBeGreaterThan(0);
+
+      expect(
+        compareCards(
+          { face: Face.Three, suit: Suit.Clubs },
+          { face: Face.Two, suit: Suit.Diamonds },
+        ),
+      ).toBeLessThan(0);
+
+      expect(
+        compareCards(
+          { face: Face.Ten, suit: Suit.Diamonds },
+          { face: Face.Nine, suit: Suit.Spades },
+        ),
+      ).toBeLessThan(0);
     });
   });
 });

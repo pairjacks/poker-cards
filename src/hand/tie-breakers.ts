@@ -1,6 +1,6 @@
 import { uniqBy } from '../util/array';
+import { getFaceValue } from '../card/value';
 import { HandRank } from './constants';
-import { getFaceValue } from './card';
 import { Cards } from '../card/types'; // import type
 import { HandComparisonResult } from './types'; // import type
 

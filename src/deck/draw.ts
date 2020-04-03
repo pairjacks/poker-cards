@@ -1,5 +1,5 @@
 import { clamp } from '../util/number';
-import { Cards } from '../card/types'; // type
+import { Cards } from '../card/types'; // import type
 
 export type DeckDrawResult = Readonly<{ cards: Cards; deck: Cards }>;
 
