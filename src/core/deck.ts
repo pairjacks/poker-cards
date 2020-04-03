@@ -1,4 +1,4 @@
-import { clamp } from '../util/number';
+import { clamp } from './util/number';
 import { Suit, Face } from './constants';
 import { Cards, Deck } from './types'; // type
 

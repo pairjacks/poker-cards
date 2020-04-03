@@ -1,4 +1,4 @@
-import { uniqBy } from '../../util/array';
+import { uniqBy } from '../../core/util/array';
 import { Face } from '../../core/constants';
 import { HandRank } from '../constants';
 import {

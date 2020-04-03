@@ -1,4 +1,4 @@
-import { differenceWith } from '../util/array';
+import { differenceWith } from './util/array';
 import { fullDeck } from './__fixtures__/deck';
 import { isSameCard } from './card';
 import { createDeckShuffler } from './shuffle';

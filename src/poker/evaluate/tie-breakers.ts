@@ -1,4 +1,4 @@
-import { uniqBy } from '../../util/array';
+import { uniqBy } from '../../core/util/array';
 import { HandRank } from '../constants';
 import { getFaceValue } from '../card';
 import { Cards } from '../../core/types'; // type

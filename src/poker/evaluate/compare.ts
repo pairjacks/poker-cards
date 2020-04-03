@@ -1,5 +1,5 @@
-import { uniqBy } from '../../util/array';
-import { identity } from '../../util/function';
+import { uniqBy } from '../../core/util/array';
+import { identity } from '../../core/util/function';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
 import { HandCandidate } from '../types'; // type
