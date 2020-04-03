@@ -29,11 +29,11 @@ describe('compare', () => {
     describe('resolve tied hand ranks', () => {
       test('high card', () => {
         const highCardHighKicker = {
-          pocket: [
+          pocketCards: [
             { face: Face.Jack, suit: Suit.Clubs },
             { face: Face.Eight, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Seven, suit: Suit.Diamonds },
             { face: Face.Two, suit: Suit.Diamonds },
             { face: Face.Three, suit: Suit.Clubs },
@@ -42,11 +42,11 @@ describe('compare', () => {
           ],
         };
         const highCardLowKicker = {
-          pocket: [
+          pocketCards: [
             { face: Face.Jack, suit: Suit.Clubs },
             { face: Face.Eight, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Six, suit: Suit.Diamonds },
             { face: Face.Two, suit: Suit.Diamonds },
             { face: Face.Three, suit: Suit.Clubs },
@@ -65,11 +65,11 @@ describe('compare', () => {
         ]);
 
         const highCardEqualA = {
-          pocket: [
+          pocketCards: [
             { face: Face.Jack, suit: Suit.Clubs },
             { face: Face.Eight, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Six, suit: Suit.Diamonds },
             { face: Face.Two, suit: Suit.Diamonds },
             { face: Face.Three, suit: Suit.Clubs },
@@ -78,11 +78,11 @@ describe('compare', () => {
           ],
         };
         const highCardEqualB = {
-          pocket: [
+          pocketCards: [
             { face: Face.Jack, suit: Suit.Spades },
             { face: Face.Eight, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Six, suit: Suit.Clubs },
             { face: Face.Two, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
@@ -105,11 +105,11 @@ describe('compare', () => {
 
       test('one pair', () => {
         const onePairThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Spades },
@@ -119,11 +119,11 @@ describe('compare', () => {
         };
 
         const onePairFives = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Clubs },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Diamonds },
             { face: Face.Ace, suit: Suit.Hearts },
@@ -140,11 +140,11 @@ describe('compare', () => {
         ]);
 
         const onePairThreesHighKicker = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Spades },
@@ -154,11 +154,11 @@ describe('compare', () => {
         };
 
         const onePairThreesLowKicker = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Spades },
             { face: Face.Ace, suit: Suit.Clubs },
@@ -177,11 +177,11 @@ describe('compare', () => {
         ]);
 
         const onePairEqualA = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Spades },
@@ -191,11 +191,11 @@ describe('compare', () => {
         };
 
         const onePairEqualB = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Spades },
             { face: Face.Ace, suit: Suit.Clubs },
@@ -218,11 +218,11 @@ describe('compare', () => {
 
       test('two pair', () => {
         const twoPairFivesOverThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Five, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Spades },
@@ -232,11 +232,11 @@ describe('compare', () => {
         };
 
         const twoPairSixesOverThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Six, suit: Suit.Diamonds },
             { face: Face.Six, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Clubs },
@@ -255,11 +255,11 @@ describe('compare', () => {
         ]);
 
         const twoPairFivesOverFours = {
-          pocket: [
+          pocketCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Four, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Five, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Spades },
             { face: Face.Ace, suit: Suit.Clubs },
@@ -278,11 +278,11 @@ describe('compare', () => {
         ]);
 
         const twoPairFoursOverThreesHighKicker = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Diamonds },
             { face: Face.Four, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Spades },
@@ -292,11 +292,11 @@ describe('compare', () => {
         };
 
         const twoPairFoursOverThreesLowKicker = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Four, suit: Suit.Spades },
             { face: Face.King, suit: Suit.Clubs },
@@ -318,11 +318,11 @@ describe('compare', () => {
         ]);
 
         const twoPairEqualA = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Diamonds },
             { face: Face.Four, suit: Suit.Clubs },
             { face: Face.Ace, suit: Suit.Spades },
@@ -332,11 +332,11 @@ describe('compare', () => {
         };
 
         const twoPairEqualB = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Four, suit: Suit.Spades },
             { face: Face.Ace, suit: Suit.Clubs },
@@ -363,11 +363,11 @@ describe('compare', () => {
         // be determined by high rank card
 
         const threeOfAKindThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Three, suit: Suit.Spades },
             { face: Face.Ace, suit: Suit.Spades },
@@ -377,11 +377,11 @@ describe('compare', () => {
         };
 
         const threeOfAKindFives = {
-          pocket: [
+          pocketCards: [
             { face: Face.Five, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Clubs },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Diamonds },
             { face: Face.Ace, suit: Suit.Hearts },
@@ -402,11 +402,11 @@ describe('compare', () => {
 
       test('straight', () => {
         const straightEightSpadesHigh = {
-          pocket: [
+          pocketCards: [
             { face: Face.Eight, suit: Suit.Spades },
             { face: Face.Six, suit: Suit.Hearts },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Diamonds },
             { face: Face.Two, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -415,11 +415,11 @@ describe('compare', () => {
           ],
         };
         const straightAceSpadesLow = {
-          pocket: [
+          pocketCards: [
             { face: Face.Ace, suit: Suit.Spades },
             { face: Face.Eight, suit: Suit.Hearts },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Two, suit: Suit.Spades },
             { face: Face.Three, suit: Suit.Hearts },
@@ -438,11 +438,11 @@ describe('compare', () => {
         ]);
 
         const straightEightClubsHigh = {
-          pocket: [
+          pocketCards: [
             { face: Face.Eight, suit: Suit.Clubs },
             { face: Face.Six, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Two, suit: Suit.Spades },
             { face: Face.Three, suit: Suit.Hearts },
@@ -467,11 +467,11 @@ describe('compare', () => {
 
       test('flush', () => {
         const flushJackHighDiamonds = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Diamonds },
             { face: Face.Jack, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Diamonds },
             { face: Face.Two, suit: Suit.Diamonds },
             { face: Face.Three, suit: Suit.Spades },
@@ -480,11 +480,11 @@ describe('compare', () => {
           ],
         };
         const flushNineHighHearts = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Nine, suit: Suit.Hearts },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Hearts },
             { face: Face.Two, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Clubs },
@@ -503,11 +503,11 @@ describe('compare', () => {
         ]);
 
         const flushJackHighSpades = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Spades },
             { face: Face.Jack, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Spades },
             { face: Face.Two, suit: Suit.Spades },
             { face: Face.Three, suit: Suit.Diamonds },
@@ -536,11 +536,11 @@ describe('compare', () => {
         // always be a natural higher hand on high card value
 
         const fullHouseFivesOverThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Five, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Clubs },
             { face: Face.Five, suit: Suit.Spades },
@@ -550,11 +550,11 @@ describe('compare', () => {
         };
 
         const fullHouseSixesOverThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Hearts },
             { face: Face.Three, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Six, suit: Suit.Diamonds },
             { face: Face.Six, suit: Suit.Clubs },
             { face: Face.Six, suit: Suit.Hearts },
@@ -582,11 +582,11 @@ describe('compare', () => {
         // on highest rank cards.
 
         const fourOfAKindThrees = {
-          pocket: [
+          pocketCards: [
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Three, suit: Suit.Spades },
             { face: Face.Three, suit: Suit.Hearts },
@@ -596,11 +596,11 @@ describe('compare', () => {
         };
 
         const fourOfAKindFives = {
-          pocket: [
+          pocketCards: [
             { face: Face.Five, suit: Suit.Hearts },
             { face: Face.Five, suit: Suit.Clubs },
           ],
-          community: [
+          communityCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Diamonds },
             { face: Face.Five, suit: Suit.Spades },
@@ -621,11 +621,11 @@ describe('compare', () => {
 
       test('straight flush', () => {
         const straightFlushEightHigh = {
-          pocket: [
+          pocketCards: [
             { face: Face.Two, suit: Suit.Clubs },
             { face: Face.Six, suit: Suit.Clubs },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Eight, suit: Suit.Spades },
@@ -634,11 +634,11 @@ describe('compare', () => {
           ],
         };
         const straightFlushAceLow = {
-          pocket: [
+          pocketCards: [
             { face: Face.Ace, suit: Suit.Spades },
             { face: Face.Eight, suit: Suit.Hearts },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Spades },
             { face: Face.Two, suit: Suit.Spades },
             { face: Face.Three, suit: Suit.Spades },
@@ -657,11 +657,11 @@ describe('compare', () => {
         ]);
 
         const straightFlushSixHighClubs = {
-          pocket: [
+          pocketCards: [
             { face: Face.Two, suit: Suit.Clubs },
             { face: Face.Six, suit: Suit.Clubs },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Clubs },
             { face: Face.Three, suit: Suit.Clubs },
             { face: Face.Eight, suit: Suit.Spades },
@@ -670,11 +670,11 @@ describe('compare', () => {
           ],
         };
         const straightFlushSixHighSpades = {
-          pocket: [
+          pocketCards: [
             { face: Face.Two, suit: Suit.Spades },
             { face: Face.Six, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Four, suit: Suit.Spades },
             { face: Face.Three, suit: Suit.Spades },
             { face: Face.Eight, suit: Suit.Hearts },
@@ -702,11 +702,11 @@ describe('compare', () => {
 
       test('royal flush', () => {
         const royalFlushDiamonds = {
-          pocket: [
+          pocketCards: [
             { face: Face.King, suit: Suit.Diamonds },
             { face: Face.Queen, suit: Suit.Diamonds },
           ],
-          community: [
+          communityCards: [
             { face: Face.Ace, suit: Suit.Diamonds },
             { face: Face.Ten, suit: Suit.Diamonds },
             { face: Face.Eight, suit: Suit.Spades },
@@ -715,11 +715,11 @@ describe('compare', () => {
           ],
         };
         const royalFlushSpades = {
-          pocket: [
+          pocketCards: [
             { face: Face.King, suit: Suit.Spades },
             { face: Face.Queen, suit: Suit.Spades },
           ],
-          community: [
+          communityCards: [
             { face: Face.Ace, suit: Suit.Spades },
             { face: Face.Ten, suit: Suit.Spades },
             { face: Face.Eight, suit: Suit.Spades },

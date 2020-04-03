@@ -2,8 +2,8 @@ import { HandRank } from './constants';
 import { Cards } from '../card/types'; // import type
 
 export interface HandCandidate {
-  readonly pocket: Cards;
-  readonly community: Cards;
+  readonly pocketCards: Cards;
+  readonly communityCards: Cards;
 }
 
 export interface Hand {

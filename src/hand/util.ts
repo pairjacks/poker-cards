@@ -24,8 +24,8 @@ export const omitAndSort = (from: Cards, cards: Cards) =>
 export const extractInPreferenceOrder = (
   extractors: HandExtractor[],
   fallbackExtractor: HandExtractor<Hand>,
-) => ({ pocket, community }: HandCandidate) => {
-  const cards: Cards = [...pocket, ...community];
+) => ({ pocketCards, communityCards }: HandCandidate) => {
+  const cards: Cards = [...pocketCards, ...communityCards];
 
   return (
     extractors.reduce(
