@@ -17,18 +17,16 @@ export const randomIntNaive: RandomIntGenerator = (min: number, max: number) =>
 // Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d
 export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
   randomIntGenerator,
-) => async (arr) => {
-  let count = arr.length;
+) => (arr) =>
+  Promise.all(arr.map((_, i) => randomIntGenerator(0, arr.length - i))).then(
+    (randomInts) => {
+      for (let i = 0; i < randomInts.length; i++) {
+        arr.push(arr.splice(randomInts[i], 1)[0]);
+      }
 
-  while (count) {
-    const sampleIndex = await randomIntGenerator(0, count);
-
-    arr.push(arr.splice(sampleIndex, 1)[0]);
-    count -= 1;
-  }
-
-  return arr;
-};
+      return arr;
+    },
+  );
 
 export type DeckShuffler = (deck: Cards) => Promise<Cards>;
 
