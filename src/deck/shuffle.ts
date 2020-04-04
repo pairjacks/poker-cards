@@ -2,7 +2,7 @@ import { Cards } from '../card/types'; // import type
 
 export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 
-export type ShuffleFunction = <T>(arr: readonly T[]) => Promise<readonly T[]>;
+export type ShuffleFunction = <T>(arr: readonly T[]) => Promise<T[]>;
 
 export type ShuffleFunctionCreator = (
   randomIntGenerator: RandomIntGenerator,
@@ -35,7 +35,7 @@ export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
 export const createDeckShuffler = (shuffleFn?: ShuffleFunction) => {
   const shuffle = shuffleFn || createFisherYatesStackShuffle(randomIntNaive);
 
-  return (deck: Cards) => shuffle(deck);
+  return (deck: Cards): Promise<Cards> => shuffle(deck);
 };
 
 export type DeckShuffler = ReturnType<typeof createDeckShuffler>;

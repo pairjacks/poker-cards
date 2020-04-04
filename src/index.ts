@@ -6,11 +6,11 @@ export { createDeck } from './deck/create';
 export { drawCardsFromDeck } from './deck/draw';
 export { createDeckShuffler } from './deck/shuffle';
 export type { DeckDrawResult } from './deck/draw';
-export type { DeckShuffler } from './deck/shuffle';
 export type {
   RandomIntGenerator,
   ShuffleFunction,
   ShuffleFunctionCreator,
+  DeckShuffler,
 } from './deck/shuffle';
 
 export { HandRank } from './hand/constants';

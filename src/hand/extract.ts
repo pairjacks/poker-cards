@@ -11,8 +11,11 @@ import {
   extractPair,
   extractHighCard,
 } from './hand-extractors';
+import { HandCandidate, Hand } from './types';
 
-export const extractHand = extractInPreferenceOrder(
+export const extractHand: (
+  candidate: HandCandidate,
+) => Hand = extractInPreferenceOrder(
   [
     extractRoyalFlush,
     extractStraightFlush,
