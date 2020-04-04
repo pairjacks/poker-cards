@@ -33,8 +33,9 @@ export const findHighestHands = (
 ): readonly HandComparisonResult[] => {
   const evaluated = candidates
     .map(
-      (candidate): HandComparisonResult => ({
+      (candidate, candidateIndex): HandComparisonResult => ({
         candidate,
+        candidateIndex,
         hand: extractHand(candidate),
       }),
     )

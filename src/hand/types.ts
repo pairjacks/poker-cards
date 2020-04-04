@@ -16,6 +16,7 @@ export interface Hand {
 export type HandExtractor<T = Hand | null> = (cards: Cards) => T;
 
 export interface HandComparisonResult {
-  readonly candidate: HandCandidate;
   readonly hand: Hand;
+  readonly candidateIndex: number;
+  readonly candidate: HandCandidate;
 }
