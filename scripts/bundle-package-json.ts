@@ -16,6 +16,7 @@ const readAttributes = [
   'author',
   'contributors',
   'publishConfig',
+  'engines',
   'dependencies',
   'peerDependencies',
 ];

@@ -3,14 +3,11 @@ module.exports = ({ env }) => ({
     [
       '@babel/preset-env',
       {
-        loose: true,
         shippedProposals: true,
-        ...(() => {
-          if (env('test')) return { modules: 'commonjs', useBuiltIns: false };
-          if (env('production')) return { modules: false, useBuiltIns: false };
-
-          return { modules: false, useBuiltIns: 'usage', corejs: 3 };
-        })(),
+        targets: { node: '10', browsers: 'last 2 versions, > 2%' },
+        ...(env('test')
+          ? { modules: 'commonjs', useBuiltIns: false }
+          : { modules: false, useBuiltIns: 'usage', corejs: 3 }),
       },
     ],
     '@babel/preset-typescript',
