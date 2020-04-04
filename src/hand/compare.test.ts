@@ -4,7 +4,7 @@ import {
   ranksFourOfAKind,
   ranksFullHouse,
   ranksTwoPair,
-  ranksRoyalFlushContainspair,
+  ranksRoyalFlushContainsPair,
 } from './__fixtures__/hands';
 import { HandRank } from './constants';
 
@@ -16,11 +16,11 @@ describe('compare', () => {
           ranksFourOfAKind,
           ranksFullHouse,
           ranksTwoPair,
-          ranksRoyalFlushContainspair,
+          ranksRoyalFlushContainsPair,
         ]),
       ).toEqual([
         {
-          candidate: ranksRoyalFlushContainspair,
+          candidate: ranksRoyalFlushContainsPair,
           hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
         },
       ]);
