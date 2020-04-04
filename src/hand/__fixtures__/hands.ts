@@ -2,212 +2,212 @@ import { Face, Suit } from '../../card/constants';
 
 export const ranksHighCard = {
   pocketCards: [
-    { face: Face.Jack, suit: Suit.Clubs },
-    { face: Face.Eight, suit: Suit.Spades },
+    [Face.Jack, Suit.Clubs],
+    [Face.Eight, Suit.Spades],
   ],
   communityCards: [
-    { face: Face.Six, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Diamonds },
-    { face: Face.Three, suit: Suit.Clubs },
-    { face: Face.Four, suit: Suit.Clubs },
-    { face: Face.Queen, suit: Suit.Diamonds },
+    [Face.Six, Suit.Diamonds],
+    [Face.Two, Suit.Diamonds],
+    [Face.Three, Suit.Clubs],
+    [Face.Four, Suit.Clubs],
+    [Face.Queen, Suit.Diamonds],
   ],
-};
+} as const;
 
 export const ranksPair = {
   pocketCards: [
-    { face: Face.Six, suit: Suit.Clubs },
-    { face: Face.Two, suit: Suit.Diamonds },
+    [Face.Six, Suit.Clubs],
+    [Face.Two, Suit.Diamonds],
   ],
   communityCards: [
-    { face: Face.Six, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Clubs },
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Four, suit: Suit.Clubs },
-    { face: Face.Queen, suit: Suit.Diamonds },
+    [Face.Six, Suit.Diamonds],
+    [Face.Jack, Suit.Clubs],
+    [Face.Eight, Suit.Spades],
+    [Face.Four, Suit.Clubs],
+    [Face.Queen, Suit.Diamonds],
   ],
-};
+} as const;
 
 export const ranksTwoPair = {
   pocketCards: [
-    { face: Face.Four, suit: Suit.Clubs },
-    { face: Face.Jack, suit: Suit.Diamonds },
+    [Face.Four, Suit.Clubs],
+    [Face.Jack, Suit.Diamonds],
   ],
   communityCards: [
-    { face: Face.Six, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Diamonds },
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Six, suit: Suit.Clubs },
-    { face: Face.Jack, suit: Suit.Clubs },
+    [Face.Six, Suit.Diamonds],
+    [Face.Two, Suit.Diamonds],
+    [Face.Eight, Suit.Spades],
+    [Face.Six, Suit.Clubs],
+    [Face.Jack, Suit.Clubs],
   ],
-};
+} as const;
 
 export const ranksTwoPairContainsThreePair = {
   pocketCards: [
-    { face: Face.Queen, suit: Suit.Clubs },
-    { face: Face.Jack, suit: Suit.Clubs },
+    [Face.Queen, Suit.Clubs],
+    [Face.Jack, Suit.Clubs],
   ],
   communityCards: [
-    { face: Face.Six, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Diamonds },
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Six, suit: Suit.Clubs },
-    { face: Face.Queen, suit: Suit.Spades },
+    [Face.Six, Suit.Diamonds],
+    [Face.Jack, Suit.Diamonds],
+    [Face.Eight, Suit.Spades],
+    [Face.Six, Suit.Clubs],
+    [Face.Queen, Suit.Spades],
   ],
-};
+} as const;
 
 export const ranksThreeOfAKind = {
   pocketCards: [
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Six, suit: Suit.Clubs },
+    [Face.Eight, Suit.Spades],
+    [Face.Six, Suit.Clubs],
   ],
   communityCards: [
-    { face: Face.Six, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Diamonds },
-    { face: Face.Six, suit: Suit.Hearts },
-    { face: Face.Queen, suit: Suit.Clubs },
+    [Face.Six, Suit.Diamonds],
+    [Face.Two, Suit.Diamonds],
+    [Face.Jack, Suit.Diamonds],
+    [Face.Six, Suit.Hearts],
+    [Face.Queen, Suit.Clubs],
   ],
-};
+} as const;
 
 export const ranksStraightContainsPair = {
   pocketCards: [
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Six, suit: Suit.Hearts },
+    [Face.Eight, Suit.Spades],
+    [Face.Six, Suit.Hearts],
   ],
   communityCards: [
-    { face: Face.Four, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Clubs },
-    { face: Face.Three, suit: Suit.Diamonds },
-    { face: Face.Five, suit: Suit.Clubs },
-    { face: Face.Six, suit: Suit.Diamonds },
+    [Face.Four, Suit.Diamonds],
+    [Face.Two, Suit.Clubs],
+    [Face.Three, Suit.Diamonds],
+    [Face.Five, Suit.Clubs],
+    [Face.Six, Suit.Diamonds],
   ],
-};
+} as const;
 
 export const ranksStraightAceLowContainsPair = {
   pocketCards: [
-    { face: Face.Ace, suit: Suit.Spades },
-    { face: Face.Eight, suit: Suit.Hearts },
+    [Face.Ace, Suit.Spades],
+    [Face.Eight, Suit.Hearts],
   ],
   communityCards: [
-    { face: Face.Four, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Clubs },
-    { face: Face.Three, suit: Suit.Diamonds },
-    { face: Face.Five, suit: Suit.Clubs },
-    { face: Face.Eight, suit: Suit.Diamonds },
+    [Face.Four, Suit.Diamonds],
+    [Face.Two, Suit.Clubs],
+    [Face.Three, Suit.Diamonds],
+    [Face.Five, Suit.Clubs],
+    [Face.Eight, Suit.Diamonds],
   ],
-};
+} as const;
 
 export const ranksFlushContainsTwoPair = {
   pocketCards: [
-    { face: Face.Three, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Diamonds },
+    [Face.Three, Suit.Diamonds],
+    [Face.Jack, Suit.Diamonds],
   ],
   communityCards: [
-    { face: Face.Four, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Diamonds },
-    { face: Face.Three, suit: Suit.Spades },
-    { face: Face.Five, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Hearts },
+    [Face.Four, Suit.Diamonds],
+    [Face.Two, Suit.Diamonds],
+    [Face.Three, Suit.Spades],
+    [Face.Five, Suit.Diamonds],
+    [Face.Jack, Suit.Hearts],
   ],
-};
+} as const;
 
 export const ranksFullHouse = {
   pocketCards: [
-    { face: Face.Three, suit: Suit.Spades },
-    { face: Face.Four, suit: Suit.Diamonds },
+    [Face.Three, Suit.Spades],
+    [Face.Four, Suit.Diamonds],
   ],
   communityCards: [
-    { face: Face.Three, suit: Suit.Clubs },
-    { face: Face.Three, suit: Suit.Diamonds },
-    { face: Face.Five, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Hearts },
+    [Face.Three, Suit.Clubs],
+    [Face.Three, Suit.Diamonds],
+    [Face.Five, Suit.Diamonds],
+    [Face.Jack, Suit.Diamonds],
+    [Face.Jack, Suit.Hearts],
   ],
-};
+} as const;
 
 export const ranksFullHouseContainsTwoPair = {
   pocketCards: [
-    { face: Face.Four, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Hearts },
+    [Face.Four, Suit.Diamonds],
+    [Face.Jack, Suit.Hearts],
   ],
   communityCards: [
-    { face: Face.Four, suit: Suit.Hearts },
-    { face: Face.Three, suit: Suit.Clubs },
-    { face: Face.Three, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Spades },
-    { face: Face.Jack, suit: Suit.Diamonds },
+    [Face.Four, Suit.Hearts],
+    [Face.Three, Suit.Clubs],
+    [Face.Three, Suit.Diamonds],
+    [Face.Jack, Suit.Spades],
+    [Face.Jack, Suit.Diamonds],
   ],
-};
+} as const;
 
 export const ranksFullHouseContainsTwoThreeOfAKind = {
   pocketCards: [
-    { face: Face.Four, suit: Suit.Diamonds },
-    { face: Face.Three, suit: Suit.Clubs },
+    [Face.Four, Suit.Diamonds],
+    [Face.Three, Suit.Clubs],
   ],
   communityCards: [
-    { face: Face.Three, suit: Suit.Hearts },
-    { face: Face.Three, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Spades },
-    { face: Face.Jack, suit: Suit.Diamonds },
-    { face: Face.Jack, suit: Suit.Hearts },
+    [Face.Three, Suit.Hearts],
+    [Face.Three, Suit.Diamonds],
+    [Face.Jack, Suit.Spades],
+    [Face.Jack, Suit.Diamonds],
+    [Face.Jack, Suit.Hearts],
   ],
-};
+} as const;
 [];
 
 export const ranksFourOfAKind = {
   pocketCards: [
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Jack, suit: Suit.Diamonds },
+    [Face.Eight, Suit.Spades],
+    [Face.Jack, Suit.Diamonds],
   ],
   communityCards: [
-    { face: Face.Six, suit: Suit.Diamonds },
-    { face: Face.Two, suit: Suit.Diamonds },
-    { face: Face.Six, suit: Suit.Clubs },
-    { face: Face.Six, suit: Suit.Hearts },
-    { face: Face.Six, suit: Suit.Spades },
+    [Face.Six, Suit.Diamonds],
+    [Face.Two, Suit.Diamonds],
+    [Face.Six, Suit.Clubs],
+    [Face.Six, Suit.Hearts],
+    [Face.Six, Suit.Spades],
   ],
-};
+} as const;
 [];
 
 export const ranksStraightFlushContainsPair = {
   pocketCards: [
-    { face: Face.Two, suit: Suit.Clubs },
-    { face: Face.Six, suit: Suit.Clubs },
+    [Face.Two, Suit.Clubs],
+    [Face.Six, Suit.Clubs],
   ],
   communityCards: [
-    { face: Face.Four, suit: Suit.Clubs },
-    { face: Face.Three, suit: Suit.Clubs },
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Five, suit: Suit.Clubs },
-    { face: Face.Six, suit: Suit.Spades },
+    [Face.Four, Suit.Clubs],
+    [Face.Three, Suit.Clubs],
+    [Face.Eight, Suit.Spades],
+    [Face.Five, Suit.Clubs],
+    [Face.Six, Suit.Spades],
   ],
-};
+} as const;
 
 export const ranksStraightFlushAceLow = {
   pocketCards: [
-    { face: Face.Ace, suit: Suit.Spades },
-    { face: Face.Eight, suit: Suit.Hearts },
+    [Face.Ace, Suit.Spades],
+    [Face.Eight, Suit.Hearts],
   ],
   communityCards: [
-    { face: Face.Four, suit: Suit.Spades },
-    { face: Face.Two, suit: Suit.Spades },
-    { face: Face.Three, suit: Suit.Spades },
-    { face: Face.Five, suit: Suit.Spades },
-    { face: Face.Eight, suit: Suit.Diamonds },
+    [Face.Four, Suit.Spades],
+    [Face.Two, Suit.Spades],
+    [Face.Three, Suit.Spades],
+    [Face.Five, Suit.Spades],
+    [Face.Eight, Suit.Diamonds],
   ],
-};
+} as const;
 
 export const ranksRoyalFlushContainsPair = {
   pocketCards: [
-    { face: Face.King, suit: Suit.Clubs },
-    { face: Face.Queen, suit: Suit.Clubs },
+    [Face.King, Suit.Clubs],
+    [Face.Queen, Suit.Clubs],
   ],
   communityCards: [
-    { face: Face.Ace, suit: Suit.Clubs },
-    { face: Face.Ten, suit: Suit.Clubs },
-    { face: Face.Eight, suit: Suit.Spades },
-    { face: Face.Jack, suit: Suit.Clubs },
-    { face: Face.Jack, suit: Suit.Spades },
+    [Face.Ace, Suit.Clubs],
+    [Face.Ten, Suit.Clubs],
+    [Face.Eight, Suit.Spades],
+    [Face.Jack, Suit.Clubs],
+    [Face.Jack, Suit.Spades],
   ],
-};
+} as const;

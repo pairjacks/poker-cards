@@ -30,30 +30,30 @@ describe('compare', () => {
       test('high card', () => {
         const highCardHighKicker = {
           pocketCards: [
-            { face: Face.Jack, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Spades },
+            [Face.Jack, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Seven, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Queen, suit: Suit.Diamonds },
+            [Face.Seven, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Three, Suit.Clubs],
+            [Face.Four, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
           ],
-        };
+        } as const;
         const highCardLowKicker = {
           pocketCards: [
-            { face: Face.Jack, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Spades },
+            [Face.Jack, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Six, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Queen, suit: Suit.Diamonds },
+            [Face.Six, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Three, Suit.Clubs],
+            [Face.Four, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([highCardHighKicker, highCardLowKicker]),
@@ -66,30 +66,30 @@ describe('compare', () => {
 
         const highCardEqualA = {
           pocketCards: [
-            { face: Face.Jack, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Spades },
+            [Face.Jack, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Six, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Queen, suit: Suit.Diamonds },
+            [Face.Six, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Three, Suit.Clubs],
+            [Face.Four, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
           ],
-        };
+        } as const;
         const highCardEqualB = {
           pocketCards: [
-            { face: Face.Jack, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Diamonds },
+            [Face.Jack, Suit.Spades],
+            [Face.Eight, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Six, suit: Suit.Clubs },
-            { face: Face.Two, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Queen, suit: Suit.Spades },
+            [Face.Six, Suit.Clubs],
+            [Face.Two, Suit.Hearts],
+            [Face.Three, Suit.Spades],
+            [Face.Four, Suit.Hearts],
+            [Face.Queen, Suit.Spades],
           ],
-        };
+        } as const;
 
         expect(findHighestHands([highCardEqualA, highCardEqualB])).toEqual([
           {
@@ -106,31 +106,31 @@ describe('compare', () => {
       test('pair', () => {
         const pairThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.King, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const pairFives = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Clubs },
+            [Face.Three, Suit.Hearts],
+            [Face.Five, Suit.Clubs],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Ace, suit: Suit.Hearts },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.King, Suit.Diamonds],
+            [Face.Five, Suit.Diamonds],
+            [Face.Ace, Suit.Hearts],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(findHighestHands([pairThrees, pairFives])).toEqual([
           {
@@ -141,31 +141,31 @@ describe('compare', () => {
 
         const pairThreesHighKicker = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.King, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const pairThreesLowKicker = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.Four, Suit.Hearts],
+            [Face.Five, Suit.Spades],
+            [Face.Ace, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([pairThreesLowKicker, pairThreesHighKicker]),
@@ -178,31 +178,31 @@ describe('compare', () => {
 
         const pairEqualA = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.King, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const pairEqualB = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.King, Suit.Hearts],
+            [Face.Five, Suit.Spades],
+            [Face.Ace, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(findHighestHands([pairEqualA, pairEqualB])).toEqual([
           {
@@ -219,31 +219,31 @@ describe('compare', () => {
       test('two pair', () => {
         const twoPairFivesOverThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.Five, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const twoPairSixesOverThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Six, suit: Suit.Diamonds },
-            { face: Face.Six, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.Six, Suit.Diamonds],
+            [Face.Six, Suit.Clubs],
+            [Face.Ace, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([twoPairFivesOverThrees, twoPairSixesOverThrees]),
@@ -256,17 +256,17 @@ describe('compare', () => {
 
         const twoPairFivesOverFours = {
           pocketCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Four, suit: Suit.Spades },
+            [Face.Four, Suit.Hearts],
+            [Face.Four, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Five, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.Five, Suit.Hearts],
+            [Face.Five, Suit.Spades],
+            [Face.Ace, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([twoPairFivesOverThrees, twoPairFivesOverFours]),
@@ -279,31 +279,31 @@ describe('compare', () => {
 
         const twoPairFoursOverThreesHighKicker = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.Four, Suit.Diamonds],
+            [Face.Four, Suit.Clubs],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const twoPairFoursOverThreesLowKicker = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.King, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.Four, Suit.Hearts],
+            [Face.Four, Suit.Spades],
+            [Face.King, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([
@@ -319,31 +319,31 @@ describe('compare', () => {
 
         const twoPairEqualA = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.Four, Suit.Diamonds],
+            [Face.Four, Suit.Clubs],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const twoPairEqualB = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.Four, Suit.Hearts],
+            [Face.Four, Suit.Spades],
+            [Face.Ace, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(findHighestHands([twoPairEqualA, twoPairEqualB])).toEqual([
           {
@@ -364,31 +364,31 @@ describe('compare', () => {
 
         const threeOfAKindThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.King, Suit.Diamonds],
+            [Face.Three, Suit.Spades],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const threeOfAKindFives = {
           pocketCards: [
-            { face: Face.Five, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Clubs },
+            [Face.Five, Suit.Hearts],
+            [Face.Five, Suit.Clubs],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Ace, suit: Suit.Hearts },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.King, Suit.Diamonds],
+            [Face.Five, Suit.Diamonds],
+            [Face.Ace, Suit.Hearts],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([threeOfAKindThrees, threeOfAKindFives]),
@@ -403,30 +403,30 @@ describe('compare', () => {
       test('straight', () => {
         const straightEightSpadesHigh = {
           pocketCards: [
-            { face: Face.Eight, suit: Suit.Spades },
-            { face: Face.Six, suit: Suit.Hearts },
+            [Face.Eight, Suit.Spades],
+            [Face.Six, Suit.Hearts],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Diamonds },
+            [Face.Four, Suit.Diamonds],
+            [Face.Two, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Six, Suit.Diamonds],
           ],
-        };
+        } as const;
         const straightAceSpadesLow = {
           pocketCards: [
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Two, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
+            [Face.Four, Suit.Hearts],
+            [Face.Two, Suit.Spades],
+            [Face.Three, Suit.Hearts],
+            [Face.Five, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([straightEightSpadesHigh, straightAceSpadesLow]),
@@ -439,17 +439,17 @@ describe('compare', () => {
 
         const straightEightClubsHigh = {
           pocketCards: [
-            { face: Face.Eight, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Diamonds },
+            [Face.Eight, Suit.Clubs],
+            [Face.Six, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Two, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Six, suit: Suit.Hearts },
+            [Face.Four, Suit.Hearts],
+            [Face.Two, Suit.Spades],
+            [Face.Three, Suit.Hearts],
+            [Face.Five, Suit.Spades],
+            [Face.Six, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([straightEightClubsHigh, straightEightSpadesHigh]),
@@ -468,30 +468,30 @@ describe('compare', () => {
       test('flush', () => {
         const flushJackHighDiamonds = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Diamonds },
-            { face: Face.Jack, suit: Suit.Diamonds },
+            [Face.Three, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Diamonds },
-            { face: Face.Two, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Jack, suit: Suit.Hearts },
+            [Face.Four, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Three, Suit.Spades],
+            [Face.Five, Suit.Diamonds],
+            [Face.Jack, Suit.Hearts],
           ],
-        };
+        } as const;
         const flushNineHighHearts = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Nine, suit: Suit.Hearts },
+            [Face.Three, Suit.Hearts],
+            [Face.Nine, Suit.Hearts],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Hearts },
-            { face: Face.Two, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Five, suit: Suit.Hearts },
-            { face: Face.Nine, suit: Suit.Hearts },
+            [Face.Four, Suit.Hearts],
+            [Face.Two, Suit.Hearts],
+            [Face.Three, Suit.Clubs],
+            [Face.Five, Suit.Hearts],
+            [Face.Nine, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([flushJackHighDiamonds, flushNineHighHearts]),
@@ -504,17 +504,17 @@ describe('compare', () => {
 
         const flushJackHighSpades = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Jack, suit: Suit.Spades },
+            [Face.Three, Suit.Spades],
+            [Face.Jack, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.Two, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Jack, suit: Suit.Hearts },
+            [Face.Four, Suit.Spades],
+            [Face.Two, Suit.Spades],
+            [Face.Three, Suit.Diamonds],
+            [Face.Five, Suit.Spades],
+            [Face.Jack, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([flushJackHighDiamonds, flushJackHighSpades]),
@@ -537,31 +537,31 @@ describe('compare', () => {
 
         const fullHouseFivesOverThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.Five, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Five, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const fullHouseSixesOverThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Three, suit: Suit.Spades },
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Six, suit: Suit.Diamonds },
-            { face: Face.Six, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Hearts },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.Six, Suit.Diamonds],
+            [Face.Six, Suit.Clubs],
+            [Face.Six, Suit.Hearts],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([
@@ -583,31 +583,31 @@ describe('compare', () => {
 
         const fourOfAKindThrees = {
           pocketCards: [
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Diamonds },
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Hearts },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Seven, suit: Suit.Diamonds },
+            [Face.King, Suit.Diamonds],
+            [Face.Three, Suit.Spades],
+            [Face.Three, Suit.Hearts],
+            [Face.Eight, Suit.Hearts],
+            [Face.Seven, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         const fourOfAKindFives = {
           pocketCards: [
-            { face: Face.Five, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Clubs },
+            [Face.Five, Suit.Hearts],
+            [Face.Five, Suit.Clubs],
           ],
           communityCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Diamonds },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Diamonds },
-            { face: Face.Seven, suit: Suit.Hearts },
+            [Face.King, Suit.Diamonds],
+            [Face.Five, Suit.Diamonds],
+            [Face.Five, Suit.Spades],
+            [Face.Eight, Suit.Diamonds],
+            [Face.Seven, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(findHighestHands([fourOfAKindThrees, fourOfAKindFives])).toEqual(
           [
@@ -622,30 +622,30 @@ describe('compare', () => {
       test('straight flush', () => {
         const straightFlushEightHigh = {
           pocketCards: [
-            { face: Face.Two, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Clubs },
+            [Face.Two, Suit.Clubs],
+            [Face.Six, Suit.Clubs],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Spades },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Spades },
+            [Face.Four, Suit.Clubs],
+            [Face.Three, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
+            [Face.Five, Suit.Clubs],
+            [Face.Six, Suit.Spades],
           ],
-        };
+        } as const;
         const straightFlushAceLow = {
           pocketCards: [
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.Two, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Diamonds },
+            [Face.Four, Suit.Spades],
+            [Face.Two, Suit.Spades],
+            [Face.Three, Suit.Spades],
+            [Face.Five, Suit.Spades],
+            [Face.Eight, Suit.Diamonds],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([straightFlushEightHigh, straightFlushAceLow]),
@@ -658,30 +658,30 @@ describe('compare', () => {
 
         const straightFlushSixHighClubs = {
           pocketCards: [
-            { face: Face.Two, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Clubs },
+            [Face.Two, Suit.Clubs],
+            [Face.Six, Suit.Clubs],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Clubs },
-            { face: Face.Three, suit: Suit.Clubs },
-            { face: Face.Eight, suit: Suit.Spades },
-            { face: Face.Five, suit: Suit.Clubs },
-            { face: Face.Six, suit: Suit.Spades },
+            [Face.Four, Suit.Clubs],
+            [Face.Three, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
+            [Face.Five, Suit.Clubs],
+            [Face.Six, Suit.Spades],
           ],
-        };
+        } as const;
         const straightFlushSixHighSpades = {
           pocketCards: [
-            { face: Face.Two, suit: Suit.Spades },
-            { face: Face.Six, suit: Suit.Spades },
+            [Face.Two, Suit.Spades],
+            [Face.Six, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Four, suit: Suit.Spades },
-            { face: Face.Three, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Hearts },
-            { face: Face.Five, suit: Suit.Spades },
-            { face: Face.Six, suit: Suit.Hearts },
+            [Face.Four, Suit.Spades],
+            [Face.Three, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Five, Suit.Spades],
+            [Face.Six, Suit.Hearts],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([
@@ -703,30 +703,30 @@ describe('compare', () => {
       test('royal flush', () => {
         const royalFlushDiamonds = {
           pocketCards: [
-            { face: Face.King, suit: Suit.Diamonds },
-            { face: Face.Queen, suit: Suit.Diamonds },
+            [Face.King, Suit.Diamonds],
+            [Face.Queen, Suit.Diamonds],
           ],
           communityCards: [
-            { face: Face.Ace, suit: Suit.Diamonds },
-            { face: Face.Ten, suit: Suit.Diamonds },
-            { face: Face.Eight, suit: Suit.Spades },
-            { face: Face.Jack, suit: Suit.Diamonds },
-            { face: Face.Jack, suit: Suit.Spades },
+            [Face.Ace, Suit.Diamonds],
+            [Face.Ten, Suit.Diamonds],
+            [Face.Eight, Suit.Spades],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Jack, Suit.Spades],
           ],
-        };
+        } as const;
         const royalFlushSpades = {
           pocketCards: [
-            { face: Face.King, suit: Suit.Spades },
-            { face: Face.Queen, suit: Suit.Spades },
+            [Face.King, Suit.Spades],
+            [Face.Queen, Suit.Spades],
           ],
           communityCards: [
-            { face: Face.Ace, suit: Suit.Spades },
-            { face: Face.Ten, suit: Suit.Spades },
-            { face: Face.Eight, suit: Suit.Spades },
-            { face: Face.Jack, suit: Suit.Spades },
-            { face: Face.Jack, suit: Suit.Spades },
+            [Face.Ace, Suit.Spades],
+            [Face.Ten, Suit.Spades],
+            [Face.Eight, Suit.Spades],
+            [Face.Jack, Suit.Spades],
+            [Face.Jack, Suit.Spades],
           ],
-        };
+        } as const;
 
         expect(
           findHighestHands([royalFlushDiamonds, royalFlushSpades]),

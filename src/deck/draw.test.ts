@@ -5,8 +5,8 @@ import { Cards } from '../card/types'; // import type
 describe('draw', () => {
   describe('drawCardsFromDeck', () => {
     it('does not modify deck if no cards to be drawn', () => {
-      const emptyDeck: Cards = [];
-      const initialDeck = [{ suit: Suit.Diamonds, face: Face.Two }];
+      const emptyDeck: Cards = [] as const;
+      const initialDeck = [[Face.Two, Suit.Diamonds]] as const;
 
       let drawResult = drawCardsFromDeck(emptyDeck, 1);
 
@@ -26,20 +26,20 @@ describe('draw', () => {
 
     it('immutably draws cards from "top" of deck', () => {
       const initialDeck = [
-        { suit: Suit.Hearts, face: Face.Jack },
-        { suit: Suit.Diamonds, face: Face.Six },
-        { suit: Suit.Spades, face: Face.Nine },
-        { suit: Suit.Clubs, face: Face.Ten },
-      ];
+        [Face.Jack, Suit.Hearts],
+        [Face.Six, Suit.Diamonds],
+        [Face.Nine, Suit.Spades],
+        [Face.Ten, Suit.Clubs],
+      ] as const;
 
       let drawResult = drawCardsFromDeck(initialDeck);
 
       expect(drawResult).toEqual({
-        cards: [{ suit: Suit.Hearts, face: Face.Jack }],
+        cards: [[Face.Jack, Suit.Hearts]],
         deck: [
-          { suit: Suit.Diamonds, face: Face.Six },
-          { suit: Suit.Spades, face: Face.Nine },
-          { suit: Suit.Clubs, face: Face.Ten },
+          [Face.Six, Suit.Diamonds],
+          [Face.Nine, Suit.Spades],
+          [Face.Ten, Suit.Clubs],
         ],
       });
 
@@ -50,10 +50,10 @@ describe('draw', () => {
 
       expect(drawResult).toEqual({
         cards: [
-          { suit: Suit.Clubs, face: Face.Ten },
-          { suit: Suit.Spades, face: Face.Nine },
-          { suit: Suit.Diamonds, face: Face.Six },
-          { suit: Suit.Hearts, face: Face.Jack },
+          [Face.Ten, Suit.Clubs],
+          [Face.Nine, Suit.Spades],
+          [Face.Six, Suit.Diamonds],
+          [Face.Jack, Suit.Hearts],
         ],
         deck: [],
       });

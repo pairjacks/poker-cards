@@ -25,12 +25,12 @@ describe('evaluate/extract', () => {
       expect(extractHand(ranksHighCard)).toEqual({
         rank: HandRank.HighCard,
         rankValue: 1,
-        rankCards: [{ face: Face.Queen, suit: Suit.Diamonds }],
+        rankCards: [[Face.Queen, Suit.Diamonds]],
         kickers: [
-          { face: Face.Jack, suit: Suit.Clubs },
-          { face: Face.Eight, suit: Suit.Spades },
-          { face: Face.Six, suit: Suit.Diamonds },
-          { face: Face.Four, suit: Suit.Clubs },
+          [Face.Jack, Suit.Clubs],
+          [Face.Eight, Suit.Spades],
+          [Face.Six, Suit.Diamonds],
+          [Face.Four, Suit.Clubs],
         ],
       });
     });
@@ -40,13 +40,13 @@ describe('evaluate/extract', () => {
         rank: HandRank.Pair,
         rankValue: 2,
         rankCards: [
-          { face: Face.Six, suit: Suit.Clubs },
-          { face: Face.Six, suit: Suit.Diamonds },
+          [Face.Six, Suit.Clubs],
+          [Face.Six, Suit.Diamonds],
         ],
         kickers: [
-          { face: Face.Queen, suit: Suit.Diamonds },
-          { face: Face.Jack, suit: Suit.Clubs },
-          { face: Face.Eight, suit: Suit.Spades },
+          [Face.Queen, Suit.Diamonds],
+          [Face.Jack, Suit.Clubs],
+          [Face.Eight, Suit.Spades],
         ],
       });
     });
@@ -56,24 +56,24 @@ describe('evaluate/extract', () => {
         rank: HandRank.TwoPair,
         rankValue: 3,
         rankCards: [
-          { face: Face.Jack, suit: Suit.Clubs },
-          { face: Face.Jack, suit: Suit.Diamonds },
-          { face: Face.Six, suit: Suit.Clubs },
-          { face: Face.Six, suit: Suit.Diamonds },
+          [Face.Jack, Suit.Clubs],
+          [Face.Jack, Suit.Diamonds],
+          [Face.Six, Suit.Clubs],
+          [Face.Six, Suit.Diamonds],
         ],
-        kickers: [{ face: Face.Eight, suit: Suit.Spades }],
+        kickers: [[Face.Eight, Suit.Spades]],
       });
 
       expect(extractHand(ranksTwoPairContainsThreePair)).toEqual({
         rank: HandRank.TwoPair,
         rankValue: 3,
         rankCards: [
-          { face: Face.Queen, suit: Suit.Spades },
-          { face: Face.Queen, suit: Suit.Clubs },
-          { face: Face.Jack, suit: Suit.Clubs },
-          { face: Face.Jack, suit: Suit.Diamonds },
+          [Face.Queen, Suit.Spades],
+          [Face.Queen, Suit.Clubs],
+          [Face.Jack, Suit.Clubs],
+          [Face.Jack, Suit.Diamonds],
         ],
-        kickers: [{ face: Face.Eight, suit: Suit.Spades }],
+        kickers: [[Face.Eight, Suit.Spades]],
       });
     });
 
@@ -82,13 +82,13 @@ describe('evaluate/extract', () => {
         rank: HandRank.ThreeOfAKind,
         rankValue: 4,
         rankCards: [
-          { face: Face.Six, suit: Suit.Hearts },
-          { face: Face.Six, suit: Suit.Clubs },
-          { face: Face.Six, suit: Suit.Diamonds },
+          [Face.Six, Suit.Hearts],
+          [Face.Six, Suit.Clubs],
+          [Face.Six, Suit.Diamonds],
         ],
         kickers: [
-          { face: Face.Queen, suit: Suit.Clubs },
-          { face: Face.Jack, suit: Suit.Diamonds },
+          [Face.Queen, Suit.Clubs],
+          [Face.Jack, Suit.Diamonds],
         ],
       });
     });
@@ -98,11 +98,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.Straight,
         rankValue: 5,
         rankCards: [
-          { face: Face.Six, suit: Suit.Hearts },
-          { face: Face.Five, suit: Suit.Clubs },
-          { face: Face.Four, suit: Suit.Diamonds },
-          { face: Face.Three, suit: Suit.Diamonds },
-          { face: Face.Two, suit: Suit.Clubs },
+          [Face.Six, Suit.Hearts],
+          [Face.Five, Suit.Clubs],
+          [Face.Four, Suit.Diamonds],
+          [Face.Three, Suit.Diamonds],
+          [Face.Two, Suit.Clubs],
         ],
         kickers: [],
       });
@@ -111,11 +111,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.Straight,
         rankValue: 5,
         rankCards: [
-          { face: Face.Five, suit: Suit.Clubs },
-          { face: Face.Four, suit: Suit.Diamonds },
-          { face: Face.Three, suit: Suit.Diamonds },
-          { face: Face.Two, suit: Suit.Clubs },
-          { face: Face.Ace, suit: Suit.Spades },
+          [Face.Five, Suit.Clubs],
+          [Face.Four, Suit.Diamonds],
+          [Face.Three, Suit.Diamonds],
+          [Face.Two, Suit.Clubs],
+          [Face.Ace, Suit.Spades],
         ],
         kickers: [],
       });
@@ -126,11 +126,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.Flush,
         rankValue: 6,
         rankCards: [
-          { face: Face.Jack, suit: Suit.Diamonds },
-          { face: Face.Five, suit: Suit.Diamonds },
-          { face: Face.Four, suit: Suit.Diamonds },
-          { face: Face.Three, suit: Suit.Diamonds },
-          { face: Face.Two, suit: Suit.Diamonds },
+          [Face.Jack, Suit.Diamonds],
+          [Face.Five, Suit.Diamonds],
+          [Face.Four, Suit.Diamonds],
+          [Face.Three, Suit.Diamonds],
+          [Face.Two, Suit.Diamonds],
         ],
         kickers: [],
       });
@@ -141,11 +141,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.FullHouse,
         rankValue: 7,
         rankCards: [
-          { face: Face.Three, suit: Suit.Spades },
-          { face: Face.Three, suit: Suit.Clubs },
-          { face: Face.Three, suit: Suit.Diamonds },
-          { face: Face.Jack, suit: Suit.Hearts },
-          { face: Face.Jack, suit: Suit.Diamonds },
+          [Face.Three, Suit.Spades],
+          [Face.Three, Suit.Clubs],
+          [Face.Three, Suit.Diamonds],
+          [Face.Jack, Suit.Hearts],
+          [Face.Jack, Suit.Diamonds],
         ],
         kickers: [],
       });
@@ -154,11 +154,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.FullHouse,
         rankValue: 7,
         rankCards: [
-          { face: Face.Jack, suit: Suit.Spades },
-          { face: Face.Jack, suit: Suit.Hearts },
-          { face: Face.Jack, suit: Suit.Diamonds },
-          { face: Face.Four, suit: Suit.Hearts },
-          { face: Face.Four, suit: Suit.Diamonds },
+          [Face.Jack, Suit.Spades],
+          [Face.Jack, Suit.Hearts],
+          [Face.Jack, Suit.Diamonds],
+          [Face.Four, Suit.Hearts],
+          [Face.Four, Suit.Diamonds],
         ],
         kickers: [],
       });
@@ -167,11 +167,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.FullHouse,
         rankValue: 7,
         rankCards: [
-          { face: Face.Jack, suit: Suit.Spades },
-          { face: Face.Jack, suit: Suit.Hearts },
-          { face: Face.Jack, suit: Suit.Diamonds },
-          { face: Face.Three, suit: Suit.Hearts },
-          { face: Face.Three, suit: Suit.Clubs },
+          [Face.Jack, Suit.Spades],
+          [Face.Jack, Suit.Hearts],
+          [Face.Jack, Suit.Diamonds],
+          [Face.Three, Suit.Hearts],
+          [Face.Three, Suit.Clubs],
         ],
         kickers: [],
       });
@@ -182,12 +182,12 @@ describe('evaluate/extract', () => {
         rank: HandRank.FourOfAKind,
         rankValue: 8,
         rankCards: [
-          { face: Face.Six, suit: Suit.Spades },
-          { face: Face.Six, suit: Suit.Hearts },
-          { face: Face.Six, suit: Suit.Clubs },
-          { face: Face.Six, suit: Suit.Diamonds },
+          [Face.Six, Suit.Spades],
+          [Face.Six, Suit.Hearts],
+          [Face.Six, Suit.Clubs],
+          [Face.Six, Suit.Diamonds],
         ],
-        kickers: [{ face: Face.Jack, suit: Suit.Diamonds }],
+        kickers: [[Face.Jack, Suit.Diamonds]],
       });
     });
 
@@ -196,11 +196,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.StraightFlush,
         rankValue: 9,
         rankCards: [
-          { face: Face.Six, suit: Suit.Clubs },
-          { face: Face.Five, suit: Suit.Clubs },
-          { face: Face.Four, suit: Suit.Clubs },
-          { face: Face.Three, suit: Suit.Clubs },
-          { face: Face.Two, suit: Suit.Clubs },
+          [Face.Six, Suit.Clubs],
+          [Face.Five, Suit.Clubs],
+          [Face.Four, Suit.Clubs],
+          [Face.Three, Suit.Clubs],
+          [Face.Two, Suit.Clubs],
         ],
         kickers: [],
       });
@@ -209,11 +209,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.StraightFlush,
         rankValue: 9,
         rankCards: [
-          { face: Face.Five, suit: Suit.Spades },
-          { face: Face.Four, suit: Suit.Spades },
-          { face: Face.Three, suit: Suit.Spades },
-          { face: Face.Two, suit: Suit.Spades },
-          { face: Face.Ace, suit: Suit.Spades },
+          [Face.Five, Suit.Spades],
+          [Face.Four, Suit.Spades],
+          [Face.Three, Suit.Spades],
+          [Face.Two, Suit.Spades],
+          [Face.Ace, Suit.Spades],
         ],
         kickers: [],
       });
@@ -224,11 +224,11 @@ describe('evaluate/extract', () => {
         rank: HandRank.RoyalFlush,
         rankValue: 10,
         rankCards: [
-          { face: Face.Ace, suit: Suit.Clubs },
-          { face: Face.King, suit: Suit.Clubs },
-          { face: Face.Queen, suit: Suit.Clubs },
-          { face: Face.Jack, suit: Suit.Clubs },
-          { face: Face.Ten, suit: Suit.Clubs },
+          [Face.Ace, Suit.Clubs],
+          [Face.King, Suit.Clubs],
+          [Face.Queen, Suit.Clubs],
+          [Face.Jack, Suit.Clubs],
+          [Face.Ten, Suit.Clubs],
         ],
         kickers: [],
       });

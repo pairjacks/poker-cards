@@ -5,63 +5,39 @@ describe('compare', () => {
   describe('isSameCard', () => {
     it('determines if two cards are the same', () => {
       expect(
-        isSameCard(
-          { face: Face.Four, suit: Suit.Diamonds },
-          { face: Face.Four, suit: Suit.Diamonds },
-        ),
+        isSameCard([Face.Four, Suit.Diamonds], [Face.Four, Suit.Diamonds]),
       ).toBe(true);
 
       expect(
-        isSameCard(
-          { face: Face.Three, suit: Suit.Diamonds },
-          { face: Face.Four, suit: Suit.Diamonds },
-        ),
+        isSameCard([Face.Three, Suit.Diamonds], [Face.Four, Suit.Diamonds]),
       ).toBe(false);
 
       expect(
-        isSameCard(
-          { face: Face.Four, suit: Suit.Diamonds },
-          { face: Face.Four, suit: Suit.Clubs },
-        ),
+        isSameCard([Face.Four, Suit.Diamonds], [Face.Four, Suit.Clubs]),
       ).toBe(false);
     });
   });
 
   describe('compareCards', () => {
     it('compares card values', () => {
-      expect(
-        compareCards(
-          { face: Face.Two, suit: Suit.Clubs },
-          { face: Face.Two, suit: Suit.Clubs },
-        ),
-      ).toBe(0);
+      expect(compareCards([Face.Two, Suit.Clubs], [Face.Two, Suit.Clubs])).toBe(
+        0,
+      );
 
       expect(
-        compareCards(
-          { face: Face.Two, suit: Suit.Clubs },
-          { face: Face.Three, suit: Suit.Clubs },
-        ),
+        compareCards([Face.Two, Suit.Clubs], [Face.Three, Suit.Clubs]),
       ).toBeGreaterThan(0);
 
       expect(
-        compareCards(
-          { face: Face.Two, suit: Suit.Clubs },
-          { face: Face.Two, suit: Suit.Hearts },
-        ),
+        compareCards([Face.Two, Suit.Clubs], [Face.Two, Suit.Hearts]),
       ).toBeGreaterThan(0);
 
       expect(
-        compareCards(
-          { face: Face.Three, suit: Suit.Clubs },
-          { face: Face.Two, suit: Suit.Diamonds },
-        ),
+        compareCards([Face.Three, Suit.Clubs], [Face.Two, Suit.Diamonds]),
       ).toBeLessThan(0);
 
       expect(
-        compareCards(
-          { face: Face.Ten, suit: Suit.Diamonds },
-          { face: Face.Nine, suit: Suit.Spades },
-        ),
+        compareCards([Face.Ten, Suit.Diamonds], [Face.Nine, Suit.Spades]),
       ).toBeLessThan(0);
     });
   });

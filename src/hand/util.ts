@@ -52,14 +52,14 @@ export const createExtractorResult = (
 
 export const getSortedFaceGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
-    Object.entries(groupBy(({ face }) => face, getSortedCards(cards)))
+    Object.entries(groupBy(([face]) => face, getSortedCards(cards)))
       .filter(([, cards]) => cards?.length > 1)
       .map(([, cards]) => cards),
 );
 
 export const getSortedSuitGroups = memoizeWeakMap(
   (cards: Cards): readonly Cards[] =>
-    Object.entries(groupBy(({ suit }) => suit, getSortedCards(cards)))
+    Object.entries(groupBy(([, suit]) => suit, getSortedCards(cards)))
       .filter(([, cards]) => cards?.length > 1)
       .map(([, cards]) => cards)
       .sort((a, b) => compareSuits(a[0], b[0])),
