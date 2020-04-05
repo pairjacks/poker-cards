@@ -25,7 +25,7 @@ jobs:
         run: npm run test
       - name: Build
         run: npm run build
+      - name: Setup GitHub packages auth
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ./dist/.npmrc
       - name: Deploy
         run: npm run deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
