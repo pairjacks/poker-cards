@@ -4,7 +4,10 @@ export type { Card, Cards } from './card/types';
 
 export { createDeck } from './deck/create';
 export { drawCardsFromDeck } from './deck/draw';
-export { createDeckShuffler } from './deck/shuffle';
+export {
+  createDeckShuffler,
+  createFisherYatesStackShuffle,
+} from './deck/shuffle';
 export type { DeckDrawResult } from './deck/draw';
 export type {
   RandomIntGenerator,
