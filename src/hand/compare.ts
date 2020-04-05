@@ -27,9 +27,9 @@ const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
     );
   }
 
-  const highestHandIndex = tieBreakers[uniqueRanks[0]](results);
+  const highestHandIndeces = tieBreakers[uniqueRanks[0]](results);
 
-  return highestHandIndex === -1 ? results : [results[highestHandIndex]];
+  return highestHandIndeces.map((index) => results[index]);
 };
 
 /**

@@ -1,4 +1,3 @@
-import { uniqBy } from '../util/array';
 import { getFaceValue } from '../card/value';
 import { HandRank } from './constants';
 import { Cards } from '../card/types'; // import type
@@ -9,49 +8,48 @@ import { HandComparisonResult } from './types'; // import type
  * all hands. They return the index of the highest hand, or -1 if the highest
  * cannot be determined
  */
-type TieBreaker = (results: readonly HandComparisonResult[]) => number;
-
-const highestNumberIndex = (xs: readonly number[]) => {
-  if (xs.length > 1 && uniqBy((x) => x, xs).length === 1) return -1;
-
-  return xs.indexOf(Math.max(...xs));
-};
+type TieBreaker = (results: readonly HandComparisonResult[]) => number[];
 
 // Assumes xs are sorted highest first
-const withHighestNumberIndex = (xss: readonly (readonly number[])[]) => {
+const indecesWithHighestNumber = (xss: readonly (readonly number[])[]) => {
   const maxLength = Math.min(...xss.map((xs) => xs.length));
+  let itr = 0;
 
-  if (maxLength === 0) return -1;
+  while (itr < maxLength) {
+    const topVals = xss.map((xs) => xs[itr]);
+    const maxTopVal = Math.max(...topVals);
+    const indeces = topVals.reduce((acc, curr, index) => {
+      if (curr === maxTopVal) acc.push(index);
 
-  let index = 0;
+      return acc;
+    }, [] as number[]);
 
-  while (index < maxLength) {
-    const highestIndex = highestNumberIndex(xss.map((xs) => xs[index]));
+    if (indeces.length < xss.length) return indeces;
 
-    if (highestIndex !== -1) return highestIndex;
-
-    index += 1;
+    itr += 1;
   }
 
-  return -1;
+  return xss.map((_, index) => index);
 };
 
-const alwaysTied = () => -1;
-
-const withHighestFaceIndex = (cardChunks: readonly Cards[]) =>
-  withHighestNumberIndex(cardChunks.map((cards) => cards.map(getFaceValue)));
+const indecesWithHighestFace = (cardChunks: readonly Cards[]) =>
+  indecesWithHighestNumber(cardChunks.map((cards) => cards.map(getFaceValue)));
 
 const highestKicker: TieBreaker = (results) =>
-  withHighestFaceIndex(results.map(({ hand }) => hand.kickerCards));
+  indecesWithHighestFace(results.map(({ hand }) => hand.kickerCards));
 
 const highestRankCard: TieBreaker = (results) =>
-  withHighestFaceIndex(results.map(({ hand }) => hand.rankCards));
+  indecesWithHighestFace(results.map(({ hand }) => hand.rankCards));
 
 const highestRankCardThenHighestKicker: TieBreaker = (results) => {
   const rankResult = highestRankCard(results);
 
-  return rankResult === -1 ? highestKicker(results) : rankResult;
+  return rankResult.length === results.length
+    ? highestKicker(results)
+    : rankResult;
 };
+
+const alwaysTied: TieBreaker = (results) => results.map((_, index) => index);
 
 export const tieBreakers: { [key in HandRank]: TieBreaker } = {
   [HandRank.HighCard]: highestKicker,

@@ -28,6 +28,69 @@ describe('compare', () => {
     });
 
     describe('resolve tied hand ranks', () => {
+      it('should find highest ties when all ranks are same', () => {
+        const straightEightSpadesHigh = {
+          pocketCards: [
+            [Face.Eight, Suit.Spades],
+            [Face.Seven, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Hearts],
+            [Face.Five, Suit.Clubs],
+            [Face.Four, Suit.Diamonds],
+            [Face.Three, Suit.Diamonds],
+            [Face.Two, Suit.Clubs],
+          ],
+        } as const;
+
+        const straightEightClubsHigh = {
+          pocketCards: [
+            [Face.Eight, Suit.Clubs],
+            [Face.Seven, Suit.Hearts],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Five, Suit.Spades],
+            [Face.Four, Suit.Hearts],
+            [Face.Three, Suit.Hearts],
+            [Face.Two, Suit.Spades],
+          ],
+        } as const;
+
+        const straightAceSpadesLow = {
+          pocketCards: [
+            [Face.Five, Suit.Spades],
+            [Face.Four, Suit.Hearts],
+          ],
+          communityCards: [
+            [Face.Three, Suit.Hearts],
+            [Face.Two, Suit.Spades],
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+            [Face.Eight, Suit.Hearts],
+          ],
+        } as const;
+
+        expect(
+          findHighestHands([
+            straightEightSpadesHigh,
+            straightAceSpadesLow,
+            straightEightClubsHigh,
+          ]),
+        ).toEqual([
+          {
+            candidate: straightEightSpadesHigh,
+            candidateIndex: 0,
+            hand: expect.objectContaining({ rank: HandRank.Straight }),
+          },
+          {
+            candidate: straightEightClubsHigh,
+            candidateIndex: 2,
+            hand: expect.objectContaining({ rank: HandRank.Straight }),
+          },
+        ]);
+      });
+
       test('high card', () => {
         const highCardHighKicker = {
           pocketCards: [
@@ -485,28 +548,28 @@ describe('compare', () => {
       test('flush', () => {
         const flushJackHighDiamonds = {
           pocketCards: [
-            [Face.Three, Suit.Diamonds],
             [Face.Jack, Suit.Diamonds],
+            [Face.Five, Suit.Diamonds],
           ],
           communityCards: [
+            [Face.Three, Suit.Diamonds],
             [Face.Four, Suit.Diamonds],
             [Face.Two, Suit.Diamonds],
-            [Face.Three, Suit.Spades],
-            [Face.Five, Suit.Diamonds],
             [Face.Jack, Suit.Hearts],
+            [Face.Three, Suit.Spades],
           ],
         } as const;
         const flushNineHighHearts = {
           pocketCards: [
-            [Face.Three, Suit.Hearts],
             [Face.Nine, Suit.Hearts],
+            [Face.Five, Suit.Hearts],
           ],
           communityCards: [
             [Face.Four, Suit.Hearts],
+            [Face.Three, Suit.Hearts],
             [Face.Two, Suit.Hearts],
             [Face.Three, Suit.Clubs],
-            [Face.Five, Suit.Hearts],
-            [Face.Nine, Suit.Hearts],
+            [Face.Nine, Suit.Diamonds],
           ],
         } as const;
 
@@ -522,14 +585,14 @@ describe('compare', () => {
 
         const flushJackHighSpades = {
           pocketCards: [
-            [Face.Three, Suit.Spades],
             [Face.Jack, Suit.Spades],
+            [Face.Five, Suit.Spades],
           ],
           communityCards: [
             [Face.Four, Suit.Spades],
+            [Face.Three, Suit.Spades],
             [Face.Two, Suit.Spades],
             [Face.Three, Suit.Diamonds],
-            [Face.Five, Suit.Spades],
             [Face.Jack, Suit.Hearts],
           ],
         } as const;
@@ -544,6 +607,33 @@ describe('compare', () => {
           },
           {
             candidate: flushJackHighSpades,
+            candidateIndex: 1,
+            hand: expect.objectContaining({ rank: HandRank.Flush }),
+          },
+        ]);
+
+        const flushNineHighDiamondsHigherInternal = {
+          pocketCards: [
+            [Face.Nine, Suit.Diamonds],
+            [Face.Eight, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Diamonds],
+            [Face.Three, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Nine, Suit.Hearts],
+            [Face.Three, Suit.Spades],
+          ],
+        } as const;
+
+        expect(
+          findHighestHands([
+            flushNineHighHearts,
+            flushNineHighDiamondsHigherInternal,
+          ]),
+        ).toEqual([
+          {
+            candidate: flushNineHighDiamondsHigherInternal,
             candidateIndex: 1,
             hand: expect.objectContaining({ rank: HandRank.Flush }),
           },
