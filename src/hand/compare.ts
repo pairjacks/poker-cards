@@ -2,6 +2,7 @@ import { uniqBy } from '../util/array';
 import { identity } from '../util/function';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
+import { getHandRankValue } from './util';
 import { HandCandidate, HandComparisonResult } from './types'; // import type
 
 const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
@@ -39,10 +40,12 @@ export const findHighestHands = (
         hand: extractHand(candidate),
       }),
     )
-    .sort((a, b) => b.hand.rankValue - a.hand.rankValue);
-  const maxRankValue = evaluated[0].hand.rankValue;
+    .sort(
+      (a, b) => getHandRankValue(b.hand.rank) - getHandRankValue(a.hand.rank),
+    );
+  const maxRankValue = getHandRankValue(evaluated[0].hand.rank);
   const hasMaxRankValue = evaluated.filter(
-    ({ hand: ranked }) => ranked.rankValue === maxRankValue,
+    ({ hand: ranked }) => getHandRankValue(ranked.rank) === maxRankValue,
   );
 
   if (hasMaxRankValue.length === 1) return hasMaxRankValue;

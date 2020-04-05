@@ -38,9 +38,12 @@ interface HandCandidate {
 
 // A hand derived from a HandCandidate
 interface Hand {
-  rank: HandRank; // Straight, TwoPair etc
-  rankCards: Card[]; // Card used in the ranking combination
-  kickers: Card[]; // Cards included in the hand but not in the ranking combination
+  // Straight, TwoPair etc
+  rank: HandRank;
+  // Card used in the ranking combination
+  rankCards: Card[];
+  // Cards included in the hand but not in the ranking combination
+  kickerCards: Card[];
 }
 ```
 
@@ -151,7 +154,6 @@ const hand = extractHand({
 /*
 hand: Hand = {
   rank: HandRank.StraightFlush,
-  rankValue: 9,
   rankCards: [
     [Face.Six, Suit.Clubs],
     [Face.Five, Suit.Clubs],
@@ -159,7 +161,7 @@ hand: Hand = {
     [Face.Three, Suit.Clubs],
     [Face.Two, Suit.Clubs],
   ],
-  kickers: [],
+  kickerCards: [],
 }
 */
 ```

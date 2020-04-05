@@ -37,7 +37,7 @@ const withHighestFaceIndex = (cardChunks: readonly Cards[]) =>
   withHighestNumberIndex(cardChunks.map((cards) => cards.map(getFaceValue)));
 
 const highestKicker: TieBreaker = (results) =>
-  withHighestFaceIndex(results.map(({ hand }) => hand.kickers));
+  withHighestFaceIndex(results.map(({ hand }) => hand.kickerCards));
 
 const highestRankCard: TieBreaker = (results) =>
   withHighestFaceIndex(results.map(({ hand }) => hand.rankCards));

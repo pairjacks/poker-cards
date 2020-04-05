@@ -43,11 +43,10 @@ export const createExtractorResult = (
   rank,
   rankCards,
   // Kickers are determined from a 5 card slice of the full hand
-  kickers: omitAndSort(cards, rankCards).slice(
+  kickerCards: omitAndSort(cards, rankCards).slice(
     0,
     Math.max(0, 5 - rankCards.length),
   ),
-  rankValue: getHandRankValue(rank),
 });
 
 export const getSortedFaceGroups = memoizeWeakMap(

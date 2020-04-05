@@ -8,7 +8,6 @@ import {
   getSortedCards,
   getSortedSuitGroups,
   createExtractorResult,
-  getHandRankValue,
 } from './util';
 import { Hand, HandExtractor } from './types'; // import type
 
@@ -19,9 +18,8 @@ export const extractHighCard: HandExtractor<Hand> = (cards) => {
 
   return {
     rank: HandRank.HighCard,
-    rankValue: getHandRankValue(HandRank.HighCard),
     rankCards: [highestCard],
-    kickers: kickers.slice(0, 4),
+    kickerCards: kickers.slice(0, 4),
   };
 };
 
@@ -129,17 +127,16 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 };
 
 export const extractRoyalFlush: HandExtractor = (cards) => {
-  const { rankCards, kickers } = extractStraightFlush(cards) || {
+  const { rankCards, kickerCards: kickers } = extractStraightFlush(cards) || {
     rankCards: null,
-    kickers: [],
+    kickerCards: [],
   };
 
   return rankCards?.[0]?.[0] === Face.Ace
     ? {
-        kickers,
+        kickerCards: kickers,
         rankCards,
         rank: HandRank.RoyalFlush,
-        rankValue: getHandRankValue(HandRank.RoyalFlush),
       }
     : null;
 };

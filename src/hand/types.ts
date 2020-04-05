@@ -8,9 +8,8 @@ export interface HandCandidate {
 
 export interface Hand {
   readonly rank: HandRank;
-  readonly rankValue: number;
   readonly rankCards: Cards;
-  readonly kickers: Cards;
+  readonly kickerCards: Cards;
 }
 
 export type HandExtractor<T = Hand | null> = (cards: Cards) => T;
