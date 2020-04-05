@@ -28,22 +28,25 @@ enum Suit {
   Spades = 'Spades',
 }
 
-type Card = [Face, Suit];
+type Card = readonly [Face, Suit];
+
+// Convenience type expressing a readonly array of readonly cards
+type Cards = readonly Card[];
 
 // Represents a collection of cards that can be used to create a 5 card hand
 interface HandCandidate {
-  pocketCards: Card[];
-  communityCards: Card[];
+  readonly pocketCards: Cards;
+  readonly communityCards: Cards;
 }
 
 // A hand derived from a HandCandidate
 interface Hand {
   // Straight, TwoPair etc
-  rank: HandRank;
+  readonly rank: HandRank;
   // Cards included in the ranking combination
-  rankCards: Card[];
+  readonly rankCards: Cards;
   // Cards included in the hand but not in the ranking combination
-  kickerCards: Card[];
+  readonly kickerCards: Cards;
 }
 ```
 
