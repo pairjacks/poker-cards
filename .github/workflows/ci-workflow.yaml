@@ -1,5 +1,11 @@
 name: CI
 
+runs-on: ${{ matrix.os }}
+strategy:
+  matrix:
+    os: [ubuntu-latest]
+    node: [10, 12, latest]
+
 on:
   push:
     branches:
@@ -29,4 +35,4 @@ jobs:
         run: npm i
 
       - name: Run test
-        run: npm run test:mutation
+        run: npm run test
