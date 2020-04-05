@@ -1,6 +1,6 @@
 # poker-cards
 
-![CI status](https://github.com/kavsingh/poker-lib/workflows/CI/badge.svg)
+![CI status](https://github.com/kavsingh/poker-lib/workflows/Test/badge.svg)
 
 ## Base Constants & Types
 
