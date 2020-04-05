@@ -1,11 +1,5 @@
 name: CI
 
-runs-on: ${{ matrix.os }}
-strategy:
-  matrix:
-    os: [ubuntu-latest]
-    node: [10, 12, latest]
-
 on:
   push:
     branches:
@@ -17,22 +11,22 @@ on:
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [10, 12, latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
         id: nvm
-
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
       - name: Install packages
         run: npm i
-
       - name: Run test
         run: npm run test
