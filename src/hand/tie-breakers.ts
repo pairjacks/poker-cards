@@ -6,8 +6,8 @@ import { HandComparisonResult } from './types'; // import type
 
 /*
  * Tie breakers try to resolve ties between hands, given the same rank for all
- * all hands. They return the indexes of the highest hands, or all indexes
- * if all remain tied.
+ * all hands. They return the index of the highest hand, or -1 if the highest
+ * cannot be determined
  */
 type TieBreaker = (results: readonly HandComparisonResult[]) => number;
 

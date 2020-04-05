@@ -59,7 +59,7 @@ export const extractStraight: HandExtractor = (cards) => {
   const candidate = getSortedConsequtiveFaceGroups(cards)
     .map((group) => uniqBy(([face]) => face, group))
     .find((group) => group.length > 3)
-    ?.slice(-5);
+    ?.slice(0, 5);
 
   if (!candidate) return null;
 
