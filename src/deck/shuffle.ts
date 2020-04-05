@@ -10,12 +10,11 @@ export type ShuffleFunctionCreator = (
 
 /**
  * Provide a naive Math.random based generator.
- * BYO robust solution e.g. random-number-csprng
- * @param min - mininmum int value
+ * @param min - minimum int value
  * @param max - maximum int value
  * @returns a random int value
  */
-export const randomIntNaive: RandomIntGenerator = (min: number, max: number) =>
+export const randomIntNaive: RandomIntGenerator = (min, max) =>
   Promise.resolve(min + Math.floor(Math.random() * max));
 
 /**
@@ -42,9 +41,13 @@ export type DeckShuffler = (deck: Cards) => Promise<Cards>;
  * Create a non-mutation async shuffle function wrapper
  * @param shuffleFn - an async shuffle function
  */
-export const createDeckShuffler = (shuffleFn?: ShuffleFunction) => {
-  const shuffle = shuffleFn || createFisherYatesStackShuffle(randomIntNaive);
-  const shuffler: DeckShuffler = (deck) => shuffle([...deck]);
+export const createDeckShuffler = (
+  shuffleFn: ShuffleFunction,
+): DeckShuffler => (deck) => shuffleFn([...deck]);
 
-  return shuffler;
-};
+/**
+ * Provide a default shuffler using naive Math.random int generator
+ */
+export const shuffleDeckNaive: DeckShuffler = createDeckShuffler(
+  createFisherYatesStackShuffle(randomIntNaive),
+);

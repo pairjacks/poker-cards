@@ -1,13 +1,12 @@
 import { differenceWith } from '../util/array';
 import { isSameCard } from '../card/compare';
 import { fullDeck } from './__fixtures__/deck';
-import { createDeckShuffler } from './shuffle';
+import { shuffleDeckNaive, createDeckShuffler } from './shuffle';
 
 describe('shuffle', () => {
-  it('asynchronously shuffles a deck using default shuffler', async () => {
+  it('asynchronously shuffles a deck using naive shuffler', async () => {
     const deck = fullDeck;
-    const shuffle = createDeckShuffler();
-    const shuffled = await shuffle(deck);
+    const shuffled = await shuffleDeckNaive(deck);
 
     expect(shuffled).not.toEqual(deck);
     expect(differenceWith(isSameCard, deck, shuffled)).toHaveLength(0);

@@ -97,20 +97,19 @@ drawCardsFromDeck(deck, 4); // { cards: [...4 cards], deck: [...deck without 4 c
 
 #### Shuffling a deck
 
-You will need to create a shuffle function before use to allow swapping shuffle implementations. The shuffle function returned is async to allow for async random number generators.
+Shuffle functions are async to allow for async random number generators.
 
-This library provides default values for the shuffle function, using fisher-yates and a _naive Math.random random number generator_.
+#### `shuffleDeckNaive`
 
-#### `createDeckShuffler`
-
-Creating the default shuffler
+A default shuffle deck function is provided which uses Math.random to drive a fisher-yates shuffle.
 
 ```ts
-import { createDeckShuffler } from '@kavsingh/poker-cards';
+import { shuffleDeckNaive } from '@kavsingh/poker-cards';
 
-const shuffle = createDeckShuffler();
-const shuffled = await shuffle(deck);
+const shuffled = await shuffleDeckNaive(deck);
 ```
+
+#### `createDeckShuffler`
 
 You might want to use a more robust random int generator, like that provided by (`random-number-csprng`)[<https://www.npmjs.com/package/random-number-csprng]> which asynchronously returns a crypto-secure random int.
 
@@ -125,10 +124,23 @@ import randomNumberCsprng from 'random-number-csprng';
 const randomInt = randomNumberCsprng;
 
 // <T>(arr: T[]) => Promise<T[]>);
-const shuffleFunction: ShuffleFunction = createFisherYatesStackShuffle(
-  randomInt,
-);
+const shuffleFunction = createFisherYatesStackShuffle(randomInt);
 const shuffle = createDeckShuffler(shuffleFunction);
+const shuffled = await shuffle(deck);
+```
+
+As another example, the following produces `shuffleDeckNaive` described above
+
+```ts
+import {
+  createDeckShuffler,
+  createFisherYatesStackShuffle,
+  randomIntNaive,
+} from '@kavsingh/poker-cards';
+
+const shuffleDeckNaive = createDeckShuffler(
+  createFisherYatesStackShuffle(randomIntNaive),
+);
 const shuffled = await shuffle(deck);
 ```
 

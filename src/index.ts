@@ -15,8 +15,10 @@ export { Card, Cards } from './card/types'; // export type
 export { createDeck } from './deck/create';
 export { drawCardsFromDeck } from './deck/draw';
 export {
+  shuffleDeckNaive,
   createDeckShuffler,
   createFisherYatesStackShuffle,
+  randomIntNaive,
 } from './deck/shuffle';
 // @ts-ignore
 export { DeckDrawResult } from './deck/draw'; // export type
