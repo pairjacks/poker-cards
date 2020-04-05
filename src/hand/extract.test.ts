@@ -1,28 +1,25 @@
 import { Face, Suit } from '../card/constants';
 import { HandRank } from './constants';
-import {
-  ranksHighCard,
-  ranksFullHouse,
-  ranksTwoPair,
-  ranksPair,
-  ranksThreeOfAKind,
-  ranksTwoPairContainsThreePair,
-  ranksStraightContainsPair,
-  ranksFlushContainsTwoPair,
-  ranksFullHouseContainsTwoPair,
-  ranksFullHouseContainsTwoThreeOfAKind,
-  ranksFourOfAKind,
-  ranksStraightFlushContainsPair,
-  ranksRoyalFlushContainsPair,
-  ranksStraightAceLowContainsPair,
-  ranksStraightFlushAceLow,
-} from './__fixtures__/hands';
 import { extractHand } from './extract';
 
 describe('evaluate/extract', () => {
   describe('extractHand', () => {
     it('extracts high card', () => {
-      expect(extractHand(ranksHighCard)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Jack, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Three, Suit.Clubs],
+            [Face.Four, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.HighCard,
         rankCards: [[Face.Queen, Suit.Diamonds]],
         kickerCards: [
@@ -35,7 +32,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts pair', () => {
-      expect(extractHand(ranksPair)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Six, Suit.Clubs],
+            [Face.Two, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Jack, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
+            [Face.Four, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.Pair,
         rankCards: [
           [Face.Six, Suit.Clubs],
@@ -50,7 +61,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts two pair', () => {
-      expect(extractHand(ranksTwoPair)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Four, Suit.Clubs],
+            [Face.Jack, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Eight, Suit.Spades],
+            [Face.Six, Suit.Clubs],
+            [Face.Jack, Suit.Clubs],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.TwoPair,
         rankCards: [
           [Face.Jack, Suit.Clubs],
@@ -61,7 +86,22 @@ describe('evaluate/extract', () => {
         kickerCards: [[Face.Eight, Suit.Spades]],
       });
 
-      expect(extractHand(ranksTwoPairContainsThreePair)).toEqual({
+      // Contains extra pair sixes
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Queen, Suit.Clubs],
+            [Face.Jack, Suit.Clubs],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Eight, Suit.Spades],
+            [Face.Six, Suit.Clubs],
+            [Face.Queen, Suit.Spades],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.TwoPair,
         rankCards: [
           [Face.Queen, Suit.Spades],
@@ -74,7 +114,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts three of a kind', () => {
-      expect(extractHand(ranksThreeOfAKind)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Eight, Suit.Spades],
+            [Face.Six, Suit.Clubs],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Six, Suit.Hearts],
+            [Face.Queen, Suit.Clubs],
+          ],
+        } as const),
+      ).toEqual({
         rank: HandRank.ThreeOfAKind,
         rankCards: [
           [Face.Six, Suit.Hearts],
@@ -89,7 +143,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts straight', () => {
-      expect(extractHand(ranksStraightContainsPair)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Eight, Suit.Spades],
+            [Face.Six, Suit.Hearts],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Diamonds],
+            [Face.Two, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Six, Suit.Diamonds],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.Straight,
         rankCards: [
           [Face.Six, Suit.Hearts],
@@ -101,7 +169,22 @@ describe('evaluate/extract', () => {
         kickerCards: [],
       });
 
-      expect(extractHand(ranksStraightAceLowContainsPair)).toEqual({
+      // Ace low
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Diamonds],
+            [Face.Two, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
+            [Face.Five, Suit.Clubs],
+            [Face.Eight, Suit.Diamonds],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.Straight,
         rankCards: [
           [Face.Five, Suit.Clubs],
@@ -115,7 +198,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts flush', () => {
-      expect(extractHand(ranksFlushContainsTwoPair)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Three, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Three, Suit.Spades],
+            [Face.Five, Suit.Diamonds],
+            [Face.Jack, Suit.Hearts],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.Flush,
         rankCards: [
           [Face.Jack, Suit.Diamonds],
@@ -129,7 +226,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts full house', () => {
-      expect(extractHand(ranksFullHouse)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Three, Suit.Spades],
+            [Face.Four, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
+            [Face.Five, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Jack, Suit.Hearts],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.FullHouse,
         rankCards: [
           [Face.Three, Suit.Spades],
@@ -141,7 +252,22 @@ describe('evaluate/extract', () => {
         kickerCards: [],
       });
 
-      expect(extractHand(ranksFullHouseContainsTwoPair)).toEqual({
+      // contains pair fours and pair threes
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Four, Suit.Diamonds],
+            [Face.Jack, Suit.Hearts],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Hearts],
+            [Face.Three, Suit.Clubs],
+            [Face.Three, Suit.Diamonds],
+            [Face.Jack, Suit.Spades],
+            [Face.Jack, Suit.Diamonds],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.FullHouse,
         rankCards: [
           [Face.Jack, Suit.Spades],
@@ -153,7 +279,22 @@ describe('evaluate/extract', () => {
         kickerCards: [],
       });
 
-      expect(extractHand(ranksFullHouseContainsTwoThreeOfAKind)).toEqual({
+      // contains three jacks and three threes
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Four, Suit.Diamonds],
+            [Face.Three, Suit.Clubs],
+          ],
+          communityCards: [
+            [Face.Three, Suit.Hearts],
+            [Face.Three, Suit.Diamonds],
+            [Face.Jack, Suit.Spades],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Jack, Suit.Hearts],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.FullHouse,
         rankCards: [
           [Face.Jack, Suit.Spades],
@@ -167,7 +308,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts four of a kind', () => {
-      expect(extractHand(ranksFourOfAKind)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Eight, Suit.Spades],
+            [Face.Jack, Suit.Diamonds],
+          ],
+          communityCards: [
+            [Face.Six, Suit.Diamonds],
+            [Face.Two, Suit.Diamonds],
+            [Face.Six, Suit.Clubs],
+            [Face.Six, Suit.Hearts],
+            [Face.Six, Suit.Spades],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.FourOfAKind,
         rankCards: [
           [Face.Six, Suit.Spades],
@@ -180,7 +335,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts straight flush', () => {
-      expect(extractHand(ranksStraightFlushContainsPair)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Two, Suit.Clubs],
+            [Face.Six, Suit.Clubs],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Clubs],
+            [Face.Three, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
+            [Face.Five, Suit.Clubs],
+            [Face.Six, Suit.Spades],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.StraightFlush,
         rankCards: [
           [Face.Six, Suit.Clubs],
@@ -192,7 +361,21 @@ describe('evaluate/extract', () => {
         kickerCards: [],
       });
 
-      expect(extractHand(ranksStraightFlushAceLow)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Ace, Suit.Spades],
+            [Face.Eight, Suit.Hearts],
+          ],
+          communityCards: [
+            [Face.Four, Suit.Spades],
+            [Face.Two, Suit.Spades],
+            [Face.Three, Suit.Spades],
+            [Face.Five, Suit.Spades],
+            [Face.Eight, Suit.Diamonds],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.StraightFlush,
         rankCards: [
           [Face.Five, Suit.Spades],
@@ -206,7 +389,21 @@ describe('evaluate/extract', () => {
     });
 
     it('extracts royal flush', () => {
-      expect(extractHand(ranksRoyalFlushContainsPair)).toEqual({
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.King, Suit.Clubs],
+            [Face.Queen, Suit.Clubs],
+          ],
+          communityCards: [
+            [Face.Ace, Suit.Clubs],
+            [Face.Ten, Suit.Clubs],
+            [Face.Eight, Suit.Spades],
+            [Face.Jack, Suit.Clubs],
+            [Face.Jack, Suit.Spades],
+          ],
+        }),
+      ).toEqual({
         rank: HandRank.RoyalFlush,
         rankCards: [
           [Face.Ace, Suit.Clubs],

@@ -1,27 +1,83 @@
 import { Suit, Face } from '../card/constants';
 import { findHighestHands } from './compare';
-import {
-  ranksFourOfAKind,
-  ranksFullHouse,
-  ranksTwoPair,
-  ranksRoyalFlushContainsPair,
-} from './__fixtures__/hands';
 import { HandRank } from './constants';
 
 describe('compare', () => {
   describe('findHighestHands', () => {
     it('should find natural highest hands', () => {
+      const twoPair = {
+        pocketCards: [
+          [Face.Four, Suit.Clubs],
+          [Face.Jack, Suit.Diamonds],
+        ],
+        communityCards: [
+          [Face.Six, Suit.Diamonds],
+          [Face.Two, Suit.Diamonds],
+          [Face.Eight, Suit.Spades],
+          [Face.Six, Suit.Clubs],
+          [Face.Jack, Suit.Clubs],
+        ],
+      } as const;
+
+      const fullHouse = {
+        pocketCards: [
+          [Face.Three, Suit.Spades],
+          [Face.Four, Suit.Diamonds],
+        ],
+        communityCards: [
+          [Face.Three, Suit.Clubs],
+          [Face.Three, Suit.Diamonds],
+          [Face.Five, Suit.Diamonds],
+          [Face.Jack, Suit.Diamonds],
+          [Face.Jack, Suit.Hearts],
+        ],
+      } as const;
+
+      const fourOfAKind = {
+        pocketCards: [
+          [Face.Eight, Suit.Spades],
+          [Face.Jack, Suit.Diamonds],
+        ],
+        communityCards: [
+          [Face.Six, Suit.Diamonds],
+          [Face.Two, Suit.Diamonds],
+          [Face.Six, Suit.Clubs],
+          [Face.Six, Suit.Hearts],
+          [Face.Six, Suit.Spades],
+        ],
+      } as const;
+
+      const royalFlush = {
+        pocketCards: [
+          [Face.King, Suit.Clubs],
+          [Face.Queen, Suit.Clubs],
+        ],
+        communityCards: [
+          [Face.Ace, Suit.Clubs],
+          [Face.Ten, Suit.Clubs],
+          [Face.Eight, Suit.Spades],
+          [Face.Jack, Suit.Clubs],
+          [Face.Jack, Suit.Spades],
+        ],
+      } as const;
+
       expect(
         findHighestHands([
-          ranksFourOfAKind,
-          ranksFullHouse,
-          ranksTwoPair,
-          ranksRoyalFlushContainsPair,
+          fourOfAKind,
+          fullHouse,
+          royalFlush,
+          twoPair,
+          royalFlush,
         ]),
       ).toEqual([
         {
-          candidate: ranksRoyalFlushContainsPair,
-          candidateIndex: 3,
+          candidate: royalFlush,
+          candidateIndex: 2,
+          hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
+        },
+        {
+          candidate: royalFlush,
+          candidateIndex: 4,
           hand: expect.objectContaining({ rank: HandRank.RoyalFlush }),
         },
       ]);
