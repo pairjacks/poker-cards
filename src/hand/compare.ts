@@ -5,6 +5,10 @@ import { tieBreakers } from './tie-breakers';
 import { getHandRankValue } from './util';
 import { HandCandidate, HandComparisonResult } from './types'; // import type
 
+/**
+ * Resolves tied ranks from high level rank comparison
+ * @param results - tied hand comparison results
+ */
 const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
   if (results.length < 2) {
     throw new Error(
@@ -28,7 +32,10 @@ const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
   return highestHandIndex === -1 ? results : [results[highestHandIndex]];
 };
 
-// finds highest value hands, multiple values are tied
+/**
+ * Returns an array of highest hands from a list of candidates. Multiple entries indicates a draw.
+ * @param candidates - an array of HandCandidates to compare
+ */
 export const findHighestHands = (
   candidates: readonly HandCandidate[],
 ): readonly HandComparisonResult[] => {

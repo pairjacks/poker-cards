@@ -11,7 +11,11 @@ import {
 } from './util';
 import { Hand, HandExtractor } from './types'; // import type
 
-// https://www.cardschat.com/poker-hands/
+/*
+ * Hand extractors try to find particular hand patterns from an array of cards.
+ * They return a Hand if a match is found, otherwise null.
+ * See https://www.cardschat.com/poker-hands/ for poker hands
+ */
 
 export const extractHighCard: HandExtractor<Hand> = (cards) => {
   const [highestCard, ...kickers] = getSortedCards(cards);

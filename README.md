@@ -5,7 +5,7 @@
 ## Base Constants & Types
 
 ```ts
-export enum Face {
+enum Face {
   Two = 'Two',
   Three = 'Three',
   Four = 'Four',
@@ -21,7 +21,7 @@ export enum Face {
   Ace = 'Ace',
 }
 
-export enum Suit {
+enum Suit {
   Diamonds = 'Diamonds',
   Clubs = 'Clubs',
   Hearts = 'Heart',
@@ -40,7 +40,7 @@ interface HandCandidate {
 interface Hand {
   // Straight, TwoPair etc
   rank: HandRank;
-  // Card used in the ranking combination
+  // Cards included in the ranking combination
   rankCards: Card[];
   // Cards included in the hand but not in the ranking combination
   kickerCards: Card[];
@@ -66,7 +66,7 @@ isSameCard([Face.Three, Suit.Clubs], [Face.Two, Suit.Clubs]); // false
 
 #### `createDeck`
 
-Creates an ordered 52 card deck without Jokers, sorted by suite and face.
+Creates a 52 card deck without Jokers, sorted by suite and face.
 
 ```ts
 import { createDeck } from '@kavsingh/poker-cards';
@@ -76,7 +76,7 @@ createDeck(); // [[Two, Diamonds], [Three, Diamonds] ... [King, Spades], [Ace, S
 
 #### `drawCardsFromDeck`
 
-Draws n cards from deck without mutating the deck. Returned card order tries to represent drawing cards one-by-one, as opposed to cutting off a chunk of cards from the "top" of the deck
+Draws n cards from deck without mutating the deck. Returned card order tries to represent drawing cards one-by-one, as opposed to cutting off a chunk of cards from the top of the deck, **where index 0 represents the top of the deck**.
 e.g. when drawing 3:
 
 ```text

@@ -1,9 +1,18 @@
 import { clamp } from '../util/number';
 import { Cards } from '../card/types'; // import type
 
-export type DeckDrawResult = Readonly<{ cards: Cards; deck: Cards }>;
+export interface DeckDrawResult {
+  readonly cards: Cards;
+  readonly deck: Cards;
+}
 
-// index 0 represents 'top' of a deck
+/**
+ * Draws n cards from deck without mutating the deck. Returned card order tries
+ * to represent drawing cards one-by-one, as opposed to cutting off a chunk of
+ * cards from the top of the deck, **where index 0 represents the top of the deck**.
+ * @param deck - the deck to draw from
+ * @param count - the number of cards to draw
+ */
 export const drawCardsFromDeck = (deck: Cards, count = 1): DeckDrawResult => {
   const drawCount = clamp(0, deck.length, count);
 

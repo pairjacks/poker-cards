@@ -13,6 +13,10 @@ import {
 } from './hand-extractors';
 import { HandCandidate, Hand } from './types';
 
+/**
+ * Extracts the highest possible hand from a candidate hand
+ * @param candidate - a HandCandidate to evaluate
+ */
 export const extractHand: (
   candidate: HandCandidate,
 ) => Hand = extractInPreferenceOrder(

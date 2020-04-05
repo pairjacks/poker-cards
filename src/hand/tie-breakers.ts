@@ -4,6 +4,11 @@ import { HandRank } from './constants';
 import { Cards } from '../card/types'; // import type
 import { HandComparisonResult } from './types'; // import type
 
+/*
+ * Tie breakers try to resolve ties between hands, given the same rank for all
+ * all hands. They return the indexes of the highest hands, or all indexes
+ * if all remain tied.
+ */
 type TieBreaker = (results: readonly HandComparisonResult[]) => number;
 
 const highestNumberIndex = (xs: readonly number[]) => {
