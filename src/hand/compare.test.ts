@@ -425,7 +425,7 @@ describe('compare', () => {
             [Face.Two, Suit.Clubs],
             [Face.Three, Suit.Diamonds],
             [Face.Five, Suit.Clubs],
-            [Face.Six, Suit.Diamonds],
+            [Face.Seven, Suit.Diamonds],
           ],
         } as const;
         const straightAceSpadesLow = {
@@ -462,7 +462,7 @@ describe('compare', () => {
             [Face.Two, Suit.Spades],
             [Face.Three, Suit.Hearts],
             [Face.Five, Suit.Spades],
-            [Face.Six, Suit.Hearts],
+            [Face.Seven, Suit.Hearts],
           ],
         } as const;
 
