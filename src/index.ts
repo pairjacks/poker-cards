@@ -1,7 +1,7 @@
 /*
   export type { ... } does not currently work with api extractor
   export { ... } for types throws an error if isolatedModules is true
-  in tsconfig - this is set for babel and in-ide linting since
+  in tsconfig - this is set in tsconfig for in-IDE linting since
   babel compiles with isolated modules.
   ignore the resulting ts error, KIV api extractor updates
 */
