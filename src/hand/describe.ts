@@ -1,11 +1,10 @@
-import { extractHand } from './extract';
 import { HandRank } from './constants';
 import { Face } from '../card/constants';
 import { getSortedCards } from './util';
 import { allEqualBy } from '../util/array';
 import { getFaceValue, getSuitValue } from '../card/value';
 import { Card, Cards } from '../card/types'; // import type
-import { Hand, HandCandidate } from './types'; // import type
+import { Hand } from './types'; // import type
 
 type HandDescriber = (hand: Hand) => string;
 
@@ -97,7 +96,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   [HandRank.RoyalFlush]: () => 'Royal flush',
 };
 
-export const describePocketCards = ({ pocketCards }: HandCandidate): string => {
+export const describePocketCards = (pocketCards: Cards): string => {
   if (allEqualBy(getFaceValue, pocketCards)) {
     return `Pocket ${facePlural(pocketCards[0], 2)}`;
   }
@@ -110,8 +109,5 @@ export const describePocketCards = ({ pocketCards }: HandCandidate): string => {
   return `${sorted.map((card) => facePlural(card)).join('-')} ${suitStatus}`;
 };
 
-export const describeHand = (candidate: HandCandidate): string => {
-  const hand = extractHand(candidate);
-
-  return handDescribers[hand.rank](hand);
-};
+export const describeHand = (hand: Hand): string =>
+  handDescribers[hand.rank](hand);
