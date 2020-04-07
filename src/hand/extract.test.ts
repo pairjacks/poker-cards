@@ -2,7 +2,7 @@ import { Face, Suit } from '../card/constants';
 import { HandRank } from './constants';
 import { extractHand } from './extract';
 
-describe('evaluate/extract', () => {
+describe('extract', () => {
   describe('extractHand', () => {
     it('extracts high card', () => {
       expect(
