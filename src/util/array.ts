@@ -47,3 +47,8 @@ export const chunkPreviousWith = <X>(
 
     return chunks;
   }, [] as X[][]);
+
+export const allEqualBy = <X>(
+  value: (x: Readonly<X>) => unknown,
+  xs: readonly X[],
+) => uniqBy(value, xs).length === 1;

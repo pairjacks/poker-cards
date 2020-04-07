@@ -386,6 +386,21 @@ describe('evaluate/extract', () => {
         ],
         kickerCards: [],
       });
+
+      expect(
+        extractHand({
+          pocketCards: [
+            [Face.Ace, Suit.Clubs],
+            [Face.Two, Suit.Spades],
+          ],
+          communityCards: [
+            [Face.Three, Suit.Spades],
+            [Face.Four, Suit.Spades],
+            [Face.Five, Suit.Spades],
+            [Face.Eight, Suit.Spades],
+          ],
+        }),
+      ).not.toEqual(expect.objectContaining({ rank: HandRank.StraightFlush }));
     });
 
     it('extracts royal flush', () => {

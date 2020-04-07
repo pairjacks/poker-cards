@@ -123,7 +123,9 @@ export const extractStraightFlush: HandExtractor = (cards) => {
     return createExtractorResult(HandRank.StraightFlush, candidate, cards);
   }
 
-  const ace = getSortedCards(cards).find(([face]) => face === Face.Ace);
+  const ace = getSortedCards(cards).find(
+    ([face, suit]) => face === Face.Ace && suit === candidate[0][1],
+  );
 
   return ace
     ? createExtractorResult(HandRank.StraightFlush, [...candidate, ace], cards)
