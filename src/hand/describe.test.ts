@@ -5,6 +5,10 @@ import { describePocketCards, describeHand } from './describe';
 describe('describe', () => {
   describe('describePocketCards', () => {
     it('should describe pocket cards', () => {
+      expect(describePocketCards([])).toBe('');
+
+      expect(describePocketCards([[Face.Three, Suit.Diamonds]])).toBe('Three');
+
       expect(
         describePocketCards([
           [Face.Ace, Suit.Clubs],
@@ -29,6 +33,26 @@ describe('describe', () => {
   });
 
   describe('describeHand', () => {
+    test('empty state', () => {
+      expect(
+        describeHand(
+          extractHand({
+            pocketCards: [],
+            communityCards: [],
+          }),
+        ),
+      ).toBe('');
+
+      expect(
+        describeHand(
+          extractHand({
+            pocketCards: [[Face.Ace, Suit.Clubs]],
+            communityCards: [],
+          }),
+        ),
+      ).toBe('Ace high');
+    });
+
     test('high card', () => {
       expect(
         describeHand(

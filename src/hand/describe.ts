@@ -42,8 +42,12 @@ const sentence = (parts: unknown[]) =>
   parts.filter((part) => part && typeof part === 'string').join(', ');
 
 const handDescribers: { [key in HandRank]: HandDescriber } = {
+  // This is the only rank at which rankCards could be zero, for the rest
+  // to have been derived, there would need to be at least 2 rank cards
   [HandRank.HighCard]: ({ rankCards, kickerCards }) =>
-    sentence([`${facePlural(rankCards[0])} high`, kickerList(kickerCards)]),
+    rankCards.length
+      ? sentence([`${facePlural(rankCards[0])} high`, kickerList(kickerCards)])
+      : '',
 
   [HandRank.Pair]: ({ rankCards, kickerCards }) =>
     sentence([`Pair ${facePlural(rankCards[0], 2)}`, kickerList(kickerCards)]),
@@ -103,6 +107,10 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
  * @param pocketCards - Player's pocket cards
  */
 export const describePocketCards = (pocketCards: Cards): string => {
+  if (!pocketCards.length) return '';
+
+  if (pocketCards.length === 1) return facePlural(pocketCards[0]);
+
   if (allEqualBy(getFaceValue, pocketCards)) {
     return `Pocket ${facePlural(pocketCards[0], 2)}`;
   }
@@ -112,7 +120,7 @@ export const describePocketCards = (pocketCards: Cards): string => {
     ? 'Suited'
     : 'Offsuit';
 
-  return `${sorted.map((card) => facePlural(card)).join('-')} ${suitStatus}`;
+  return `${cardList(sorted)} ${suitStatus}`;
 };
 
 /**

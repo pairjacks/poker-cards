@@ -4,6 +4,30 @@ import { extractHand } from './extract';
 
 describe('extract', () => {
   describe('extractHand', () => {
+    it('handles empty state', () => {
+      expect(
+        extractHand({
+          pocketCards: [],
+          communityCards: [],
+        }),
+      ).toEqual({
+        rank: HandRank.HighCard,
+        rankCards: [],
+        kickerCards: [],
+      });
+
+      expect(
+        extractHand({
+          pocketCards: [[Face.Ace, Suit.Clubs]],
+          communityCards: [],
+        }),
+      ).toEqual({
+        rank: HandRank.HighCard,
+        rankCards: [[Face.Ace, Suit.Clubs]],
+        kickerCards: [],
+      });
+    });
+
     it('extracts high card', () => {
       expect(
         extractHand({

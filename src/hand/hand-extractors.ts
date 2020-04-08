@@ -22,7 +22,7 @@ export const extractHighCard: HandExtractor<Hand> = (cards) => {
 
   return {
     rank: HandRank.HighCard,
-    rankCards: [highestCard],
+    rankCards: highestCard ? [highestCard] : [],
     kickerCards: kickers.slice(0, 4),
   };
 };
