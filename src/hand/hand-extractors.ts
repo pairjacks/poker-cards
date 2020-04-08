@@ -63,9 +63,14 @@ export const extractStraight: HandExtractor = (cards) => {
 
   if (!candidate) return null;
 
+  // Ace highs should be part of 5 card candidates since they sort high
   if (candidate.length === 5) {
     return createExtractorResult(HandRank.Straight, candidate, cards);
   }
+
+  // Only consider ace low if lowest card in candidate is two,
+  // otherwise we end up with a disjointed straight
+  if (candidate[candidate.length - 1][0] !== Face.Two) return null;
 
   const ace = getSortedCards(cards).find(([face]) => face === Face.Ace);
 
@@ -119,9 +124,14 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 
   if (!candidate) return null;
 
+  // Ace highs should be part of 5 card candidates since they sort high
   if (candidate.length === 5) {
     return createExtractorResult(HandRank.StraightFlush, candidate, cards);
   }
+
+  // Only consider ace low if lowest card in candidate is two,
+  // otherwise we end up with a disjointed straight
+  if (candidate[candidate.length - 1][0] !== Face.Two) return null;
 
   const ace = getSortedCards(cards).find(
     ([face, suit]) => face === Face.Ace && suit === candidate[0][1],

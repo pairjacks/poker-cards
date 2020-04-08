@@ -219,6 +219,29 @@ describe('extract', () => {
         ],
         kickerCards: [],
       });
+
+      // Observed bugs
+
+      const ambiguousAce = extractHand({
+        pocketCards: [
+          [Face.Ace, Suit.Diamonds],
+          [Face.Five, Suit.Diamonds],
+        ],
+        communityCards: [
+          [Face.Nine, Suit.Diamonds],
+          [Face.Queen, Suit.Clubs],
+          [Face.Seven, Suit.Hearts],
+          [Face.King, Suit.Clubs],
+          [Face.Jack, Suit.Diamonds],
+        ],
+      });
+
+      expect(ambiguousAce).not.toEqual(
+        expect.objectContaining({ rank: HandRank.Straight }),
+      );
+      expect(ambiguousAce).toEqual(
+        expect.objectContaining({ rank: HandRank.HighCard }),
+      );
     });
 
     it('extracts flush', () => {
@@ -411,20 +434,48 @@ describe('extract', () => {
         kickerCards: [],
       });
 
-      expect(
-        extractHand({
-          pocketCards: [
-            [Face.Ace, Suit.Clubs],
-            [Face.Two, Suit.Spades],
-          ],
-          communityCards: [
-            [Face.Three, Suit.Spades],
-            [Face.Four, Suit.Spades],
-            [Face.Five, Suit.Spades],
-            [Face.Eight, Suit.Spades],
-          ],
-        }),
-      ).not.toEqual(expect.objectContaining({ rank: HandRank.StraightFlush }));
+      // Observed bugs
+
+      const offsuitAce = extractHand({
+        pocketCards: [
+          [Face.Ace, Suit.Clubs],
+          [Face.Two, Suit.Spades],
+        ],
+        communityCards: [
+          [Face.Three, Suit.Spades],
+          [Face.Four, Suit.Spades],
+          [Face.Five, Suit.Spades],
+          [Face.Eight, Suit.Spades],
+        ],
+      });
+
+      expect(offsuitAce).not.toEqual(
+        expect.objectContaining({ rank: HandRank.StraightFlush }),
+      );
+      expect(offsuitAce).toEqual(
+        expect.objectContaining({ rank: HandRank.Flush }),
+      );
+
+      const ambiguousAce = extractHand({
+        pocketCards: [
+          [Face.Ace, Suit.Diamonds],
+          [Face.Five, Suit.Diamonds],
+        ],
+        communityCards: [
+          [Face.Nine, Suit.Diamonds],
+          [Face.Queen, Suit.Diamonds],
+          [Face.Seven, Suit.Diamonds],
+          [Face.King, Suit.Diamonds],
+          [Face.Jack, Suit.Diamonds],
+        ],
+      });
+
+      expect(ambiguousAce).not.toEqual(
+        expect.objectContaining({ rank: HandRank.StraightFlush }),
+      );
+      expect(ambiguousAce).toEqual(
+        expect.objectContaining({ rank: HandRank.Flush }),
+      );
     });
 
     it('extracts royal flush', () => {
