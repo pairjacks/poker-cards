@@ -61,7 +61,7 @@ describe('describe', () => {
             communityCards: [[Face.Seven, Suit.Clubs]],
           }),
         ),
-      ).toBe('Ace high, Seven-Two kicker');
+      ).toBe('Ace high, Seven-Two kickers');
 
       expect(
         describeHand(
@@ -76,7 +76,24 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Ace high, Ten-Seven kicker');
+      ).toBe('Ace high, Ten-Seven-Two kickers');
+
+      expect(
+        describeHand(
+          extractHand({
+            pocketCards: [
+              [Face.Ace, Suit.Clubs],
+              [Face.Two, Suit.Diamonds],
+            ],
+            communityCards: [
+              [Face.Ten, Suit.Spades],
+              [Face.Seven, Suit.Clubs],
+              [Face.Jack, Suit.Clubs],
+              [Face.Three, Suit.Diamonds],
+            ],
+          }),
+        ),
+      ).toBe('Ace high, Jack-Ten-Seven-Three kickers');
     });
 
     test('pair', () => {
@@ -119,7 +136,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Pair Twos, Jack-Ten kicker');
+      ).toBe('Pair Twos, Jack-Ten-Eight kickers');
     });
 
     test('two pair', () => {
@@ -200,7 +217,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Three of a kind Fours, Jack-Eight kicker');
+      ).toBe('Three of a kind Fours, Jack-Eight kickers');
     });
 
     test('straight', () => {

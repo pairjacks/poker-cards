@@ -228,16 +228,18 @@ describePocketCards([
 Describes a hand in words
 
 ```ts
-import { describeHand, Face, Suit } from '@kavsingh/poker-cards';
+import { extractHand, describeHand, Face, Suit } from '@kavsingh/poker-cards';
 
-describeHand({
-  // ...hand
-  rankCards: [
-    [Face.Two, Suit.Hearts],
-    [Face.Two, Suit.Diamonds],
+describeHand(extractHand({
+  pocketCards: [
     [Face.Five, Suit.Hearts],
-    [Face.Five, Suit.Diamonds],
+    [Face.Three, Suit.Diamonds],
   ],
-  kickerCards: [[Face.Three, Suit.Diamonds]],
-}); // Two pair, Fives over Twos, Three kicker
+  communityCards: [
+    [Face.Two, Suit.Hearts],
+    [Face.Five, Suit.Diamonds],
+    [Face.Two, Suit.Diamonds],
+    [Face.Seven, Suit.Clubs],
+  ],
+}); // Two pair, Fives over Twos, Seven kicker
 ```

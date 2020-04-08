@@ -34,7 +34,9 @@ const cardList = (cards: Cards) =>
   cards.map((card) => facePlural(card)).join('-');
 
 const kickerList = (kickers: Cards) =>
-  kickers.length ? `${cardList(kickers.slice(0, 2))} kicker` : '';
+  kickers.length
+    ? `${cardList(kickers)} ${kickers.length > 1 ? 'kickers' : 'kicker'}`
+    : '';
 
 const sentence = (parts: unknown[]) =>
   parts.filter((part) => part && typeof part === 'string').join(', ');
@@ -114,7 +116,7 @@ export const describePocketCards = (pocketCards: Cards): string => {
 };
 
 /**
- * Describes hand in words, e.g. "Two pair, Aces over Kings, Jack kicker"
+ * Describes a hand in words, e.g. "Two pair, Aces over Kings, Jack kicker"
  * @param pocketCards - Player's pocket cards
  */
 export const describeHand = (hand: Hand): string =>
