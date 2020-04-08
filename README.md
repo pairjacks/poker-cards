@@ -209,3 +209,35 @@ winners: HandComparisonResult[] = [
 */
 
 ```
+
+#### `describePocketCards`
+
+Describes pocket cards in words
+
+```ts
+import { describePocketCards, Face, Suit } from '@kavsingh/poker-cards';
+
+describePocketCards([
+  [Face.Ace, Suit.Hearts],
+  [Face.Ace, Suit.Spades],
+]); // Pocket Aces
+```
+
+#### `describeHand`
+
+Describes a hand in words
+
+```ts
+import { describeHand, Face, Suit } from '@kavsingh/poker-cards';
+
+describeHand({
+  // ...hand
+  rankCards: [
+    [Face.Two, Suit.Hearts],
+    [Face.Two, Suit.Diamonds],
+    [Face.Five, Suit.Hearts],
+    [Face.Five, Suit.Diamonds],
+  ],
+  kickerCards: [[Face.Three, Suit.Diamonds]],
+}); // Two pair, Fives over Twos, Three kicker
+```

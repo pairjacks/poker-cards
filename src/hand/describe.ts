@@ -96,6 +96,10 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   [HandRank.RoyalFlush]: () => 'Royal flush',
 };
 
+/**
+ * Describes pocket cards in words, e.g. "Pocket Aces"
+ * @param pocketCards - Player's pocket cards
+ */
 export const describePocketCards = (pocketCards: Cards): string => {
   if (allEqualBy(getFaceValue, pocketCards)) {
     return `Pocket ${facePlural(pocketCards[0], 2)}`;
@@ -109,5 +113,9 @@ export const describePocketCards = (pocketCards: Cards): string => {
   return `${sorted.map((card) => facePlural(card)).join('-')} ${suitStatus}`;
 };
 
+/**
+ * Describes hand in words, e.g. "Two pair, Aces over Kings, Jack kicker"
+ * @param pocketCards - Player's pocket cards
+ */
 export const describeHand = (hand: Hand): string =>
   handDescribers[hand.rank](hand);
