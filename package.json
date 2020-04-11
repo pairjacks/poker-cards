@@ -1,16 +1,16 @@
 {
   "name": "poker-cards",
   "version": "0.0.11",
-  "description": "Does something",
+  "description": "Handles cards, decks and hands for poker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kavsingh/poker-cards.git"
+    "url": "https://github.com/easy-poker/poker-cards.git"
   },
   "license": "MIT",
   "author": "Kav Singh <flakisms@gmail.com>",
   "contributors": [],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@kavsingh"
+    "registry": "https://npm.pkg.github.com/@easy-poker"
   },
   "engines": {
     "node": ">=10.0.0"
