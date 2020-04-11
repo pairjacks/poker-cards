@@ -37,5 +37,13 @@ export { HandRank } from './hand/constants';
 export { extractHand } from './hand/extract';
 export { findHighestHands } from './hand/compare';
 export { describePocketCards, describeHand } from './hand/describe';
-// @ts-ignore
-export { HandCandidate, Hand, HandComparisonResult } from './hand/types'; // export type
+export {
+  // @ts-ignore
+  HandCandidate,
+  // @ts-ignore
+  Hand,
+  // @ts-ignore
+  HandComparisonResult,
+  // @ts-ignore
+  HandDescription,
+} from './hand/types'; // export type

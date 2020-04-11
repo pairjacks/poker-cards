@@ -241,5 +241,5 @@ describeHand(extractHand({
     [Face.Two, Suit.Diamonds],
     [Face.Seven, Suit.Clubs],
   ],
-}); // Two pair, Fives over Twos, Seven kicker
+}); // { rank: 'Two pair, Fives over Twos', kickers: 'Seven kicker' }
 ```

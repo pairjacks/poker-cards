@@ -29,3 +29,9 @@ export interface HandComparisonResult {
   /** The index of the original HandCandidate in the comparison array */
   readonly candidateIndex: number;
 }
+
+/** Represents a human readable description of a hand */
+export interface HandDescription {
+  readonly rank: string;
+  readonly kickers: string;
+}

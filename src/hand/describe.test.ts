@@ -41,7 +41,7 @@ describe('describe', () => {
             communityCards: [],
           }),
         ),
-      ).toBe('');
+      ).toEqual({ rank: '', kickers: '' });
 
       expect(
         describeHand(
@@ -50,7 +50,7 @@ describe('describe', () => {
             communityCards: [],
           }),
         ),
-      ).toBe('Ace high');
+      ).toEqual({ rank: 'Ace high', kickers: '' });
     });
 
     test('high card', () => {
@@ -61,7 +61,7 @@ describe('describe', () => {
             communityCards: [],
           }),
         ),
-      ).toBe('Ace high');
+      ).toEqual({ rank: 'Ace high', kickers: '' });
 
       expect(
         describeHand(
@@ -73,7 +73,7 @@ describe('describe', () => {
             communityCards: [],
           }),
         ),
-      ).toBe('Ace high, Two kicker');
+      ).toEqual({ rank: 'Ace high', kickers: 'Two kicker' });
 
       expect(
         describeHand(
@@ -85,7 +85,7 @@ describe('describe', () => {
             communityCards: [[Face.Seven, Suit.Clubs]],
           }),
         ),
-      ).toBe('Ace high, Seven-Two kickers');
+      ).toEqual({ rank: 'Ace high', kickers: 'Seven-Two kickers' });
 
       expect(
         describeHand(
@@ -100,7 +100,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Ace high, Ten-Seven-Two kickers');
+      ).toEqual({ rank: 'Ace high', kickers: 'Ten-Seven-Two kickers' });
 
       expect(
         describeHand(
@@ -117,7 +117,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Ace high, Jack-Ten-Seven-Three kickers');
+      ).toEqual({ rank: 'Ace high', kickers: 'Jack-Ten-Seven-Three kickers' });
     });
 
     test('pair', () => {
@@ -131,7 +131,7 @@ describe('describe', () => {
             communityCards: [],
           }),
         ),
-      ).toBe('Pair Twos');
+      ).toEqual({ rank: 'Pair Twos', kickers: '' });
 
       expect(
         describeHand(
@@ -143,7 +143,7 @@ describe('describe', () => {
             communityCards: [[Face.Seven, Suit.Clubs]],
           }),
         ),
-      ).toBe('Pair Twos, Seven kicker');
+      ).toEqual({ rank: 'Pair Twos', kickers: 'Seven kicker' });
 
       expect(
         describeHand(
@@ -160,7 +160,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Pair Twos, Jack-Ten-Eight kickers');
+      ).toEqual({ rank: 'Pair Twos', kickers: 'Jack-Ten-Eight kickers' });
     });
 
     test('two pair', () => {
@@ -177,7 +177,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Two pair, Sixes over Twos');
+      ).toEqual({ rank: 'Two pair, Sixes over Twos', kickers: '' });
 
       expect(
         describeHand(
@@ -194,7 +194,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Two pair, Sixes over Twos, Jack kicker');
+      ).toEqual({ rank: 'Two pair, Sixes over Twos', kickers: 'Jack kicker' });
     });
 
     test('three of a kind', () => {
@@ -208,7 +208,7 @@ describe('describe', () => {
             communityCards: [[Face.Six, Suit.Spades]],
           }),
         ),
-      ).toBe('Three of a kind Sixes');
+      ).toEqual({ rank: 'Three of a kind Sixes', kickers: '' });
 
       expect(
         describeHand(
@@ -223,7 +223,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Three of a kind Fours, Eight kicker');
+      ).toEqual({ rank: 'Three of a kind Fours', kickers: 'Eight kicker' });
 
       expect(
         describeHand(
@@ -241,7 +241,10 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Three of a kind Fours, Jack-Eight kickers');
+      ).toEqual({
+        rank: 'Three of a kind Fours',
+        kickers: 'Jack-Eight kickers',
+      });
     });
 
     test('straight', () => {
@@ -259,7 +262,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Straight, Four to Eight');
+      ).toEqual({ rank: 'Straight, Four to Eight', kickers: '' });
 
       expect(
         describeHand(
@@ -275,7 +278,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Straight, Ace to Five');
+      ).toEqual({ rank: 'Straight, Ace to Five', kickers: '' });
 
       expect(
         describeHand(
@@ -291,7 +294,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Straight, Ten to Ace');
+      ).toEqual({ rank: 'Straight, Ten to Ace', kickers: '' });
 
       expect(
         describeHand(
@@ -308,7 +311,7 @@ describe('describe', () => {
             ],
           }),
         ),
-      ).toBe('Straight, Ten to Ace');
+      ).toEqual({ rank: 'Straight, Ten to Ace', kickers: '' });
     });
   });
 
@@ -327,7 +330,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Flush, Jack-Seven high');
+    ).toEqual({ rank: 'Flush, Jack-Seven high', kickers: '' });
 
     expect(
       describeHand(
@@ -344,7 +347,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Flush, Jack-Seven high');
+    ).toEqual({ rank: 'Flush, Jack-Seven high', kickers: '' });
   });
 
   test('full house', () => {
@@ -362,7 +365,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Full house, Fours full');
+    ).toEqual({ rank: 'Full house, Fours full', kickers: '' });
 
     expect(
       describeHand(
@@ -379,7 +382,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Full house, Fours full');
+    ).toEqual({ rank: 'Full house, Fours full', kickers: '' });
   });
 
   test('four of a kind', () => {
@@ -397,7 +400,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Four of a kind Fours, Jack kicker');
+    ).toEqual({ rank: 'Four of a kind Fours', kickers: 'Jack kicker' });
 
     expect(
       describeHand(
@@ -414,7 +417,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Four of a kind Fours, King kicker');
+    ).toEqual({ rank: 'Four of a kind Fours', kickers: 'King kicker' });
   });
 
   test('straight flush', () => {
@@ -432,7 +435,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Straight flush, Four to Eight');
+    ).toEqual({ rank: 'Straight flush, Four to Eight', kickers: '' });
 
     expect(
       describeHand(
@@ -448,7 +451,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Straight flush, Ace to Five');
+    ).toEqual({ rank: 'Straight flush, Ace to Five', kickers: '' });
 
     expect(
       describeHand(
@@ -465,7 +468,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Straight flush, Ace to Five');
+    ).toEqual({ rank: 'Straight flush, Ace to Five', kickers: '' });
   });
 
   test('royal flush', () => {
@@ -484,6 +487,6 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toBe('Royal flush');
+    ).toEqual({ rank: 'Royal flush', kickers: '' });
   });
 });
