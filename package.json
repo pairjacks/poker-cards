@@ -1,6 +1,6 @@
 {
   "name": "@pairjacks/poker-cards",
-  "version": "0.0.13-test.1",
+  "version": "0.0.13-test.2",
   "private": false,
   "description": "Handles cards, decks and hands for poker",
   "repository": {
