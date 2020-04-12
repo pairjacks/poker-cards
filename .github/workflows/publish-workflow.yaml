@@ -25,9 +25,8 @@ jobs:
         run: npm run test
       - name: Build
         run: npm run build
-      - name: Change cwd
-        run: cd dist
       - name: Deploy
-        run: npm publish --access public
+        working-directory: ./dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: npm publish --access public
