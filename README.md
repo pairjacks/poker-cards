@@ -1,6 +1,6 @@
-# poker-cards
+# @pairjacks/poker-cards
 
-![CI status](https://github.com/easy-poker/poker-cards/workflows/Test/badge.svg)
+![CI status](https://github.com/pairjacks/poker-cards/workflows/Test/badge.svg)
 
 ## Base Constants & Types
 
@@ -59,7 +59,7 @@ interface Hand {
 Determines if two cards are identical
 
 ```ts
-import { isSameCard, Face, Suit } from '@easy-poker/poker-cards';
+import { isSameCard, Face, Suit } from '@pairjacks/poker-cards';
 
 isSameCard([Face.Two, Suit.Clubs], [Face.Two, Suit.Clubs]); // true
 isSameCard([Face.Three, Suit.Clubs], [Face.Two, Suit.Clubs]); // false
@@ -72,7 +72,7 @@ isSameCard([Face.Three, Suit.Clubs], [Face.Two, Suit.Clubs]); // false
 Creates a 52 card deck without Jokers, sorted by suite and face.
 
 ```ts
-import { createDeck } from '@easy-poker/poker-cards';
+import { createDeck } from '@pairjacks/poker-cards';
 
 createDeck(); // [[Two, Diamonds], [Three, Diamonds] ... [King, Spades], [Ace, Spades]]
 ```
@@ -90,7 +90,7 @@ then third: [b] => [c, b, a]
 ```
 
 ```ts
-import { drawCardsFromDeck } from '@easy-poker/poker-cards';
+import { drawCardsFromDeck } from '@pairjacks/poker-cards';
 
 drawCardsFromDeck(deck, 4); // { cards: [...4 cards], deck: [...deck without 4 cards] }
 ```
@@ -104,7 +104,7 @@ Shuffle functions are async to allow for async random number generators.
 A default shuffle deck function is provided which uses Math.random to drive a fisher-yates shuffle.
 
 ```ts
-import { shuffleDeckNaive } from '@easy-poker/poker-cards';
+import { shuffleDeckNaive } from '@pairjacks/poker-cards';
 
 const shuffled = await shuffleDeckNaive(deck);
 ```
@@ -117,7 +117,7 @@ You might want to use a more robust random int generator, like that provided by 
 import {
   createDeckShuffler,
   createFisherYatesStackShuffle,
-} from '@easy-poker/poker-cards';
+} from '@pairjacks/poker-cards';
 import randomNumberCsprng from 'random-number-csprng';
 
 // (min: number, max: number) => Promise<number>;
@@ -136,7 +136,7 @@ import {
   createDeckShuffler,
   createFisherYatesStackShuffle,
   randomIntNaive,
-} from '@easy-poker/poker-cards';
+} from '@pairjacks/poker-cards';
 
 const shuffleDeckNaive = createDeckShuffler(
   createFisherYatesStackShuffle(randomIntNaive),
@@ -151,7 +151,7 @@ const shuffled = await shuffle(deck);
 Extracts the highest possible hand from a candidate hand
 
 ```ts
-import { extractHand } from '@easy-poker/poker-cards';
+import { extractHand } from '@pairjacks/poker-cards';
 
 const hand = extractHand({
   pocketCards: [
@@ -186,7 +186,7 @@ hand: Hand = {
 Returns an array of highest hands from a list of candidates. Multiple entries indicates a draw.
 
 ```ts
-import { findHighestHands } from '@easy-poker/poker-cards';
+import { findHighestHands } from '@pairjacks/poker-cards';
 
 const twoPair: HandCandidate = {...}
 const straightTenHighDiamonds: HandCandidate = {...}
@@ -215,7 +215,7 @@ winners: HandComparisonResult[] = [
 Describes pocket cards in words
 
 ```ts
-import { describePocketCards, Face, Suit } from '@easy-poker/poker-cards';
+import { describePocketCards, Face, Suit } from '@pairjacks/poker-cards';
 
 describePocketCards([
   [Face.Ace, Suit.Hearts],
@@ -228,7 +228,7 @@ describePocketCards([
 Describes a hand in words
 
 ```ts
-import { extractHand, describeHand, Face, Suit } from '@easy-poker/poker-cards';
+import { extractHand, describeHand, Face, Suit } from '@pairjacks/poker-cards';
 
 describeHand(extractHand({
   pocketCards: [

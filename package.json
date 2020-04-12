@@ -4,13 +4,13 @@
   "description": "Handles cards, decks and hands for poker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/easy-poker/poker-cards.git"
+    "url": "https://github.com/pairjacks/poker-cards.git"
   },
   "license": "MIT",
   "author": "Kav Singh <flakisms@gmail.com>",
   "contributors": [],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@easy-poker"
+    "registry": "https://npm.pkg.github.com/@pairjacks"
   },
   "engines": {
     "node": ">=10.0.0"
