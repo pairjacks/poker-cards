@@ -83,7 +83,10 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   }),
 
   [HandRank.FullHouse]: ({ rankCards }) => ({
-    rank: `Full house, ${facePlural(rankCards[0], 2)} full`,
+    rank: `Full house, ${facePlural(rankCards[0], 2)} full of ${facePlural(
+      rankCards[rankCards.length - 1],
+      2,
+    )}`,
     kickers: '',
   }),
 

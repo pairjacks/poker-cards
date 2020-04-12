@@ -365,7 +365,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toEqual({ rank: 'Full house, Fours full', kickers: '' });
+    ).toEqual({ rank: 'Full house, Fours full of Jacks', kickers: '' });
 
     expect(
       describeHand(
@@ -382,7 +382,7 @@ describe('describe', () => {
           ],
         }),
       ),
-    ).toEqual({ rank: 'Full house, Fours full', kickers: '' });
+    ).toEqual({ rank: 'Full house, Fours full of Jacks', kickers: '' });
   });
 
   test('four of a kind', () => {
