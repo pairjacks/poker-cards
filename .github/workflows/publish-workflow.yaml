@@ -19,12 +19,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install packages
         run: npm i
       - name: Run test
         run: npm run test
       - name: Build
         run: npm run build
+      - name: Copy npmrc
+        run: cp ./.npmrc ./dist
       - name: Deploy
         working-directory: ./dist
         env:
