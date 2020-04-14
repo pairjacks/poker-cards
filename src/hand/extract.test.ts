@@ -242,6 +242,60 @@ describe('extract', () => {
       expect(ambiguousAce).toEqual(
         expect.objectContaining({ rank: HandRank.HighCard }),
       );
+
+      const queenInAceHigh = extractHand({
+        pocketCards: [
+          [Face.Jack, Suit.Diamonds],
+          [Face.Three, Suit.Clubs],
+        ],
+        communityCards: [
+          [Face.Queen, Suit.Diamonds],
+          [Face.King, Suit.Clubs],
+          [Face.Eight, Suit.Diamonds],
+          [Face.Ten, Suit.Hearts],
+          [Face.Ace, Suit.Hearts],
+        ],
+      });
+
+      expect(queenInAceHigh).toEqual(
+        expect.objectContaining({
+          rank: HandRank.Straight,
+          rankCards: [
+            [Face.Ace, Suit.Hearts],
+            [Face.King, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Ten, Suit.Hearts],
+          ],
+        }),
+      );
+
+      const queenInAceHighInverseCommunity = extractHand({
+        pocketCards: [
+          [Face.Jack, Suit.Diamonds],
+          [Face.Three, Suit.Clubs],
+        ],
+        communityCards: [
+          [Face.Ace, Suit.Hearts],
+          [Face.Ten, Suit.Hearts],
+          [Face.Eight, Suit.Diamonds],
+          [Face.King, Suit.Clubs],
+          [Face.Queen, Suit.Diamonds],
+        ],
+      });
+
+      expect(queenInAceHighInverseCommunity).toEqual(
+        expect.objectContaining({
+          rank: HandRank.Straight,
+          rankCards: [
+            [Face.Ace, Suit.Hearts],
+            [Face.King, Suit.Clubs],
+            [Face.Queen, Suit.Diamonds],
+            [Face.Jack, Suit.Diamonds],
+            [Face.Ten, Suit.Hearts],
+          ],
+        }),
+      );
     });
 
     it('extracts flush', () => {
