@@ -1,8 +1,8 @@
-import { Cards } from '../card/types'; // import type
+import { Cards, Card } from '../card/types'; // import type
 
 export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 
-export type ShuffleFunction = <T>(arr: T[]) => Promise<T[]>;
+export type ShuffleFunction = (cards: Card[]) => Promise<Cards>;
 
 export type ShuffleFunctionCreator = (
   randomIntGenerator: RandomIntGenerator,
