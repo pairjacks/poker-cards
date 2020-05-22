@@ -5,7 +5,7 @@
   babel compiles with isolated modules.
   ignore the resulting ts error, KIV api extractor updates
 */
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 export { Face, Suit } from './card/constants';
 export { isSameCard } from './card/compare';

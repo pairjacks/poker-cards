@@ -11,20 +11,20 @@ import { HandRank } from './constants';
 import { Cards } from '../card/types'; // import type
 import { HandCandidate, Hand, HandExtractor } from './types'; // import type
 
-export const getHandRankValue = (rank: HandRank) =>
+export const getHandRankValue = (rank: HandRank): number =>
   Object.values(HandRank).indexOf(rank) + 1;
 
 export const getSortedCards = memoizeWeakMap(
   (cards: Cards): Cards => [...cards].sort(compareCards),
 );
 
-export const omitAndSort = (from: Cards, cards: Cards) =>
+export const omitAndSort = (from: Cards, cards: Cards): Cards =>
   getSortedCards(differenceWith(isSameCard, from, cards));
 
 export const extractInPreferenceOrder = (
   extractors: HandExtractor[],
   fallbackExtractor: HandExtractor<Hand>,
-) => ({ pocketCards, communityCards }: HandCandidate) => {
+) => ({ pocketCards, communityCards }: HandCandidate): Hand => {
   const cards: Cards = [...pocketCards, ...communityCards];
 
   return (

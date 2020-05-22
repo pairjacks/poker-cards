@@ -7,12 +7,12 @@ export const differenceWith = <X, Y>(
   predicate: (x: Readonly<X>, y: Readonly<Y>) => boolean,
   xs: readonly X[],
   ys: readonly Y[],
-) => xs.filter((x) => !ys.find((y) => predicate(x, y)));
+): X[] => xs.filter((x) => !ys.find((y) => predicate(x, y)));
 
 export const uniqBy = <X>(
   value: (x: Readonly<X>) => unknown,
   xs: readonly X[],
-) =>
+): X[] =>
   xs.reduce((acc, x) => {
     if (!acc.find((a) => value(a) === value(x))) acc.push(x);
 
@@ -22,7 +22,7 @@ export const uniqBy = <X>(
 export const groupBy = <X>(
   value: (x: Readonly<X>) => unknown,
   xs: readonly X[],
-) =>
+): { [key: string]: X[] } =>
   xs.reduce((acc, x) => {
     const key = String(value(x));
 
@@ -35,7 +35,7 @@ export const groupBy = <X>(
 export const chunkPreviousWith = <X>(
   predicate: (current: Readonly<X>, previous: Readonly<X>) => boolean,
   xs: readonly X[],
-) =>
+): X[][] =>
   xs.reduce((chunks, item) => {
     if (!chunks.length) return [[item]];
 
@@ -51,4 +51,4 @@ export const chunkPreviousWith = <X>(
 export const allEqualBy = <X>(
   value: (x: Readonly<X>) => unknown,
   xs: readonly X[],
-) => uniqBy(value, xs).length === 1;
+): boolean => uniqBy(value, xs).length === 1;

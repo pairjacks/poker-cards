@@ -6,7 +6,8 @@ import { Card } from './types'; // import type
  * @param a - Card
  * @param b - Card
  */
-export const isSameCard = (a: Card, b: Card) => a[0] === b[0] && a[1] === b[1];
+export const isSameCard = (a: Card, b: Card): boolean =>
+  a[0] === b[0] && a[1] === b[1];
 
 /**
  * Compares face values of cards
@@ -16,7 +17,7 @@ export const isSameCard = (a: Card, b: Card) => a[0] === b[0] && a[1] === b[1];
  * @param a - Card
  * @param b - Card
  */
-export const compareFaces = (a: Card, b: Card) =>
+export const compareFaces = (a: Card, b: Card): number =>
   getFaceValue(b) - getFaceValue(a);
 
 /**
@@ -27,7 +28,7 @@ export const compareFaces = (a: Card, b: Card) =>
  * @param a - Card
  * @param b - Card
  */
-export const compareSuits = (a: Card, b: Card) =>
+export const compareSuits = (a: Card, b: Card): number =>
   getSuitValue(b) - getSuitValue(a);
 
 /**
@@ -39,5 +40,5 @@ export const compareSuits = (a: Card, b: Card) =>
  * @param a - Card
  * @param b - Card
  */
-export const compareCards = (a: Card, b: Card) =>
+export const compareCards = (a: Card, b: Card): number =>
   compareFaces(a, b) || compareSuits(a, b);

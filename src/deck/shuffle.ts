@@ -20,10 +20,11 @@ export const randomIntNaive: RandomIntGenerator = (min, max) =>
 /**
  * Create a shuffler based on fisher-yates (https://bost.ocks.org/mike/shuffle/)
  * Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d
- * @param randomIntGenerator - an async random integeter generator
+ * @param randomIntGenerator - an async random integer generator
  */
 export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
   randomIntGenerator,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 ) => (arr) =>
   Promise.all(arr.map((_, i) => randomIntGenerator(0, arr.length - i))).then(
     (randomInts) => {
@@ -43,6 +44,7 @@ export type DeckShuffler = (deck: Cards) => Promise<Cards>;
  */
 export const createDeckShuffler = (
   shuffleFn: ShuffleFunction,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 ): DeckShuffler => (deck) => shuffleFn([...deck]);
 
 /**
