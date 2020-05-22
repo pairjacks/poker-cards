@@ -13,7 +13,6 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': [
       'warn',
       {
