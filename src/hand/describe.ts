@@ -39,7 +39,7 @@ const kickerList = (kickers: Cards) =>
     : '';
 
 const handDescribers: { [key in HandRank]: HandDescriber } = {
-  // This is the only rank at which rankCards could be zero, for the rest
+  // This is the only rank at which rankCards could be zero - for the rest
   // to have been derived, there would need to be at least 2 rank cards
   [HandRank.HighCard]: ({ rankCards, kickerCards }) =>
     rankCards.length

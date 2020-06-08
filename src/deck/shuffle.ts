@@ -24,7 +24,6 @@ export const randomIntNaive: RandomIntGenerator = (min, max) =>
  */
 export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
   randomIntGenerator,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 ) => (arr) =>
   Promise.all(arr.map((_, i) => randomIntGenerator(0, arr.length - i))).then(
     (randomInts) => {
@@ -39,12 +38,11 @@ export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
 export type DeckShuffler = (deck: Cards) => Promise<Cards>;
 
 /**
- * Create a non-mutation async shuffle function wrapper
+ * Create a non-mutating async shuffle function wrapper
  * @param shuffleFn - an async shuffle function
  */
 export const createDeckShuffler = (
   shuffleFn: ShuffleFunction,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 ): DeckShuffler => (deck) => shuffleFn([...deck]);
 
 /**
