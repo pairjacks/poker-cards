@@ -21,19 +21,18 @@ export const getSortedCards = memoizeWeakMap(
 export const omitAndSort = (from: Cards, cards: Cards): Cards =>
   getSortedCards(differenceWith(isSameCard, from, cards));
 
-export const extractInPreferenceOrder = (
-  extractors: HandExtractor[],
-  fallbackExtractor: HandExtractor<Hand>,
-) => ({ pocketCards, communityCards }: HandCandidate): Hand => {
-  const cards: Cards = [...pocketCards, ...communityCards];
+export const extractInPreferenceOrder =
+  (extractors: HandExtractor[], fallbackExtractor: HandExtractor<Hand>) =>
+  ({ pocketCards, communityCards }: HandCandidate): Hand => {
+    const cards: Cards = [...pocketCards, ...communityCards];
 
-  return (
-    extractors.reduce(
-      (result, extractor) => result || extractor(cards),
-      null as Hand | null,
-    ) || fallbackExtractor(cards)
-  );
-};
+    return (
+      extractors.reduce(
+        (result, extractor) => result || extractor(cards),
+        null as Hand | null,
+      ) || fallbackExtractor(cards)
+    );
+  };
 
 export const createExtractorResult = (
   rank: HandRank,

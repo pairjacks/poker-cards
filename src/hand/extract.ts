@@ -11,22 +11,24 @@ import {
   extractPair,
   extractHighCard,
 } from './hand-extractors';
+import { Hand, HandCandidate } from './types';
 
 /**
  * Extracts the highest possible hand from a candidate hand
  * @param candidate - a HandCandidate to evaluate
  */
-export const extractHand = extractInPreferenceOrder(
-  [
-    extractRoyalFlush,
-    extractStraightFlush,
-    extractFourOfAKind,
-    extractFullHouse,
-    extractFlush,
-    extractStraight,
-    extractThreeOfAKind,
-    extractTwoPair,
-    extractPair,
-  ],
-  extractHighCard,
-);
+export const extractHand: (candidate: HandCandidate) => Hand =
+  extractInPreferenceOrder(
+    [
+      extractRoyalFlush,
+      extractStraightFlush,
+      extractFourOfAKind,
+      extractFullHouse,
+      extractFlush,
+      extractStraight,
+      extractThreeOfAKind,
+      extractTwoPair,
+      extractPair,
+    ],
+    extractHighCard,
+  );

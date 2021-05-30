@@ -2,7 +2,7 @@ import { Face, Suit } from '../card/constants';
 import { extractHand } from './extract';
 import { describePocketCards, describeHand } from './describe';
 
-describe('describe', () => {
+describe('hand/describe', () => {
   describe('describePocketCards', () => {
     it('should describe pocket cards', () => {
       expect(describePocketCards([])).toBe('');

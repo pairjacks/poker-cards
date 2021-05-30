@@ -1,14 +1,13 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   env: { es6: true, node: true, browser: false },
-  plugins: ['@typescript-eslint', 'filenames', 'import', 'prettier'],
+  plugins: ['filenames'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    'prettier',
-    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
   ],
   rules: {
     'no-console': 'off',
@@ -24,7 +23,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '[iI]gnored' },
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
     ],
     'filenames/match-regex': ['error', '^[a-z-.]+$', true],
     'filenames/match-exported': ['error', 'kebab'],
@@ -74,7 +73,6 @@ module.exports = {
     {
       files: ['**/*.test.*'],
       env: { 'node': true, 'jest/globals': true },
-      plugins: ['jest'],
       extends: ['plugin:jest/recommended', 'plugin:jest/style'],
       rules: {
         'no-console': 'off',
