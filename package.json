@@ -1,6 +1,6 @@
 {
   "name": "@pairjacks/poker-cards",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "Handles cards, decks and hands for poker",
   "repository": {
@@ -22,7 +22,7 @@
     "build:js": "NODE_ENV=production rollup --config",
     "build:declarations": "tsc --project ./tsconfig.declarations.json",
     "build:extract_api": "api-extractor run --local",
-    "build:bundle_package_json": "ts-node -P tsconfig.tsnode.json scripts/bundle-package-json.ts",
+    "build:bundle_package_json": "babel-node -x '.ts' scripts/bundle-package-json.ts",
     "build:copy_readme": "cp README.md ./dist",
     "build": "npm run build:js && npm run build:declarations && npm run build:extract_api && npm run build:bundle_package_json && npm run build:copy_readme",
     "postbuild": "rm -rf lib"
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@babel/cli": "7.14.3",
     "@babel/core": "7.14.3",
+    "@babel/node": "7.14.2",
     "@babel/plugin-transform-runtime": "7.14.3",
     "@babel/preset-env": "7.14.4",
     "@babel/preset-typescript": "7.13.0",
@@ -58,7 +59,6 @@
     "rollup": "2.50.4",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-cleanup": "3.2.1",
-    "ts-node": "10.0.0",
     "tslib": "2.2.0",
     "typescript": "4.3.2"
   }

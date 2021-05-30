@@ -8,7 +8,7 @@ module.exports = {
   ],
   testRunner: 'jest',
   reporters: ['progress', 'clear-text', 'html'],
-  coverageAnalysis: 'off',
+  coverageAnalysis: 'all',
   jest: {
     projectType: 'custom',
     config: require('./jest.config.js'),
