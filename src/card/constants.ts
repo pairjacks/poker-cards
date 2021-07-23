@@ -1,4 +1,5 @@
 export enum Face {
+  Ace = 'Ace',
   Two = 'Two',
   Three = 'Three',
   Four = 'Four',
@@ -11,7 +12,6 @@ export enum Face {
   Jack = 'Jack',
   Queen = 'Queen',
   King = 'King',
-  Ace = 'Ace',
 }
 
 export enum Suit {

@@ -1,11 +1,11 @@
 import { differenceWith } from '../util/array';
 import { isSameCard } from '../card/compare';
-import { fullDeck } from './__fixtures__/deck';
+import { fullDeckNdo } from './__fixtures__/deck';
 import { shuffleDeckNaive, createDeckShuffler } from './shuffle';
 
 describe('shuffle', () => {
   it('asynchronously shuffles a deck using naive shuffler', async () => {
-    const deck = fullDeck;
+    const deck = [...fullDeckNdo];
     const shuffled = await shuffleDeckNaive(deck);
 
     expect(shuffled).not.toEqual(deck);
@@ -14,7 +14,7 @@ describe('shuffle', () => {
   });
 
   it('uses custom shuffle function', async () => {
-    const deck = fullDeck;
+    const deck = [...fullDeckNdo];
     const shuffle = createDeckShuffler(async (d) => {
       const result = [...d];
 

@@ -6,7 +6,7 @@ import { Card } from './types'; // import type
  * @param card - Card
  */
 export const getFaceValue = ([face]: Card): number =>
-  Object.values(Face).indexOf(face) + 1;
+  rankedFaces.indexOf(face) + 1;
 
 /**
  * Returns a suit value for a card
@@ -14,3 +14,5 @@ export const getFaceValue = ([face]: Card): number =>
  */
 export const getSuitValue = ([, suit]: Card): number =>
   Object.values(Suit).indexOf(suit) + 1;
+
+const rankedFaces = [...Object.values(Face).slice(1), Face.Ace];
