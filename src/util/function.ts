@@ -1,14 +1,14 @@
 export const identity = <T>(x: T): T => x;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const memoizeWeakMap = <A extends object, R>(
+export const memoize = <A extends object, R>(
   fn: (a: A) => R,
 ): ((a: A) => R) => {
-  const cache = new WeakMap();
+  const cache = new WeakMap<A, R>();
 
-  return function weakMapMemoized(a: A): R {
+  return function memoized(a: A): R {
     if (!cache.has(a)) cache.set(a, fn(a));
 
-    return cache.get(a);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return cache.get(a)!;
   };
 };

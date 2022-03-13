@@ -1,5 +1,5 @@
-import { HandRank } from './constants';
-import { Cards } from '../card/types'; // import type
+import type { HandRank } from './constants';
+import type { Cards } from '../card/types';
 
 /** Represents a collection of cards that can be used to create a 5 card hand */
 export interface HandCandidate {

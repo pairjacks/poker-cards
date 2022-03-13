@@ -1,4 +1,4 @@
-import { Cards, Card } from '../card/types'; // import type
+import type { Card, Cards } from '../card/types';
 
 export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 
@@ -26,8 +26,10 @@ export const createFisherYatesStackShuffle: ShuffleFunctionCreator =
   (randomIntGenerator) => (arr) =>
     Promise.all(arr.map((_, i) => randomIntGenerator(0, arr.length - i))).then(
       (randomInts) => {
-        for (let i = 0; i < randomInts.length; i++) {
-          arr.push(arr.splice(randomInts[i], 1)[0]);
+        for (const i of randomInts) {
+          const picked = arr.splice(i, 1)[0];
+
+          if (picked) arr.push(picked);
         }
 
         return arr;

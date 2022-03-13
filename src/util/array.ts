@@ -25,8 +25,9 @@ export const groupBy = <X>(
 ): { [key: string]: X[] } =>
   xs.reduce((acc, x) => {
     const key = String(value(x));
+    const curr = acc[key];
 
-    if (acc[key]) acc[key].push(x);
+    if (curr) curr.push(x);
     else acc[key] = [x];
 
     return acc;
@@ -37,12 +38,13 @@ export const chunkPreviousWith = <X>(
   xs: readonly X[],
 ): X[][] =>
   xs.reduce((chunks, item) => {
-    if (!chunks.length) return [[item]];
+    const currentChunk = chunks.at(-1);
 
-    const currentChunk = chunks[chunks.length - 1];
-    const previousItem = currentChunk[currentChunk.length - 1];
+    if (!currentChunk) return [[item]];
 
-    if (predicate(item, previousItem)) currentChunk.push(item);
+    const previousItem = currentChunk.at(-1);
+
+    if (previousItem && predicate(item, previousItem)) currentChunk.push(item);
     else chunks.push([item]);
 
     return chunks;

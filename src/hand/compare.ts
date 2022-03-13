@@ -1,9 +1,11 @@
 import { uniqBy } from '../util/array';
 import { identity } from '../util/function';
+import { isNonNullable } from '../util/predicate';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
 import { getHandRankValue } from './util';
-import { HandCandidate, HandComparisonResult } from './types'; // import type
+
+import type { HandCandidate, HandComparisonResult } from './types';
 
 /**
  * Resolves tied ranks from high level rank comparison
@@ -23,13 +25,19 @@ const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
 
   if (uniqueRanks.length > 1) {
     throw new Error(
-      `Expected same rank for hands in tie break, got ${uniqueRanks}`,
+      `Expected same rank for hands in tie break, got ${String(uniqueRanks)}`,
     );
   }
 
-  const highestHandIndeces = tieBreakers[uniqueRanks[0]](results);
+  const rank = uniqueRanks[0];
 
-  return highestHandIndeces.map((index) => results[index]);
+  if (!rank) throw new Error('No rank found');
+
+  const highestHandIndeces = tieBreakers[rank](results);
+
+  return highestHandIndeces
+    .map((index) => results[index])
+    .filter(isNonNullable);
 };
 
 /**
@@ -50,12 +58,17 @@ export const findHighestHands = (
     .sort(
       (a, b) => getHandRankValue(b.hand.rank) - getHandRankValue(a.hand.rank),
     );
-  const maxRankValue = getHandRankValue(evaluated[0].hand.rank);
-  const hasMaxRankValue = evaluated.filter(
+
+  const highestEvaluated = evaluated[0];
+
+  if (!highestEvaluated) throw new Error('No hand found to evaluate');
+
+  const maxRankValue = getHandRankValue(highestEvaluated.hand.rank);
+  const [highest, ...rest] = evaluated.filter(
     ({ hand: ranked }) => getHandRankValue(ranked.rank) === maxRankValue,
   );
 
-  if (hasMaxRankValue.length === 1) return hasMaxRankValue;
+  if (!highest) throw new Error('No viable hand');
 
-  return resolveTiedRank(hasMaxRankValue);
+  return rest.length ? resolveTiedRank([highest, ...rest]) : [highest];
 };

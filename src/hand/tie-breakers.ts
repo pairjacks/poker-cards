@@ -1,7 +1,9 @@
+import { isFiniteNumber } from '../util/predicate';
 import { getFaceValue } from '../card/value';
 import { HandRank } from './constants';
-import { Cards } from '../card/types'; // import type
-import { HandComparisonResult } from './types'; // import type
+
+import type { Cards } from '../card/types';
+import type { HandComparisonResult } from './types';
 
 /*
  * Tie breakers try to resolve ties between hands, given the same rank for all
@@ -16,7 +18,7 @@ const indecesWithHighestNumber = (xss: readonly (readonly number[])[]) => {
   let itr = 0;
 
   while (itr < maxLength) {
-    const topVals = xss.map((xs) => xs[itr]);
+    const topVals = xss.map((xs) => xs[itr]).filter(isFiniteNumber);
     const maxTopVal = Math.max(...topVals);
     const indeces = topVals.reduce((acc, curr, index) => {
       if (curr === maxTopVal) acc.push(index);

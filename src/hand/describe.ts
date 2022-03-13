@@ -3,8 +3,9 @@ import { Face } from '../card/constants';
 import { getSortedCards } from './util';
 import { allEqualBy } from '../util/array';
 import { getFaceValue, getSuitValue } from '../card/value';
-import { Card, Cards } from '../card/types'; // import type
-import { Hand, HandDescription } from './types'; // import type
+
+import type { Card, Cards } from '../card/types';
+import type { Hand, HandDescription } from './types';
 
 type HandDescriber = (hand: Hand) => HandDescription;
 
@@ -38,41 +39,61 @@ const kickerList = (kickers: Cards) =>
     ? `${cardList(kickers)} ${kickers.length > 1 ? 'kickers' : 'kicker'}`
     : '';
 
+function assertCard(card?: Card): asserts card is Card {
+  if (!card) throw new Error('Card expected');
+}
+
 const handDescribers: { [key in HandRank]: HandDescriber } = {
   // This is the only rank at which rankCards could be zero - for the rest
   // to have been derived, there would need to be at least 2 rank cards
-  [HandRank.HighCard]: ({ rankCards, kickerCards }) =>
-    rankCards.length
+  [HandRank.HighCard]: ({ rankCards: [rankCard], kickerCards }) =>
+    rankCard
       ? {
-          rank: `${facePlural(rankCards[0])} high`,
+          rank: `${facePlural(rankCard)} high`,
           kickers: kickerList(kickerCards),
         }
       : { rank: '', kickers: '' },
 
-  [HandRank.Pair]: ({ rankCards, kickerCards }) => ({
-    rank: `Pair ${facePlural(rankCards[0], 2)}`,
-    kickers: kickerList(kickerCards),
-  }),
+  [HandRank.Pair]: ({ rankCards: [rankCard], kickerCards }) => {
+    assertCard(rankCard);
 
-  [HandRank.TwoPair]: ({ rankCards, kickerCards }) => ({
-    rank: `Two pair, ${facePlural(rankCards[0], 2)} over ${facePlural(
-      rankCards[2],
-      2,
-    )}`,
-    kickers: kickerList(kickerCards),
-  }),
+    return {
+      rank: `Pair ${facePlural(rankCard, 2)}`,
+      kickers: kickerList(kickerCards),
+    };
+  },
 
-  [HandRank.ThreeOfAKind]: ({ rankCards, kickerCards }) => ({
-    rank: `Three of a kind ${facePlural(rankCards[0], 2)}`,
-    kickers: kickerList(kickerCards),
-  }),
+  [HandRank.TwoPair]: ({ rankCards: [rankCard, , over], kickerCards }) => {
+    assertCard(rankCard);
+    assertCard(over);
 
-  [HandRank.Straight]: ({ rankCards }) => ({
-    rank: `Straight, ${facePlural(
-      rankCards[rankCards.length - 1],
-    )} to ${facePlural(rankCards[0])}`,
-    kickers: '',
-  }),
+    return {
+      rank: `Two pair, ${facePlural(rankCard, 2)} over ${facePlural(over, 2)}`,
+      kickers: kickerList(kickerCards),
+    };
+  },
+
+  [HandRank.ThreeOfAKind]: ({ rankCards: [rankCard], kickerCards }) => {
+    assertCard(rankCard);
+
+    return {
+      rank: `Three of a kind ${facePlural(rankCard, 2)}`,
+      kickers: kickerList(kickerCards),
+    };
+  },
+
+  [HandRank.Straight]: ({ rankCards }) => {
+    const first = rankCards.at(0);
+    const last = rankCards.at(-1);
+
+    assertCard(first);
+    assertCard(last);
+
+    return {
+      rank: `Straight, ${facePlural(last)} to ${facePlural(first)}`,
+      kickers: '',
+    };
+  },
 
   [HandRank.Flush]: ({ rankCards }) => ({
     rank: `Flush, ${rankCards
@@ -82,25 +103,43 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
     kickers: '',
   }),
 
-  [HandRank.FullHouse]: ({ rankCards }) => ({
-    rank: `Full house, ${facePlural(rankCards[0], 2)} full of ${facePlural(
-      rankCards[rankCards.length - 1],
-      2,
-    )}`,
-    kickers: '',
-  }),
+  [HandRank.FullHouse]: ({ rankCards }) => {
+    const first = rankCards.at(0);
+    const last = rankCards.at(-1);
 
-  [HandRank.FourOfAKind]: ({ rankCards, kickerCards }) => ({
-    rank: `Four of a kind ${facePlural(rankCards[0], 2)}`,
-    kickers: kickerList(kickerCards),
-  }),
+    assertCard(first);
+    assertCard(last);
 
-  [HandRank.StraightFlush]: ({ rankCards }) => ({
-    rank: `Straight flush, ${facePlural(
-      rankCards[rankCards.length - 1],
-    )} to ${facePlural(rankCards[0])}`,
-    kickers: '',
-  }),
+    return {
+      rank: `Full house, ${facePlural(first, 2)} full of ${facePlural(
+        last,
+        2,
+      )}`,
+      kickers: '',
+    };
+  },
+
+  [HandRank.FourOfAKind]: ({ rankCards: [rankCard], kickerCards }) => {
+    assertCard(rankCard);
+
+    return {
+      rank: `Four of a kind ${facePlural(rankCard, 2)}`,
+      kickers: kickerList(kickerCards),
+    };
+  },
+
+  [HandRank.StraightFlush]: ({ rankCards }) => {
+    const first = rankCards.at(0);
+    const last = rankCards.at(-1);
+
+    assertCard(first);
+    assertCard(last);
+
+    return {
+      rank: `Straight flush, ${facePlural(last)} to ${facePlural(first)}`,
+      kickers: '',
+    };
+  },
 
   [HandRank.RoyalFlush]: () => ({ rank: 'Royal flush', kickers: '' }),
 };
@@ -110,12 +149,14 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
  * @param pocketCards - Player's pocket cards
  */
 export const describePocketCards = (pocketCards: Cards): string => {
-  if (!pocketCards.length) return '';
+  const [first, ...rest] = pocketCards;
 
-  if (pocketCards.length === 1) return facePlural(pocketCards[0]);
+  if (!first) return '';
+
+  if (!rest.length) return facePlural(first);
 
   if (allEqualBy(getFaceValue, pocketCards)) {
-    return `Pocket ${facePlural(pocketCards[0], 2)}`;
+    return `Pocket ${facePlural(first, 2)}`;
   }
 
   const sorted = getSortedCards(pocketCards);
@@ -129,7 +170,7 @@ export const describePocketCards = (pocketCards: Cards): string => {
 /**
  * Describes a hand in words,
  * e.g. rank: 'Two pair, Aces over Kings', kickers: 'Jack kicker'
- * @param pocketCards - Player's pocket cards
+ * @param hand - Player's hand
  */
 export const describeHand = (hand: Hand): HandDescription =>
   handDescribers[hand.rank](hand);

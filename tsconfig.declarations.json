@@ -1,19 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "isolatedModules": false,
-    "listEmittedFiles": true,
     "noEmit": false,
-    "outDir": "./lib",
+    "declaration": true,
+    "declarationDir": "./temp",
+    "emitDeclarationOnly": true,
   },
-  "exclude": [
-    "**/node_modules"
-  ],
   "include": [
-    "./src/index.ts",
-    "./src/typings"
+    "src/**/*"
   ]
 }

@@ -1,5 +1,6 @@
 import { getFaceValue, getSuitValue } from './value';
-import { Card } from './types'; // import type
+
+import type { Card } from './types';
 
 /**
  * Determines if two cards are identical

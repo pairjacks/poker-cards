@@ -20,12 +20,18 @@ jobs:
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
           registry-url: 'https://registry.npmjs.org'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.0.2
       - name: Install packages
-        run: npm i
+        run: pnpm i
       - name: Run test
-        run: npm run test
+        run: pnpm test
+      - name: Run lint
+        run: pnpm lint
       - name: Build
-        run: npm run build
+        run: pnpm build
       - name: Copy npmrc
         run: cp ./.npmrc ./dist
       - name: Deploy

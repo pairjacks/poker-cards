@@ -1,5 +1,6 @@
 import { Suit, Face } from '../card/constants';
-import { Card, Cards } from '../card/types'; // import type
+
+import type { Card, Cards } from '../card/types';
 
 export type DeckOrder = 'ndo' | 'value';
 
@@ -20,7 +21,7 @@ export const createDeck = ({
     case 'value':
       return createDeckValue();
     default:
-      throw new Error(`Unknown deck order ${order}`);
+      throw new Error(`Unknown deck order ${String(order)}`);
   }
 };
 

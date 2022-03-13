@@ -1,6 +1,5 @@
 import { resolve } from 'path';
-import { promisify } from 'util';
-import { readFile, writeFile } from 'fs';
+import { readFile, writeFile } from 'fs/promises';
 
 const sourcePackageJsonPath = resolve(__dirname, '../package.json');
 const distPackageJsonPath = resolve(__dirname, '../dist/package.json');
@@ -27,9 +26,8 @@ const moduleSources = {
 };
 
 const bundlePackageJson = async () => {
-  const packageJson = JSON.parse(
-    await promisify(readFile)(sourcePackageJsonPath, 'utf-8'),
-  );
+  const packageJsonString = await readFile(sourcePackageJsonPath, 'utf-8');
+  const packageJson = JSON.parse(packageJsonString) as Record<string, unknown>;
 
   const filtered = readAttributes.reduce((acc, attribute) => {
     const value = packageJson[attribute];
@@ -39,11 +37,11 @@ const bundlePackageJson = async () => {
     return acc;
   }, {} as { [key: string]: unknown });
 
-  return promisify(writeFile)(
+  return writeFile(
     distPackageJsonPath,
     JSON.stringify({ ...filtered, ...moduleSources }, null, 2),
     'utf-8',
   );
 };
 
-bundlePackageJson();
+void bundlePackageJson();
