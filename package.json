@@ -13,18 +13,19 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "test": "jest",
     "test:mutation": "stryker run",
     "lint": "tsc && eslint . --ext .ts,.js",
-    "build:prebuild": "rm -rf dist && rm -rf temp",
-    "build:js": "rollup -c --environment BUILD:production",
-    "build:declarations": "tsc -P ./tsconfig.declarations.json",
-    "build:bundle_package_json": "ts-node -P ./tsconfig.ts-node.json --log-error scripts/bundle-package-json.ts",
-    "build:copy_readme": "cp README.md ./dist",
-    "build:postbuild": "rm -rf temp",
-    "build": "pnpm build:prebuild && pnpm build:declarations && pnpm build:js && pnpm build:bundle_package_json && pnpm build:copy_readme && pnpm build:postbuild"
+    "prebuild": "rm -rf temp && rm -rf dist",
+    "build": "tsc -P ./tsconfig.declarations.json && rollup -c --environment BUILD:production",
+    "postbuild": "rm -rf temp"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "21.0.2",
