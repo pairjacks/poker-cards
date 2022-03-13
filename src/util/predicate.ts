@@ -1,4 +1,4 @@
-export const isNonNullable = <T>(val: T): val is NonNullable<T> =>
+export const isNotNullish = <T>(val: T): val is Exclude<T, null | undefined> =>
   typeof val !== 'undefined' && val !== null;
 
 export const isFiniteNumber = (val: unknown): val is number =>

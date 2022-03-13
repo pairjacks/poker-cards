@@ -1,6 +1,6 @@
 import { uniqBy } from '../util/array';
 import { identity } from '../util/function';
-import { isNonNullable } from '../util/predicate';
+import { isNotNullish } from '../util/predicate';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
 import { getHandRankValue } from './util';
@@ -33,11 +33,9 @@ const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
 
   if (!rank) throw new Error('No rank found');
 
-  const highestHandIndeces = tieBreakers[rank](results);
-
-  return highestHandIndeces
+  return tieBreakers[rank](results)
     .map((index) => results[index])
-    .filter(isNonNullable);
+    .filter(isNotNullish);
 };
 
 /**
