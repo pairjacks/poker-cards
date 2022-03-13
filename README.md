@@ -69,12 +69,22 @@ isSameCard([Face.Three, Suit.Clubs], [Face.Two, Suit.Clubs]); // false
 
 #### `createDeck`
 
-Creates a 52 card deck without Jokers, sorted by suite and face.
+Creates a 52 card deck without Jokers. Accepts an optional parameter object
+
+- `{ order: "ndo" }` new deck order (default value)
+- `{ order: "value" }` sorted by suite (Diamonds to Spades) and face (Two to Ace).
 
 ```ts
 import { createDeck } from '@pairjacks/poker-cards';
 
-createDeck(); // [[Two, Diamonds], [Three, Diamonds] ... [King, Spades], [Ace, Spades]]
+createDeck();
+// [[Ace, Hearts], [King, Hearts] ... [King, Spades], [Ace, Spades]]
+
+createDeck({ order: 'ndo' });
+// default: [[Ace, Hearts], [King, Hearts] ... [King, Spades], [Ace, Spades]]
+
+createDeck({ order: 'value' });
+// [[Two, Diamonds], [Three, Diamonds] ... [King, Spades], [Ace, Spades]]
 ```
 
 #### `drawCardsFromDeck`
@@ -92,7 +102,8 @@ then third: [b] => [c, b, a]
 ```ts
 import { drawCardsFromDeck } from '@pairjacks/poker-cards';
 
-drawCardsFromDeck(deck, 4); // { cards: [...4 cards], deck: [...deck without 4 cards] }
+drawCardsFromDeck(deck, 4);
+// { cards: [...4 cards], deck: [...deck without 4 cards] }
 ```
 
 #### Shuffling a deck
@@ -220,7 +231,8 @@ import { describePocketCards, Face, Suit } from '@pairjacks/poker-cards';
 describePocketCards([
   [Face.Ace, Suit.Hearts],
   [Face.Ace, Suit.Spades],
-]); // Pocket Aces
+]);
+// Pocket Aces
 ```
 
 #### `describeHand`
@@ -241,5 +253,6 @@ describeHand(extractHand({
     [Face.Two, Suit.Diamonds],
     [Face.Seven, Suit.Clubs],
   ],
-}); // { rank: 'Two pair, Fives over Twos', kickers: 'Seven kicker' }
+});
+// { rank: 'Two pair, Fives over Twos', kickers: 'Seven kicker' }
 ```
