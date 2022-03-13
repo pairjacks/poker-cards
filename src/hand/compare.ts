@@ -11,13 +11,12 @@ import type { HandCandidate, HandComparisonResult } from './types';
  * Resolves tied ranks from high level rank comparison
  * @param results - tied hand comparison results
  */
-const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
-  if (results.length < 2) {
-    throw new Error(
-      `Expected two or more hands in tie break, got ${results.length}`,
-    );
-  }
+const resolveTies = ([first, ...rest]: readonly HandComparisonResult[]) => {
+  if (!first) throw new Error('No hand found in comparison results');
 
+  if (!rest.length) return [first];
+
+  const results = [first, ...rest];
   const uniqueRanks = uniqBy(
     identity,
     results.map(({ hand }) => hand.rank),
@@ -31,7 +30,7 @@ const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
 
   const rank = uniqueRanks[0];
 
-  if (!rank) throw new Error('No rank found');
+  if (!rank) throw new Error('No viable rank found for comparison');
 
   return tieBreakers[rank](results)
     .map((index) => results[index])
@@ -62,11 +61,9 @@ export const findHighestHands = (
   if (!highestEvaluated) throw new Error('No hand found to evaluate');
 
   const maxRankValue = getHandRankValue(highestEvaluated.hand.rank);
-  const [highest, ...rest] = evaluated.filter(
-    ({ hand: ranked }) => getHandRankValue(ranked.rank) === maxRankValue,
+  const handsWithMaxRank = evaluated.filter(
+    ({ hand }) => getHandRankValue(hand.rank) === maxRankValue,
   );
 
-  if (!highest) throw new Error('No viable hand');
-
-  return rest.length ? resolveTiedRank([highest, ...rest]) : [highest];
+  return resolveTies(handsWithMaxRank);
 };
