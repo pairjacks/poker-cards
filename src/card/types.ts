@@ -1,4 +1,4 @@
-import { Suit, Face } from './constants'; // import type
+import type { Suit, Face } from './constants';
 
 export type Card = readonly [Face, Suit];
 

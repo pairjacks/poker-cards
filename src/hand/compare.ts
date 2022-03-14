@@ -1,21 +1,22 @@
 import { uniqBy } from '../util/array';
 import { identity } from '../util/function';
+import { isNotNullish } from '../util/predicate';
 import { extractHand } from './extract';
 import { tieBreakers } from './tie-breakers';
 import { getHandRankValue } from './util';
-import { HandCandidate, HandComparisonResult } from './types'; // import type
+
+import type { HandCandidate, HandComparisonResult } from './types';
 
 /**
  * Resolves tied ranks from high level rank comparison
  * @param results - tied hand comparison results
  */
-const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
-  if (results.length < 2) {
-    throw new Error(
-      `Expected two or more hands in tie break, got ${results.length}`,
-    );
-  }
+const resolveTies = ([first, ...rest]: readonly HandComparisonResult[]) => {
+  if (!first) throw new Error('No hand found in comparison results');
 
+  if (!rest.length) return [first];
+
+  const results = [first, ...rest];
   const uniqueRanks = uniqBy(
     identity,
     results.map(({ hand }) => hand.rank),
@@ -23,13 +24,17 @@ const resolveTiedRank = (results: readonly HandComparisonResult[]) => {
 
   if (uniqueRanks.length > 1) {
     throw new Error(
-      `Expected same rank for hands in tie break, got ${uniqueRanks}`,
+      `Expected same rank for hands in tie break, got ${String(uniqueRanks)}`,
     );
   }
 
-  const highestHandIndeces = tieBreakers[uniqueRanks[0]](results);
+  const rank = uniqueRanks[0];
 
-  return highestHandIndeces.map((index) => results[index]);
+  if (!rank) throw new Error('No viable rank found for comparison');
+
+  return tieBreakers[rank](results)
+    .map((index) => results[index])
+    .filter(isNotNullish);
 };
 
 /**
@@ -50,12 +55,15 @@ export const findHighestHands = (
     .sort(
       (a, b) => getHandRankValue(b.hand.rank) - getHandRankValue(a.hand.rank),
     );
-  const maxRankValue = getHandRankValue(evaluated[0].hand.rank);
-  const hasMaxRankValue = evaluated.filter(
-    ({ hand: ranked }) => getHandRankValue(ranked.rank) === maxRankValue,
+
+  const highestEvaluated = evaluated[0];
+
+  if (!highestEvaluated) throw new Error('No hand found to evaluate');
+
+  const maxRankValue = getHandRankValue(highestEvaluated.hand.rank);
+  const handsWithMaxRank = evaluated.filter(
+    ({ hand }) => getHandRankValue(hand.rank) === maxRankValue,
   );
 
-  if (hasMaxRankValue.length === 1) return hasMaxRankValue;
-
-  return resolveTiedRank(hasMaxRankValue);
+  return resolveTies(handsWithMaxRank);
 };

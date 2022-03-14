@@ -9,7 +9,8 @@ import {
   getSortedSuitGroups,
   createExtractorResult,
 } from './util';
-import { Hand, HandExtractor } from './types'; // import type
+
+import type { Hand, HandExtractor } from './types';
 
 /*
  * Hand extractors try to find particular hand patterns from an array of cards.
@@ -38,7 +39,7 @@ export const extractPair: HandExtractor = (cards) => {
 export const extractTwoPair: HandExtractor = (cards) => {
   const rankCards = getSortedFaceGroups(cards)
     .slice(0, 2)
-    .flatMap((cards) => cards.slice(0, 2));
+    .flatMap((sortedCards) => sortedCards.slice(0, 2));
 
   return rankCards.length === 4
     ? createExtractorResult(HandRank.TwoPair, rankCards, cards)
@@ -70,7 +71,7 @@ export const extractStraight: HandExtractor = (cards) => {
 
   // Only consider ace low if lowest card in candidate is two,
   // otherwise we end up with a disjointed straight
-  if (candidate[candidate.length - 1][0] !== Face.Two) return null;
+  if (candidate[candidate.length - 1]?.[0] !== Face.Two) return null;
 
   const ace = getSortedCards(cards).find(([face]) => face === Face.Ace);
 
@@ -131,10 +132,10 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 
   // Only consider ace low if lowest card in candidate is two,
   // otherwise we end up with a disjointed straight
-  if (candidate[candidate.length - 1][0] !== Face.Two) return null;
+  if (candidate[candidate.length - 1]?.[0] !== Face.Two) return null;
 
   const ace = getSortedCards(cards).find(
-    ([face, suit]) => face === Face.Ace && suit === candidate[0][1],
+    ([face, suit]) => face === Face.Ace && suit === candidate[0]?.[1],
   );
 
   return ace

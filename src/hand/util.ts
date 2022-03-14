@@ -1,4 +1,4 @@
-import { memoizeWeakMap } from '../util/function';
+import { memoize } from '../util/function';
 import { isInRangeInclusive } from '../util/number';
 import { groupBy, differenceWith, chunkPreviousWith } from '../util/array';
 import {
@@ -8,13 +8,14 @@ import {
   compareSuits,
 } from '../card/compare';
 import { HandRank } from './constants';
-import { Cards } from '../card/types'; // import type
-import { HandCandidate, Hand, HandExtractor } from './types'; // import type
+
+import type { Cards } from '../card/types';
+import type { HandCandidate, Hand, HandExtractor } from './types';
 
 export const getHandRankValue = (rank: HandRank): number =>
   Object.values(HandRank).indexOf(rank) + 1;
 
-export const getSortedCards = memoizeWeakMap(
+export const getSortedCards = memoize(
   (cards: Cards): Cards => [...cards].sort(compareCards),
 );
 
@@ -48,22 +49,20 @@ export const createExtractorResult = (
   ),
 });
 
-export const getSortedFaceGroups = memoizeWeakMap(
-  (cards: Cards): readonly Cards[] =>
-    Object.entries(groupBy(([face]) => face, getSortedCards(cards)))
-      .filter(([, cards]) => cards?.length > 1)
-      .map(([, cards]) => cards),
+export const getSortedFaceGroups = memoize((cards: Cards): readonly Cards[] =>
+  Object.entries(groupBy(([face]) => face, getSortedCards(cards)))
+    .filter(([, groupedCards]) => groupedCards?.length > 1)
+    .map(([, groupedCards]) => groupedCards),
 );
 
-export const getSortedSuitGroups = memoizeWeakMap(
-  (cards: Cards): readonly Cards[] =>
-    Object.entries(groupBy(([, suit]) => suit, getSortedCards(cards)))
-      .filter(([, cards]) => cards?.length > 1)
-      .map(([, cards]) => cards)
-      .sort((a, b) => compareSuits(a[0], b[0])),
+export const getSortedSuitGroups = memoize((cards: Cards): readonly Cards[] =>
+  Object.entries(groupBy(([, suit]) => suit, getSortedCards(cards)))
+    .filter(([, groupedCards]) => groupedCards?.length > 1)
+    .map(([, groupedCards]) => groupedCards)
+    .sort(([a], [b]) => (a && b ? compareSuits(a, b) : 0)),
 );
 
-export const getSortedConsequtiveFaceGroups = memoizeWeakMap(
+export const getSortedConsequtiveFaceGroups = memoize(
   (cards: Cards): readonly Cards[] =>
     chunkPreviousWith(
       (curr, prev) => isInRangeInclusive(0, 1, compareFaces(curr, prev)),

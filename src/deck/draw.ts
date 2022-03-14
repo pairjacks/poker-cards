@@ -1,5 +1,6 @@
 import { clamp } from '../util/number';
-import { Cards } from '../card/types'; // import type
+
+import type { Cards } from '../card/types';
 
 export interface DeckDrawResult {
   readonly cards: Cards;

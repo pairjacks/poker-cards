@@ -11,7 +11,8 @@ import {
   extractPair,
   extractHighCard,
 } from './hand-extractors';
-import { Hand, HandCandidate } from './types';
+
+import type { Hand, HandCandidate } from './types';
 
 /**
  * Extracts the highest possible hand from a candidate hand

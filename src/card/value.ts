@@ -1,5 +1,6 @@
 import { Suit, Face } from './constants';
-import { Card } from './types'; // import type
+
+import type { Card } from './types';
 
 /**
  * Returns a face value for a card
