@@ -78,13 +78,13 @@ Creates a 52 card deck without Jokers. Accepts an optional parameter object
 import { createDeck } from '@pairjacks/poker-cards';
 
 createDeck();
-// [[Ace, Hearts], [King, Hearts] ... [King, Spades], [Ace, Spades]]
+// [[Ace, Hearts], [Two, Hearts] ... [Two, Spades], [Ace, Spades]]
 
 createDeck({ order: 'ndo' });
-// default: [[Ace, Hearts], [King, Hearts] ... [King, Spades], [Ace, Spades]]
+// [[Ace, Hearts], [Two, Hearts] ... [Two, Spades], [Ace, Spades]] (default)
 
 createDeck({ order: 'value' });
-// [[Two, Diamonds], [Three, Diamonds] ... [King, Spades], [Ace, Spades]]
+// [[Ace, Diamonds], [Two, Diamonds] ... [Queen, Spades], [King, Spades]]
 ```
 
 #### `drawCardsFromDeck`
