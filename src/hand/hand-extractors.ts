@@ -71,7 +71,7 @@ export const extractStraight: HandExtractor = (cards) => {
 
   // Only consider ace low if lowest card in candidate is two,
   // otherwise we end up with a disjointed straight
-  if (candidate.at(-1)?.[0] !== Face.Two) return null;
+  if (candidate[candidate.length - 1]?.[0] !== Face.Two) return null;
 
   const ace = getSortedCards(cards).find(([face]) => face === Face.Ace);
 
@@ -132,7 +132,7 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 
   // Only consider ace low if lowest card in candidate is two,
   // otherwise we end up with a disjointed straight
-  if (candidate.at(-1)?.[0] !== Face.Two) return null;
+  if (candidate[candidate.length - 1]?.[0] !== Face.Two) return null;
 
   const ace = getSortedCards(cards).find(
     ([face, suit]) => face === Face.Ace && suit === candidate[0]?.[1],

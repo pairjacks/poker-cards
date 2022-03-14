@@ -38,11 +38,11 @@ export const chunkPreviousWith = <X>(
   xs: readonly X[],
 ): X[][] =>
   xs.reduce((chunks, item) => {
-    const currentChunk = chunks.at(-1);
+    const currentChunk = chunks[chunks.length - 1];
 
     if (!currentChunk) return [[item]];
 
-    const previousItem = currentChunk.at(-1);
+    const previousItem = currentChunk[currentChunk.length - 1];
 
     if (previousItem && predicate(item, previousItem)) currentChunk.push(item);
     else chunks.push([item]);

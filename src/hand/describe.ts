@@ -83,8 +83,8 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   },
 
   [HandRank.Straight]: ({ rankCards }) => {
-    const first = rankCards.at(0);
-    const last = rankCards.at(-1);
+    const first = rankCards[0];
+    const last = rankCards[rankCards.length - 1];
 
     assertCard(first);
     assertCard(last);
@@ -104,8 +104,8 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   }),
 
   [HandRank.FullHouse]: ({ rankCards }) => {
-    const first = rankCards.at(0);
-    const last = rankCards.at(-1);
+    const first = rankCards[0];
+    const last = rankCards[rankCards.length - 1];
 
     assertCard(first);
     assertCard(last);
@@ -129,8 +129,8 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   },
 
   [HandRank.StraightFlush]: ({ rankCards }) => {
-    const first = rankCards.at(0);
-    const last = rankCards.at(-1);
+    const first = rankCards[0];
+    const last = rankCards[rankCards.length - 1];
 
     assertCard(first);
     assertCard(last);

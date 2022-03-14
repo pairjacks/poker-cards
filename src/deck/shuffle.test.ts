@@ -25,7 +25,7 @@ describe('shuffle', () => {
     const shuffled = await shuffle(deck);
 
     expect(shuffled).not.toEqual(deck);
-    expect(shuffled[0]).toEqual(deck.at(-1));
-    expect(shuffled.at(-1)).toEqual(deck[0]);
+    expect(shuffled[0]).toEqual(deck[deck.length - 1]);
+    expect(shuffled[shuffled.length - 1]).toEqual(deck[0]);
   });
 });
