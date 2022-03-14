@@ -23,9 +23,9 @@
     "test": "jest",
     "test:mutation": "stryker run",
     "lint": "tsc && eslint . --ext .ts,.js",
-    "prebuild": "rm -rf temp && rm -rf dist",
+    "prebuild": "rm -rf tmp && rm -rf dist",
     "build": "tsc -P ./tsconfig.declarations.json && rollup -c --environment BUILD:production",
-    "postbuild": "rm -rf temp"
+    "postbuild": "rm -rf tmp"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "21.0.2",

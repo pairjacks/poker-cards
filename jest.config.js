@@ -1,6 +1,4 @@
-import type { Config } from '@jest/types';
-
-const config: Config.InitialOptions = {
+const config = {
   transform: { '^.+\\.[jt]s$': '@swc/jest' },
   testRegex: '^.+\\.test\\.[jt]s?$',
   collectCoverageFrom: ['src/**/*'],
@@ -12,4 +10,4 @@ const config: Config.InitialOptions = {
   ],
 };
 
-export default config;
+module.exports = config;

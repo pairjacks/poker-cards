@@ -15,7 +15,7 @@ export default [
     plugins: [resolve({ extensions }), commonjs(), swc()],
   },
   {
-    input: './temp/index.d.ts',
+    input: './tmp/index.d.ts',
     output: [{ file: './dist/index.d.ts', format: 'es' }],
     plugins: [dts()],
   },

@@ -11,7 +11,7 @@ module.exports = {
   coverageAnalysis: 'all',
   jest: {
     projectType: 'custom',
-    config: './jest.config.ts',
+    config: require('./jest.config.js'),
     enableFindRelatedTests: true,
   },
 };
