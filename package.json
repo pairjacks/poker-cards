@@ -52,6 +52,7 @@
     "eslint-plugin-tsdoc": "0.2.14",
     "jest": "27.5.1",
     "prettier": "2.5.1",
+    "regenerator-runtime": "0.13.9",
     "rollup": "2.70.0",
     "rollup-plugin-dts": "4.2.0",
     "rollup-plugin-swc": "0.2.1",
