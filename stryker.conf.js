@@ -6,7 +6,7 @@ module.exports = {
     '!src/**/constants.ts',
     '!src/**/__fixtures__/*',
   ],
-  plugins: ['@stryker-mutator/jest-runner'], 
+  plugins: ['@stryker-mutator/jest-runner'],
   testRunner: 'jest',
   reporters: ['progress', 'clear-text', 'html'],
   coverageAnalysis: 'all',

@@ -5,6 +5,8 @@
     }
   },
   "env": {
+    "targets": { "node": "14" },
+    "mode": "usage",
     "coreJs": 3
   }
 }

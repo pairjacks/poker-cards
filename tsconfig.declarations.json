@@ -4,9 +4,7 @@
     "noEmit": false,
     "declaration": true,
     "declarationDir": "./tmp",
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
