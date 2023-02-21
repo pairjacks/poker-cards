@@ -91,11 +91,11 @@ export const extractFlush: HandExtractor = (cards) => {
 };
 
 export const extractFullHouse: HandExtractor = (cards) => {
-  const { rankCards: tok } = extractThreeOfAKind(cards) || {
+  const { rankCards: tok } = extractThreeOfAKind(cards) ?? {
     rankCards: null,
   };
 
-  const pair = getSortedFaceGroups(omitAndSort(cards, tok || []))[0]?.slice(
+  const pair = getSortedFaceGroups(omitAndSort(cards, tok ?? []))[0]?.slice(
     0,
     2,
   );
@@ -117,7 +117,7 @@ export const extractFourOfAKind: HandExtractor = (cards) => {
 
 export const extractStraightFlush: HandExtractor = (cards) => {
   const candidate = getSortedSuitGroups(
-    getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 3) ||
+    getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 3) ??
       [],
   )
     .find((group) => group.length > 3)
@@ -144,7 +144,7 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 };
 
 export const extractRoyalFlush: HandExtractor = (cards) => {
-  const { rankCards, kickerCards: kickers } = extractStraightFlush(cards) || {
+  const { rankCards, kickerCards: kickers } = extractStraightFlush(cards) ?? {
     rankCards: null,
     kickerCards: [],
   };

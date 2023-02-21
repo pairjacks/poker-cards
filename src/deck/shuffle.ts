@@ -1,13 +1,5 @@
 import type { Card, Cards } from '../card/types';
 
-export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
-
-export type ShuffleFunction = (cards: Card[]) => Promise<Cards>;
-
-export type ShuffleFunctionCreator = (
-  randomIntGenerator: RandomIntGenerator,
-) => ShuffleFunction;
-
 /**
  * Provide a naive Math.random based generator.
  * @param min - minimum int value
@@ -22,30 +14,23 @@ export const randomIntNaive: RandomIntGenerator = (min, max) =>
  * Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d
  * @param randomIntGenerator - an async random integer generator
  */
-export const createFisherYatesStackShuffle: ShuffleFunctionCreator =
-  (randomIntGenerator) => (arr) =>
-    Promise.all(arr.map((_, i) => randomIntGenerator(0, arr.length - i))).then(
-      (randomInts) => {
-        for (const i of randomInts) {
-          const picked = arr.splice(i, 1)[0];
+export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
+  randomIntGenerator,
+) => {
+  return function shuffleFn(arr) {
+    const futureInts = arr.map((_, i) => randomIntGenerator(0, arr.length - i));
 
-          if (picked) arr.push(picked);
-        }
+    return Promise.all(futureInts).then((ints) => {
+      for (const i of ints) {
+        const picked = arr.splice(i, 1)[0];
 
-        return arr;
-      },
-    );
+        if (picked) arr.push(picked);
+      }
 
-export type DeckShuffler = (deck: Cards) => Promise<Cards>;
-
-/**
- * Create a non-mutating async shuffle function wrapper
- * @param shuffleFn - an async shuffle function
- */
-export const createDeckShuffler =
-  (shuffleFn: ShuffleFunction): DeckShuffler =>
-  (deck) =>
-    shuffleFn([...deck]);
+      return arr;
+    });
+  };
+};
 
 /**
  * Provide a default shuffler using naive Math.random int generator
@@ -53,3 +38,23 @@ export const createDeckShuffler =
 export const shuffleDeckNaive: DeckShuffler = createDeckShuffler(
   createFisherYatesStackShuffle(randomIntNaive),
 );
+
+/**
+ * Create a non-mutating async shuffle function wrapper
+ * @param shuffleFn - an async shuffle function
+ */
+export function createDeckShuffler(shuffleFn: ShuffleFunction): DeckShuffler {
+  return function shuffle(deck) {
+    return shuffleFn([...deck]);
+  };
+}
+
+export type DeckShuffler = (deck: Cards) => Promise<Cards>;
+
+export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
+
+export type ShuffleFunction = (cards: Card[]) => Promise<Cards>;
+
+export type ShuffleFunctionCreator = (
+  randomIntGenerator: RandomIntGenerator,
+) => ShuffleFunction;

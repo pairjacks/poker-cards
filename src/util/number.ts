@@ -1,8 +1,7 @@
-export const clamp = (min: number, max: number, x: number): number =>
-  Math.min(max, Math.max(x, min));
+export function clamp(min: number, max: number, x: number) {
+  return Math.min(max, Math.max(x, min));
+}
 
-export const isInRangeInclusive = (
-  min: number,
-  max: number,
-  x: number,
-): boolean => x >= min && x <= max;
+export function isInRangeInclusive(min: number, max: number, x: number) {
+  return x >= min && x <= max;
+}

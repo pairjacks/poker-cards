@@ -18,6 +18,7 @@ const testFilePatterns = (extensions = '*') =>
 module.exports = {
   root: true,
   env: { es6: true, node: true },
+  reportUnusedDisableDirectives: true,
   settings: {
     'import/parsers': { '@typescript-eslint/parser': ['.ts'] },
     'import/resolver': {
@@ -67,6 +68,7 @@ module.exports = {
       extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:@typescript-eslint/strict',
       ],
       rules: {
         'camelcase': 'off',

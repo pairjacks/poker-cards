@@ -10,32 +10,6 @@ import type { HandComparisonResult } from './types';
  * all hands. They return the index of the highest hand, or -1 if the highest
  * cannot be determined
  */
-type TieBreaker = (results: readonly HandComparisonResult[]) => number[];
-
-// Assumes xs are sorted highest first
-const indecesWithHighestNumber = (xss: readonly (readonly number[])[]) => {
-  const maxLength = Math.min(...xss.map((xs) => xs.length));
-  let itr = 0;
-
-  while (itr < maxLength) {
-    const topVals = xss.map((xs) => xs[itr]).filter(isFiniteNumber);
-    const maxTopVal = Math.max(...topVals);
-    const indeces = topVals.reduce((acc, curr, index) => {
-      if (curr === maxTopVal) acc.push(index);
-
-      return acc;
-    }, [] as number[]);
-
-    if (indeces.length < xss.length) return indeces;
-
-    itr += 1;
-  }
-
-  return xss.map((_, index) => index);
-};
-
-const indecesWithHighestFace = (cardChunks: readonly Cards[]) =>
-  indecesWithHighestNumber(cardChunks.map((cards) => cards.map(getFaceValue)));
 
 const highestKicker: TieBreaker = (results) =>
   indecesWithHighestFace(results.map(({ hand }) => hand.kickerCards));
@@ -77,3 +51,33 @@ export const tieBreakers: { [key in HandRank]: TieBreaker } = {
   // have no kickers.
   [HandRank.RoyalFlush]: alwaysTied,
 };
+
+// Assumes xs are sorted highest first
+function indecesWithHighestNumber(xss: readonly (readonly number[])[]) {
+  const maxLength = Math.min(...xss.map((xs) => xs.length));
+  let itr = 0;
+
+  while (itr < maxLength) {
+    const topVals = xss.map((xs) => xs[itr]).filter(isFiniteNumber);
+    const maxTopVal = Math.max(...topVals);
+    const indeces = topVals.reduce<number[]>((acc, curr, index) => {
+      if (curr === maxTopVal) acc.push(index);
+
+      return acc;
+    }, []);
+
+    if (indeces.length < xss.length) return indeces;
+
+    itr += 1;
+  }
+
+  return xss.map((_, index) => index);
+}
+
+function indecesWithHighestFace(cardChunks: readonly Cards[]) {
+  return indecesWithHighestNumber(
+    cardChunks.map((cards) => cards.map(getFaceValue)),
+  );
+}
+
+type TieBreaker = (results: readonly HandComparisonResult[]) => number[];

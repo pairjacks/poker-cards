@@ -2,19 +2,11 @@ import { Suit, Face } from '../card/constants';
 
 import type { Card, Cards } from '../card/types';
 
-export type DeckOrder = 'ndo' | 'value';
-
-export interface CreateDeckOptions {
-  order?: DeckOrder;
-}
-
 /**
  * Creates a 52 card deck without Jokers, sorted by suite and face.
  * Index 0 represents the top of a face down deck
  */
-export const createDeck = ({
-  order = 'ndo',
-}: CreateDeckOptions = {}): Cards => {
+export function createDeck({ order = 'ndo' }: CreateDeckOptions = {}) {
   switch (order) {
     case 'ndo':
       return createDeckNdo();
@@ -23,16 +15,27 @@ export const createDeck = ({
     default:
       throw new Error(`Unknown deck order ${String(order)}`);
   }
-};
+}
 
-const createDeckValue = (): Cards => Object.values(Suit).flatMap(createSuit);
+export type DeckOrder = 'ndo' | 'value';
 
-const createDeckNdo = (): Cards => [
-  ...createSuit(Suit.Hearts),
-  ...createSuit(Suit.Clubs),
-  ...createSuit(Suit.Diamonds).reverse(),
-  ...createSuit(Suit.Spades).reverse(),
-];
+export interface CreateDeckOptions {
+  order?: DeckOrder;
+}
 
-const createSuit = (suit: Suit): Card[] =>
-  Object.values(Face).map((face) => [face, suit]);
+function createDeckValue(): Cards {
+  return Object.values(Suit).flatMap(createSuit);
+}
+
+function createDeckNdo(): Cards {
+  return [
+    ...createSuit(Suit.Hearts),
+    ...createSuit(Suit.Clubs),
+    ...createSuit(Suit.Diamonds).reverse(),
+    ...createSuit(Suit.Spades).reverse(),
+  ];
+}
+
+function createSuit(suit: Suit) {
+  return Object.values(Face).map((face): Card => [face, suit]);
+}

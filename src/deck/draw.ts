@@ -2,11 +2,6 @@ import { clamp } from '../util/number';
 
 import type { Cards } from '../card/types';
 
-export interface DeckDrawResult {
-  readonly cards: Cards;
-  readonly deck: Cards;
-}
-
 /**
  * Draws n cards from deck without mutating the deck. Returned card order tries
  * to represent drawing cards one-by-one, as opposed to cutting off a chunk of
@@ -14,7 +9,7 @@ export interface DeckDrawResult {
  * @param deck - the deck to draw from
  * @param count - the number of cards to draw
  */
-export const drawCardsFromDeck = (deck: Cards, count = 1): DeckDrawResult => {
+export function drawCardsFromDeck(deck: Cards, count = 1): DeckDrawResult {
   const drawCount = clamp(0, deck.length, count);
 
   if (!deck.length || !drawCount) return { deck, cards: [] };
@@ -30,4 +25,9 @@ export const drawCardsFromDeck = (deck: Cards, count = 1): DeckDrawResult => {
   const cards = nextDeck.splice(0, drawCount).reverse();
 
   return { cards, deck: nextDeck };
-};
+}
+
+export interface DeckDrawResult {
+  readonly cards: Cards;
+  readonly deck: Cards;
+}

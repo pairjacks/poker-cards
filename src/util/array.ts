@@ -3,27 +3,30 @@
 // ...By generally takes a value function (x) => unknown
 
 // asymmetrical difference
-export const differenceWith = <X, Y>(
+export function differenceWith<X, Y>(
   predicate: (x: Readonly<X>, y: Readonly<Y>) => boolean,
   xs: readonly X[],
   ys: readonly Y[],
-): X[] => xs.filter((x) => !ys.find((y) => predicate(x, y)));
+) {
+  return xs.filter((x) => !ys.find((y) => predicate(x, y)));
+}
 
-export const uniqBy = <X>(
+export function uniqBy<X>(
   value: (x: Readonly<X>) => unknown,
   xs: readonly X[],
-): X[] =>
-  xs.reduce((acc, x) => {
+) {
+  return xs.reduce<X[]>((acc, x) => {
     if (!acc.find((a) => value(a) === value(x))) acc.push(x);
 
     return acc;
-  }, [] as X[]);
+  }, []);
+}
 
-export const groupBy = <X>(
+export function groupBy<X>(
   value: (x: Readonly<X>) => unknown,
   xs: readonly X[],
-): { [key: string]: X[] } =>
-  xs.reduce((acc, x) => {
+) {
+  return xs.reduce<Record<string, X[]>>((acc, x) => {
     const key = String(value(x));
     const curr = acc[key];
 
@@ -31,13 +34,14 @@ export const groupBy = <X>(
     else acc[key] = [x];
 
     return acc;
-  }, {} as { [key: string]: X[] });
+  }, {});
+}
 
-export const chunkPreviousWith = <X>(
+export function chunkPreviousWith<X>(
   predicate: (current: Readonly<X>, previous: Readonly<X>) => boolean,
   xs: readonly X[],
-): X[][] =>
-  xs.reduce((chunks, item) => {
+) {
+  return xs.reduce<X[][]>((chunks, item) => {
     const currentChunk = chunks[chunks.length - 1];
 
     if (!currentChunk) return [[item]];
@@ -48,9 +52,12 @@ export const chunkPreviousWith = <X>(
     else chunks.push([item]);
 
     return chunks;
-  }, [] as X[][]);
+  }, []);
+}
 
-export const allEqualBy = <X>(
+export function allEqualBy<X>(
   value: (x: Readonly<X>) => unknown,
   xs: readonly X[],
-): boolean => uniqBy(value, xs).length === 1;
+) {
+  return uniqBy(value, xs).length === 1;
+}

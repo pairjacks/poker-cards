@@ -7,10 +7,37 @@ import { getFaceValue, getSuitValue } from '../card/value';
 import type { Card, Cards } from '../card/types';
 import type { Hand, HandDescription } from './types';
 
-type HandDescriber = (hand: Hand) => HandDescription;
+/**
+ * Describes pocket cards in words, e.g. "Pocket Aces"
+ * @param pocketCards - Player's pocket cards
+ */
+export function describePocketCards(pocketCards: Cards) {
+  const [first, ...rest] = pocketCards;
 
-/** Plural forms for card face values, [One, Many] */
-type PluralForms = [string, string];
+  if (!first) return '';
+
+  if (!rest.length) return facePlural(first);
+
+  if (allEqualBy(getFaceValue, pocketCards)) {
+    return `Pocket ${facePlural(first, 2)}`;
+  }
+
+  const sorted = getSortedCards(pocketCards);
+  const suitStatus = allEqualBy(getSuitValue, pocketCards)
+    ? 'Suited'
+    : 'Offsuit';
+
+  return `${cardList(sorted)} ${suitStatus}`;
+}
+
+/**
+ * Describes a hand in words,
+ * e.g. rank: 'Two pair, Aces over Kings', kickers: 'Jack kicker'
+ * @param hand - Player's hand
+ */
+export function describeHand(hand: Hand): HandDescription {
+  return handDescribers[hand.rank](hand);
+}
 
 const faceTextPluralForms: { [key in Face]: PluralForms } = {
   [Face.Two]: ['Two', 'Twos'],
@@ -28,16 +55,19 @@ const faceTextPluralForms: { [key in Face]: PluralForms } = {
   [Face.Ace]: ['Ace', 'Aces'],
 };
 
-const facePlural = (card: Card, count = 1) =>
-  faceTextPluralForms[card[0]][count > 1 ? 1 : 0];
+function facePlural(card: Card, count = 1) {
+  return faceTextPluralForms[card[0]][count > 1 ? 1 : 0];
+}
 
-const cardList = (cards: Cards) =>
-  cards.map((card) => facePlural(card)).join('-');
+function cardList(cards: Cards) {
+  return cards.map((card) => facePlural(card)).join('-');
+}
 
-const kickerList = (kickers: Cards) =>
-  kickers.length
+function kickerList(kickers: Cards) {
+  return kickers.length
     ? `${cardList(kickers)} ${kickers.length > 1 ? 'kickers' : 'kicker'}`
     : '';
+}
 
 function assertCard(card?: Card): asserts card is Card {
   if (!card) throw new Error('Card expected');
@@ -144,33 +174,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
   [HandRank.RoyalFlush]: () => ({ rank: 'Royal flush', kickers: '' }),
 };
 
-/**
- * Describes pocket cards in words, e.g. "Pocket Aces"
- * @param pocketCards - Player's pocket cards
- */
-export const describePocketCards = (pocketCards: Cards): string => {
-  const [first, ...rest] = pocketCards;
+type HandDescriber = (hand: Hand) => HandDescription;
 
-  if (!first) return '';
-
-  if (!rest.length) return facePlural(first);
-
-  if (allEqualBy(getFaceValue, pocketCards)) {
-    return `Pocket ${facePlural(first, 2)}`;
-  }
-
-  const sorted = getSortedCards(pocketCards);
-  const suitStatus = allEqualBy(getSuitValue, pocketCards)
-    ? 'Suited'
-    : 'Offsuit';
-
-  return `${cardList(sorted)} ${suitStatus}`;
-};
-
-/**
- * Describes a hand in words,
- * e.g. rank: 'Two pair, Aces over Kings', kickers: 'Jack kicker'
- * @param hand - Player's hand
- */
-export const describeHand = (hand: Hand): HandDescription =>
-  handDescribers[hand.rank](hand);
+/** Plural forms for card face values, [One, Many] */
+type PluralForms = [string, string];

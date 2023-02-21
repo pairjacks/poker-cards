@@ -1,5 +1,7 @@
-export const isNotNullish = <T>(val: T): val is Exclude<T, null | undefined> =>
-  typeof val !== 'undefined' && val !== null;
+export function isNotNullish<T>(val: T): val is Exclude<T, null | undefined> {
+  return typeof val !== 'undefined' && val !== null;
+}
 
-export const isFiniteNumber = (val: unknown): val is number =>
-  Number.isFinite(val);
+export function isFiniteNumber(val: unknown): val is number {
+  return Number.isFinite(val);
+}
