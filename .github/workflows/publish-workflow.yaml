@@ -13,17 +13,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
+        uses: pnpm/action-setup@v2
         with:
           version: latest
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
+          node-version-file: .nvmrc
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
       - name: Install packages
-        run: pnpm i
+        run: pnpm i --frozen-lockfile
       - name: Run test
         run: pnpm t
       - name: Run lint
