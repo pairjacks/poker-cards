@@ -1,68 +1,66 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Suit, Face } from "../card/constants.js";
 import { findHighestHands } from "./compare.js";
-import { HandRank } from "./constants.js";
 
-import type { HandCandidate } from "./types.js";
+import type { HandCandidate, HandRank } from "./types.js";
 
 void describe("hand/compare", () => {
 	void describe("findHighestHands", () => {
 		void it("should find natural highest hands", () => {
 			const twoPair = {
 				pocketCards: [
-					[Face.Four, Suit.Clubs],
-					[Face.Jack, Suit.Diamonds],
+					["4", "c"],
+					["j", "d"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Eight, Suit.Spades],
-					[Face.Six, Suit.Clubs],
-					[Face.Jack, Suit.Clubs],
+					["6", "d"],
+					["2", "d"],
+					["8", "s"],
+					["6", "c"],
+					["j", "c"],
 				],
 			} as const;
 
 			const fullHouse = {
 				pocketCards: [
-					[Face.Three, Suit.Spades],
-					[Face.Four, Suit.Diamonds],
+					["3", "s"],
+					["4", "d"],
 				],
 				communityCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
-					[Face.Jack, Suit.Diamonds],
-					[Face.Jack, Suit.Hearts],
+					["3", "c"],
+					["3", "d"],
+					["5", "d"],
+					["j", "d"],
+					["j", "h"],
 				],
 			} as const;
 
 			const fourOfAKind = {
 				pocketCards: [
-					[Face.Eight, Suit.Spades],
-					[Face.Jack, Suit.Diamonds],
+					["8", "s"],
+					["j", "d"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Six, Suit.Clubs],
-					[Face.Six, Suit.Hearts],
-					[Face.Six, Suit.Spades],
+					["6", "d"],
+					["2", "d"],
+					["6", "c"],
+					["6", "h"],
+					["6", "s"],
 				],
 			} as const;
 
 			const royalFlush = {
 				pocketCards: [
-					[Face.King, Suit.Clubs],
-					[Face.Queen, Suit.Clubs],
+					["k", "c"],
+					["q", "c"],
 				],
 				communityCards: [
-					[Face.Ace, Suit.Clubs],
-					[Face.Ten, Suit.Clubs],
-					[Face.Eight, Suit.Spades],
-					[Face.Jack, Suit.Clubs],
-					[Face.Jack, Suit.Spades],
+					["a", "c"],
+					["t", "c"],
+					["8", "s"],
+					["j", "c"],
+					["j", "s"],
 				],
 			} as const;
 
@@ -72,12 +70,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: royalFlush,
 						candidateIndex: 2,
-						rank: HandRank.RoyalFlush,
+						rank: "royalFlush",
 					},
 					{
 						candidate: royalFlush,
 						candidateIndex: 4,
-						rank: HandRank.RoyalFlush,
+						rank: "royalFlush",
 					},
 				],
 			);
@@ -86,43 +84,43 @@ void describe("hand/compare", () => {
 		void it("should find highest ties when all ranks are same", () => {
 			const straightEightSpadesHigh = {
 				pocketCards: [
-					[Face.Eight, Suit.Spades],
-					[Face.Seven, Suit.Diamonds],
+					["8", "s"],
+					["7", "d"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Hearts],
-					[Face.Five, Suit.Clubs],
-					[Face.Four, Suit.Diamonds],
-					[Face.Three, Suit.Diamonds],
-					[Face.Two, Suit.Clubs],
+					["6", "h"],
+					["5", "c"],
+					["4", "d"],
+					["3", "d"],
+					["2", "c"],
 				],
 			} as const;
 
 			const straightEightClubsHigh = {
 				pocketCards: [
-					[Face.Eight, Suit.Clubs],
-					[Face.Seven, Suit.Hearts],
+					["8", "c"],
+					["7", "h"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Five, Suit.Spades],
-					[Face.Four, Suit.Hearts],
-					[Face.Three, Suit.Hearts],
-					[Face.Two, Suit.Spades],
+					["6", "d"],
+					["5", "s"],
+					["4", "h"],
+					["3", "h"],
+					["2", "s"],
 				],
 			} as const;
 
 			const straightAceSpadesLow = {
 				pocketCards: [
-					[Face.Five, Suit.Spades],
-					[Face.Four, Suit.Hearts],
+					["5", "s"],
+					["4", "h"],
 				],
 				communityCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Two, Suit.Spades],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Eight, Suit.Hearts],
+					["3", "h"],
+					["2", "s"],
+					["a", "s"],
+					["8", "h"],
+					["8", "h"],
 				],
 			} as const;
 
@@ -132,12 +130,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: straightEightSpadesHigh,
 						candidateIndex: 0,
-						rank: HandRank.Straight,
+						rank: "straight",
 					},
 					{
 						candidate: straightEightClubsHigh,
 						candidateIndex: 2,
-						rank: HandRank.Straight,
+						rank: "straight",
 					},
 				],
 			);
@@ -146,29 +144,29 @@ void describe("hand/compare", () => {
 		void it("should resolve to high card", () => {
 			const highCardHighKicker = {
 				pocketCards: [
-					[Face.Jack, Suit.Clubs],
-					[Face.Eight, Suit.Spades],
+					["j", "c"],
+					["8", "s"],
 				],
 				communityCards: [
-					[Face.Seven, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Three, Suit.Clubs],
-					[Face.Four, Suit.Clubs],
-					[Face.Queen, Suit.Diamonds],
+					["7", "d"],
+					["2", "d"],
+					["3", "c"],
+					["4", "c"],
+					["q", "d"],
 				],
 			} as const;
 
 			const highCardLowKicker = {
 				pocketCards: [
-					[Face.Jack, Suit.Clubs],
-					[Face.Eight, Suit.Spades],
+					["j", "c"],
+					["8", "s"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Three, Suit.Clubs],
-					[Face.Four, Suit.Clubs],
-					[Face.Queen, Suit.Diamonds],
+					["6", "d"],
+					["2", "d"],
+					["3", "c"],
+					["4", "c"],
+					["q", "d"],
 				],
 			} as const;
 
@@ -178,36 +176,36 @@ void describe("hand/compare", () => {
 					{
 						candidate: highCardHighKicker,
 						candidateIndex: 0,
-						rank: HandRank.HighCard,
+						rank: "highCard",
 					},
 				],
 			);
 
 			const highCardEqualA = {
 				pocketCards: [
-					[Face.Jack, Suit.Clubs],
-					[Face.Eight, Suit.Spades],
+					["j", "c"],
+					["8", "s"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Three, Suit.Clubs],
-					[Face.Four, Suit.Clubs],
-					[Face.Queen, Suit.Diamonds],
+					["6", "d"],
+					["2", "d"],
+					["3", "c"],
+					["4", "c"],
+					["q", "d"],
 				],
 			} as const;
 
 			const highCardEqualB = {
 				pocketCards: [
-					[Face.Jack, Suit.Spades],
-					[Face.Eight, Suit.Diamonds],
+					["j", "s"],
+					["8", "d"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Clubs],
-					[Face.Two, Suit.Hearts],
-					[Face.Three, Suit.Spades],
-					[Face.Four, Suit.Hearts],
-					[Face.Queen, Suit.Spades],
+					["6", "c"],
+					["2", "h"],
+					["3", "s"],
+					["4", "h"],
+					["q", "s"],
 				],
 			} as const;
 
@@ -217,12 +215,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: highCardEqualA,
 						candidateIndex: 0,
-						rank: HandRank.HighCard,
+						rank: "highCard",
 					},
 					{
 						candidate: highCardEqualB,
 						candidateIndex: 1,
-						rank: HandRank.HighCard,
+						rank: "highCard",
 					},
 				],
 			);
@@ -231,29 +229,29 @@ void describe("hand/compare", () => {
 		void it("should resolve pair", () => {
 			const pairThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Five, Suit.Clubs],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["k", "d"],
+					["5", "c"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const pairFives = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Five, Suit.Clubs],
+					["3", "h"],
+					["5", "c"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
-					[Face.Ace, Suit.Hearts],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["k", "d"],
+					["5", "d"],
+					["a", "h"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -263,36 +261,36 @@ void describe("hand/compare", () => {
 					{
 						candidate: pairFives,
 						candidateIndex: 1,
-						rank: HandRank.Pair,
+						rank: "pair",
 					},
 				],
 			);
 
 			const pairThreesHighKicker = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Five, Suit.Clubs],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["k", "d"],
+					["5", "c"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const pairThreesLowKicker = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "h"],
+					["3", "s"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Five, Suit.Spades],
-					[Face.Ace, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["4", "h"],
+					["5", "s"],
+					["a", "c"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -302,36 +300,36 @@ void describe("hand/compare", () => {
 					{
 						candidate: pairThreesHighKicker,
 						candidateIndex: 1,
-						rank: HandRank.Pair,
+						rank: "pair",
 					},
 				],
 			);
 
 			const pairEqualA = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Five, Suit.Clubs],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["k", "d"],
+					["5", "c"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const pairEqualB = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "h"],
+					["3", "s"],
 				],
 				communityCards: [
-					[Face.King, Suit.Hearts],
-					[Face.Five, Suit.Spades],
-					[Face.Ace, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["k", "h"],
+					["5", "s"],
+					["a", "c"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -341,12 +339,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: pairEqualA,
 						candidateIndex: 0,
-						rank: HandRank.Pair,
+						rank: "pair",
 					},
 					{
 						candidate: pairEqualB,
 						candidateIndex: 1,
-						rank: HandRank.Pair,
+						rank: "pair",
 					},
 				],
 			);
@@ -355,29 +353,29 @@ void describe("hand/compare", () => {
 		void it("should resolve two pair", () => {
 			const twoPairFivesOverThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.Five, Suit.Diamonds],
-					[Face.Five, Suit.Clubs],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["5", "d"],
+					["5", "c"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const twoPairSixesOverThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "h"],
+					["3", "s"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Six, Suit.Clubs],
-					[Face.Ace, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["6", "d"],
+					["6", "c"],
+					["a", "c"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -387,22 +385,22 @@ void describe("hand/compare", () => {
 					{
 						candidate: twoPairSixesOverThrees,
 						candidateIndex: 1,
-						rank: HandRank.TwoPair,
+						rank: "twoPair",
 					},
 				],
 			);
 
 			const twoPairFivesOverFours = {
 				pocketCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Four, Suit.Spades],
+					["4", "h"],
+					["4", "s"],
 				],
 				communityCards: [
-					[Face.Five, Suit.Hearts],
-					[Face.Five, Suit.Spades],
-					[Face.Ace, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["5", "h"],
+					["5", "s"],
+					["a", "c"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -412,36 +410,36 @@ void describe("hand/compare", () => {
 					{
 						candidate: twoPairFivesOverFours,
 						candidateIndex: 1,
-						rank: HandRank.TwoPair,
+						rank: "twoPair",
 					},
 				],
 			);
 
 			const twoPairFoursOverThreesHighKicker = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Diamonds],
-					[Face.Four, Suit.Clubs],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["4", "d"],
+					["4", "c"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const twoPairFoursOverThreesLowKicker = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "h"],
+					["3", "s"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Four, Suit.Spades],
-					[Face.King, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["4", "h"],
+					["4", "s"],
+					["k", "c"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -451,36 +449,36 @@ void describe("hand/compare", () => {
 					{
 						candidate: twoPairFoursOverThreesHighKicker,
 						candidateIndex: 1,
-						rank: HandRank.TwoPair,
+						rank: "twoPair",
 					},
 				],
 			);
 
 			const twoPairEqualA = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Diamonds],
-					[Face.Four, Suit.Clubs],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["4", "d"],
+					["4", "c"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const twoPairEqualB = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "h"],
+					["3", "s"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Four, Suit.Spades],
-					[Face.Ace, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["4", "h"],
+					["4", "s"],
+					["a", "c"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -490,12 +488,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: twoPairEqualA,
 						candidateIndex: 0,
-						rank: HandRank.TwoPair,
+						rank: "twoPair",
 					},
 					{
 						candidate: twoPairEqualB,
 						candidateIndex: 1,
-						rank: HandRank.TwoPair,
+						rank: "twoPair",
 					},
 				],
 			);
@@ -508,29 +506,29 @@ void describe("hand/compare", () => {
 
 			const threeOfAKindThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Three, Suit.Spades],
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["k", "d"],
+					["3", "s"],
+					["a", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const threeOfAKindFives = {
 				pocketCards: [
-					[Face.Five, Suit.Hearts],
-					[Face.Five, Suit.Clubs],
+					["5", "h"],
+					["5", "c"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
-					[Face.Ace, Suit.Hearts],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["k", "d"],
+					["5", "d"],
+					["a", "h"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -540,7 +538,7 @@ void describe("hand/compare", () => {
 					{
 						candidate: threeOfAKindFives,
 						candidateIndex: 1,
-						rank: HandRank.ThreeOfAKind,
+						rank: "threeOfAKind",
 					},
 				],
 			);
@@ -549,29 +547,29 @@ void describe("hand/compare", () => {
 		void it("should resolve straight", () => {
 			const straightEightSpadesHigh = {
 				pocketCards: [
-					[Face.Eight, Suit.Spades],
-					[Face.Six, Suit.Hearts],
+					["8", "s"],
+					["6", "h"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Diamonds],
-					[Face.Two, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
-					[Face.Five, Suit.Clubs],
-					[Face.Seven, Suit.Diamonds],
+					["4", "d"],
+					["2", "c"],
+					["3", "d"],
+					["5", "c"],
+					["7", "d"],
 				],
 			} as const;
 
 			const straightAceSpadesLow = {
 				pocketCards: [
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
+					["a", "s"],
+					["8", "h"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Two, Suit.Spades],
-					[Face.Three, Suit.Hearts],
-					[Face.Five, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
+					["4", "h"],
+					["2", "s"],
+					["3", "h"],
+					["5", "s"],
+					["8", "h"],
 				],
 			} as const;
 
@@ -581,22 +579,22 @@ void describe("hand/compare", () => {
 					{
 						candidate: straightEightSpadesHigh,
 						candidateIndex: 0,
-						rank: HandRank.Straight,
+						rank: "straight",
 					},
 				],
 			);
 
 			const straightEightClubsHigh = {
 				pocketCards: [
-					[Face.Eight, Suit.Clubs],
-					[Face.Six, Suit.Diamonds],
+					["8", "c"],
+					["6", "d"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Two, Suit.Spades],
-					[Face.Three, Suit.Hearts],
-					[Face.Five, Suit.Spades],
-					[Face.Seven, Suit.Hearts],
+					["4", "h"],
+					["2", "s"],
+					["3", "h"],
+					["5", "s"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -606,12 +604,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: straightEightClubsHigh,
 						candidateIndex: 0,
-						rank: HandRank.Straight,
+						rank: "straight",
 					},
 					{
 						candidate: straightEightSpadesHigh,
 						candidateIndex: 1,
-						rank: HandRank.Straight,
+						rank: "straight",
 					},
 				],
 			);
@@ -620,29 +618,29 @@ void describe("hand/compare", () => {
 		void it("should resolve flush", () => {
 			const flushJackHighDiamonds = {
 				pocketCards: [
-					[Face.Jack, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
+					["j", "d"],
+					["5", "d"],
 				],
 				communityCards: [
-					[Face.Three, Suit.Diamonds],
-					[Face.Four, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Jack, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "d"],
+					["4", "d"],
+					["2", "d"],
+					["j", "h"],
+					["3", "s"],
 				],
 			} as const;
 
 			const flushNineHighHearts = {
 				pocketCards: [
-					[Face.Nine, Suit.Hearts],
-					[Face.Five, Suit.Hearts],
+					["9", "h"],
+					["5", "h"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Hearts],
-					[Face.Three, Suit.Hearts],
-					[Face.Two, Suit.Hearts],
-					[Face.Three, Suit.Clubs],
-					[Face.Nine, Suit.Diamonds],
+					["4", "h"],
+					["3", "h"],
+					["2", "h"],
+					["3", "c"],
+					["9", "d"],
 				],
 			} as const;
 
@@ -652,22 +650,22 @@ void describe("hand/compare", () => {
 					{
 						candidate: flushJackHighDiamonds,
 						candidateIndex: 0,
-						rank: HandRank.Flush,
+						rank: "flush",
 					},
 				],
 			);
 
 			const flushJackHighSpades = {
 				pocketCards: [
-					[Face.Jack, Suit.Spades],
-					[Face.Five, Suit.Spades],
+					["j", "s"],
+					["5", "s"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Spades],
-					[Face.Three, Suit.Spades],
-					[Face.Two, Suit.Spades],
-					[Face.Three, Suit.Diamonds],
-					[Face.Jack, Suit.Hearts],
+					["4", "s"],
+					["3", "s"],
+					["2", "s"],
+					["3", "d"],
+					["j", "h"],
 				],
 			} as const;
 
@@ -677,27 +675,27 @@ void describe("hand/compare", () => {
 					{
 						candidate: flushJackHighDiamonds,
 						candidateIndex: 0,
-						rank: HandRank.Flush,
+						rank: "flush",
 					},
 					{
 						candidate: flushJackHighSpades,
 						candidateIndex: 1,
-						rank: HandRank.Flush,
+						rank: "flush",
 					},
 				],
 			);
 
 			const flushNineHighDiamondsHigherInternal = {
 				pocketCards: [
-					[Face.Nine, Suit.Diamonds],
-					[Face.Eight, Suit.Diamonds],
+					["9", "d"],
+					["8", "d"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Diamonds],
-					[Face.Three, Suit.Diamonds],
-					[Face.Two, Suit.Diamonds],
-					[Face.Nine, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["4", "d"],
+					["3", "d"],
+					["2", "d"],
+					["9", "h"],
+					["3", "s"],
 				],
 			} as const;
 
@@ -707,7 +705,7 @@ void describe("hand/compare", () => {
 					{
 						candidate: flushNineHighDiamondsHigherInternal,
 						candidateIndex: 1,
-						rank: HandRank.Flush,
+						rank: "flush",
 					},
 				],
 			);
@@ -720,29 +718,29 @@ void describe("hand/compare", () => {
 
 			const fullHouseFivesOverThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.Five, Suit.Diamonds],
-					[Face.Five, Suit.Clubs],
-					[Face.Five, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["5", "d"],
+					["5", "c"],
+					["5", "s"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const fullHouseSixesOverThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Hearts],
-					[Face.Three, Suit.Spades],
+					["3", "h"],
+					["3", "s"],
 				],
 				communityCards: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Six, Suit.Clubs],
-					[Face.Six, Suit.Hearts],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["6", "d"],
+					["6", "c"],
+					["6", "h"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -752,7 +750,7 @@ void describe("hand/compare", () => {
 					{
 						candidate: fullHouseSixesOverThrees,
 						candidateIndex: 1,
-						rank: HandRank.FullHouse,
+						rank: "fullHouse",
 					},
 				],
 			);
@@ -765,29 +763,29 @@ void describe("hand/compare", () => {
 
 			const fourOfAKindThrees = {
 				pocketCards: [
-					[Face.Three, Suit.Clubs],
-					[Face.Three, Suit.Diamonds],
+					["3", "c"],
+					["3", "d"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Three, Suit.Spades],
-					[Face.Three, Suit.Hearts],
-					[Face.Eight, Suit.Hearts],
-					[Face.Seven, Suit.Diamonds],
+					["k", "d"],
+					["3", "s"],
+					["3", "h"],
+					["8", "h"],
+					["7", "d"],
 				],
 			} as const;
 
 			const fourOfAKindFives = {
 				pocketCards: [
-					[Face.Five, Suit.Hearts],
-					[Face.Five, Suit.Clubs],
+					["5", "h"],
+					["5", "c"],
 				],
 				communityCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
-					[Face.Five, Suit.Spades],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Seven, Suit.Hearts],
+					["k", "d"],
+					["5", "d"],
+					["5", "s"],
+					["8", "d"],
+					["7", "h"],
 				],
 			} as const;
 
@@ -797,7 +795,7 @@ void describe("hand/compare", () => {
 					{
 						candidate: fourOfAKindFives,
 						candidateIndex: 1,
-						rank: HandRank.FourOfAKind,
+						rank: "fourOfAKind",
 					},
 				],
 			);
@@ -806,29 +804,29 @@ void describe("hand/compare", () => {
 		void it("should resolve straight flush", () => {
 			const straightFlushEightHigh = {
 				pocketCards: [
-					[Face.Two, Suit.Clubs],
-					[Face.Six, Suit.Clubs],
+					["2", "c"],
+					["6", "c"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Clubs],
-					[Face.Three, Suit.Clubs],
-					[Face.Eight, Suit.Spades],
-					[Face.Five, Suit.Clubs],
-					[Face.Six, Suit.Spades],
+					["4", "c"],
+					["3", "c"],
+					["8", "s"],
+					["5", "c"],
+					["6", "s"],
 				],
 			} as const;
 
 			const straightFlushAceLow = {
 				pocketCards: [
-					[Face.Ace, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
+					["a", "s"],
+					["8", "h"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Spades],
-					[Face.Two, Suit.Spades],
-					[Face.Three, Suit.Spades],
-					[Face.Five, Suit.Spades],
-					[Face.Eight, Suit.Diamonds],
+					["4", "s"],
+					["2", "s"],
+					["3", "s"],
+					["5", "s"],
+					["8", "d"],
 				],
 			} as const;
 
@@ -838,36 +836,36 @@ void describe("hand/compare", () => {
 					{
 						candidate: straightFlushEightHigh,
 						candidateIndex: 0,
-						rank: HandRank.StraightFlush,
+						rank: "straightFlush",
 					},
 				],
 			);
 
 			const straightFlushSixHighClubs = {
 				pocketCards: [
-					[Face.Two, Suit.Clubs],
-					[Face.Six, Suit.Clubs],
+					["2", "c"],
+					["6", "c"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Clubs],
-					[Face.Three, Suit.Clubs],
-					[Face.Eight, Suit.Spades],
-					[Face.Five, Suit.Clubs],
-					[Face.Six, Suit.Spades],
+					["4", "c"],
+					["3", "c"],
+					["8", "s"],
+					["5", "c"],
+					["6", "s"],
 				],
 			} as const;
 
 			const straightFlushSixHighSpades = {
 				pocketCards: [
-					[Face.Two, Suit.Spades],
-					[Face.Six, Suit.Spades],
+					["2", "s"],
+					["6", "s"],
 				],
 				communityCards: [
-					[Face.Four, Suit.Spades],
-					[Face.Three, Suit.Spades],
-					[Face.Eight, Suit.Hearts],
-					[Face.Five, Suit.Spades],
-					[Face.Six, Suit.Hearts],
+					["4", "s"],
+					["3", "s"],
+					["8", "h"],
+					["5", "s"],
+					["6", "h"],
 				],
 			} as const;
 
@@ -877,12 +875,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: straightFlushSixHighClubs,
 						candidateIndex: 0,
-						rank: HandRank.StraightFlush,
+						rank: "straightFlush",
 					},
 					{
 						candidate: straightFlushSixHighSpades,
 						candidateIndex: 1,
-						rank: HandRank.StraightFlush,
+						rank: "straightFlush",
 					},
 				],
 			);
@@ -891,29 +889,29 @@ void describe("hand/compare", () => {
 		void it("should resolve royal flush", () => {
 			const royalFlushDiamonds = {
 				pocketCards: [
-					[Face.King, Suit.Diamonds],
-					[Face.Queen, Suit.Diamonds],
+					["k", "d"],
+					["q", "d"],
 				],
 				communityCards: [
-					[Face.Ace, Suit.Diamonds],
-					[Face.Ten, Suit.Diamonds],
-					[Face.Eight, Suit.Spades],
-					[Face.Jack, Suit.Diamonds],
-					[Face.Jack, Suit.Spades],
+					["a", "d"],
+					["t", "d"],
+					["8", "s"],
+					["j", "d"],
+					["j", "s"],
 				],
 			} as const;
 
 			const royalFlushSpades = {
 				pocketCards: [
-					[Face.King, Suit.Spades],
-					[Face.Queen, Suit.Spades],
+					["k", "s"],
+					["q", "s"],
 				],
 				communityCards: [
-					[Face.Ace, Suit.Spades],
-					[Face.Ten, Suit.Spades],
-					[Face.Eight, Suit.Spades],
-					[Face.Jack, Suit.Spades],
-					[Face.Jack, Suit.Spades],
+					["a", "s"],
+					["t", "s"],
+					["8", "s"],
+					["j", "s"],
+					["j", "s"],
 				],
 			} as const;
 
@@ -923,12 +921,12 @@ void describe("hand/compare", () => {
 					{
 						candidate: royalFlushDiamonds,
 						candidateIndex: 0,
-						rank: HandRank.RoyalFlush,
+						rank: "royalFlush",
 					},
 					{
 						candidate: royalFlushSpades,
 						candidateIndex: 1,
-						rank: HandRank.RoyalFlush,
+						rank: "royalFlush",
 					},
 				],
 			);

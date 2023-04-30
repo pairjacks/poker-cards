@@ -1,22 +1,22 @@
-export enum Face {
-	Ace = "Ace",
-	Two = "Two",
-	Three = "Three",
-	Four = "Four",
-	Five = "Five",
-	Six = "Six",
-	Seven = "Seven",
-	Eight = "Eight",
-	Nine = "Nine",
-	Ten = "Ten",
-	Jack = "Jack",
-	Queen = "Queen",
-	King = "King",
-}
+export const FACES = [
+	"a",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"t",
+	"j",
+	"q",
+	"k",
+] as const;
 
-export enum Suit {
-	Diamonds = "Diamonds",
-	Clubs = "Clubs",
-	Hearts = "Heart",
-	Spades = "Spades",
-}
+export const SUITS = [
+	"d", // diamonds
+	"c", // clubs
+	"h", // hearts
+	"s", // spades
+] as const;

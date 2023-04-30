@@ -30,10 +30,14 @@ module.exports = {
 		"curly": ["warn", "multi-line", "consistent"],
 		"no-console": "off",
 		"no-unreachable": "error",
+		"no-restricted-syntax": [
+			"warn",
+			{ selector: "TSEnumDeclaration", message: "Avoid using enums" },
+		],
 		"@typescript-eslint/consistent-type-definitions": ["warn", "type"],
 		"@typescript-eslint/consistent-type-imports": [
 			"error",
-			{ disallowTypeAnnotations: false },
+			{ disallowTypeAnnotations: true },
 		],
 		"@typescript-eslint/member-ordering": ["warn"],
 		"no-shadow": "off",

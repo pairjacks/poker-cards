@@ -1,7 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Face, Suit } from "../card/constants.js";
 import { extractHand } from "./extract.js";
 import { describePocketCards, describeHand } from "./describe.js";
 
@@ -10,31 +9,28 @@ void describe("hand/describe", () => {
 		void it("should describe pocket cards", () => {
 			assert.strictEqual(describePocketCards([]), "");
 
-			assert.strictEqual(
-				describePocketCards([[Face.Three, Suit.Diamonds]]),
-				"Three",
-			);
+			assert.strictEqual(describePocketCards([["3", "d"]]), "Three");
 
 			assert.strictEqual(
 				describePocketCards([
-					[Face.Ace, Suit.Clubs],
-					[Face.Two, Suit.Clubs],
+					["a", "c"],
+					["2", "c"],
 				]),
 				"Ace-Two Suited",
 			);
 
 			assert.strictEqual(
 				describePocketCards([
-					[Face.Two, Suit.Diamonds],
-					[Face.Two, Suit.Clubs],
+					["2", "d"],
+					["2", "c"],
 				]),
 				"Pocket Twos",
 			);
 
 			assert.strictEqual(
 				describePocketCards([
-					[Face.Eight, Suit.Diamonds],
-					[Face.King, Suit.Clubs],
+					["8", "d"],
+					["k", "c"],
 				]),
 				"King-Eight Offsuit",
 			);
@@ -56,7 +52,7 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [[Face.Ace, Suit.Clubs]],
+						pocketCards: [["a", "c"]],
 						communityCards: [],
 					}),
 				),
@@ -68,7 +64,7 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [[Face.Ace, Suit.Clubs]],
+						pocketCards: [["a", "c"]],
 						communityCards: [],
 					}),
 				),
@@ -79,8 +75,8 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Clubs],
-							[Face.Two, Suit.Clubs],
+							["a", "c"],
+							["2", "c"],
 						],
 						communityCards: [],
 					}),
@@ -92,10 +88,10 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Clubs],
-							[Face.Two, Suit.Clubs],
+							["a", "c"],
+							["2", "c"],
 						],
-						communityCards: [[Face.Seven, Suit.Clubs]],
+						communityCards: [["7", "c"]],
 					}),
 				),
 				{ rank: "Ace high", kickers: "Seven-Two kickers" },
@@ -105,12 +101,12 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Clubs],
-							[Face.Two, Suit.Diamonds],
+							["a", "c"],
+							["2", "d"],
 						],
 						communityCards: [
-							[Face.Ten, Suit.Spades],
-							[Face.Seven, Suit.Clubs],
+							["t", "s"],
+							["7", "c"],
 						],
 					}),
 				),
@@ -121,14 +117,14 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Clubs],
-							[Face.Two, Suit.Diamonds],
+							["a", "c"],
+							["2", "d"],
 						],
 						communityCards: [
-							[Face.Ten, Suit.Spades],
-							[Face.Seven, Suit.Clubs],
-							[Face.Jack, Suit.Clubs],
-							[Face.Three, Suit.Diamonds],
+							["t", "s"],
+							["7", "c"],
+							["j", "c"],
+							["3", "d"],
 						],
 					}),
 				),
@@ -141,8 +137,8 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Two, Suit.Diamonds],
-							[Face.Two, Suit.Clubs],
+							["2", "d"],
+							["2", "c"],
 						],
 						communityCards: [],
 					}),
@@ -154,10 +150,10 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Two, Suit.Diamonds],
-							[Face.Two, Suit.Clubs],
+							["2", "d"],
+							["2", "c"],
 						],
-						communityCards: [[Face.Seven, Suit.Clubs]],
+						communityCards: [["7", "c"]],
 					}),
 				),
 				{ rank: "Pair Twos", kickers: "Seven kicker" },
@@ -167,14 +163,14 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Two, Suit.Diamonds],
-							[Face.Two, Suit.Clubs],
+							["2", "d"],
+							["2", "c"],
 						],
 						communityCards: [
-							[Face.Ten, Suit.Clubs],
-							[Face.Seven, Suit.Clubs],
-							[Face.Jack, Suit.Diamonds],
-							[Face.Eight, Suit.Diamonds],
+							["t", "c"],
+							["7", "c"],
+							["j", "d"],
+							["8", "d"],
 						],
 					}),
 				),
@@ -187,12 +183,12 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Six, Suit.Diamonds],
-							[Face.Six, Suit.Clubs],
+							["6", "d"],
+							["6", "c"],
 						],
 						communityCards: [
-							[Face.Two, Suit.Diamonds],
-							[Face.Two, Suit.Clubs],
+							["2", "d"],
+							["2", "c"],
 						],
 					}),
 				),
@@ -203,14 +199,14 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Two, Suit.Diamonds],
-							[Face.Two, Suit.Clubs],
+							["2", "d"],
+							["2", "c"],
 						],
 						communityCards: [
-							[Face.Six, Suit.Diamonds],
-							[Face.Six, Suit.Clubs],
-							[Face.Jack, Suit.Clubs],
-							[Face.Seven, Suit.Diamonds],
+							["6", "d"],
+							["6", "c"],
+							["j", "c"],
+							["7", "d"],
 						],
 					}),
 				),
@@ -223,10 +219,10 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Six, Suit.Diamonds],
-							[Face.Six, Suit.Clubs],
+							["6", "d"],
+							["6", "c"],
 						],
-						communityCards: [[Face.Six, Suit.Spades]],
+						communityCards: [["6", "s"]],
 					}),
 				),
 				{ rank: "Three of a kind Sixes", kickers: "" },
@@ -236,12 +232,12 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Four, Suit.Diamonds],
-							[Face.Four, Suit.Clubs],
+							["4", "d"],
+							["4", "c"],
 						],
 						communityCards: [
-							[Face.Four, Suit.Spades],
-							[Face.Eight, Suit.Diamonds],
+							["4", "s"],
+							["8", "d"],
 						],
 					}),
 				),
@@ -252,15 +248,15 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Four, Suit.Diamonds],
-							[Face.Four, Suit.Clubs],
+							["4", "d"],
+							["4", "c"],
 						],
 						communityCards: [
-							[Face.Four, Suit.Spades],
-							[Face.Six, Suit.Spades],
-							[Face.Two, Suit.Clubs],
-							[Face.Eight, Suit.Diamonds],
-							[Face.Jack, Suit.Clubs],
+							["4", "s"],
+							["6", "s"],
+							["2", "c"],
+							["8", "d"],
+							["j", "c"],
 						],
 					}),
 				),
@@ -273,13 +269,13 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Eight, Suit.Diamonds],
-							[Face.Seven, Suit.Clubs],
+							["8", "d"],
+							["7", "c"],
 						],
 						communityCards: [
-							[Face.Six, Suit.Spades],
-							[Face.Five, Suit.Hearts],
-							[Face.Four, Suit.Spades],
+							["6", "s"],
+							["5", "h"],
+							["4", "s"],
 						],
 					}),
 				),
@@ -290,13 +286,13 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Spades],
-							[Face.Two, Suit.Hearts],
+							["a", "s"],
+							["2", "h"],
 						],
 						communityCards: [
-							[Face.Three, Suit.Spades],
-							[Face.Four, Suit.Clubs],
-							[Face.Five, Suit.Diamonds],
+							["3", "s"],
+							["4", "c"],
+							["5", "d"],
 						],
 					}),
 				),
@@ -307,13 +303,13 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Spades],
-							[Face.Ten, Suit.Hearts],
+							["a", "s"],
+							["t", "h"],
 						],
 						communityCards: [
-							[Face.King, Suit.Spades],
-							[Face.Jack, Suit.Clubs],
-							[Face.Queen, Suit.Diamonds],
+							["k", "s"],
+							["j", "c"],
+							["q", "d"],
 						],
 					}),
 				),
@@ -324,14 +320,14 @@ void describe("hand/describe", () => {
 				describeHand(
 					extractHand({
 						pocketCards: [
-							[Face.Ace, Suit.Spades],
-							[Face.Ten, Suit.Hearts],
+							["a", "s"],
+							["t", "h"],
 						],
 						communityCards: [
-							[Face.King, Suit.Spades],
-							[Face.Jack, Suit.Clubs],
-							[Face.Queen, Suit.Diamonds],
-							[Face.Two, Suit.Diamonds],
+							["k", "s"],
+							["j", "c"],
+							["q", "d"],
+							["2", "d"],
 						],
 					}),
 				),
@@ -345,13 +341,13 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Seven, Suit.Spades],
-						[Face.Two, Suit.Spades],
+						["7", "s"],
+						["2", "s"],
 					],
 					communityCards: [
-						[Face.Jack, Suit.Spades],
-						[Face.Four, Suit.Spades],
-						[Face.Five, Suit.Spades],
+						["j", "s"],
+						["4", "s"],
+						["5", "s"],
 					],
 				}),
 			),
@@ -362,14 +358,14 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Seven, Suit.Spades],
-						[Face.Two, Suit.Spades],
+						["7", "s"],
+						["2", "s"],
 					],
 					communityCards: [
-						[Face.Jack, Suit.Spades],
-						[Face.Four, Suit.Spades],
-						[Face.Five, Suit.Spades],
-						[Face.Ace, Suit.Clubs],
+						["j", "s"],
+						["4", "s"],
+						["5", "s"],
+						["a", "c"],
 					],
 				}),
 			),
@@ -382,13 +378,13 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Spades],
-						[Face.Four, Suit.Hearts],
+						["4", "s"],
+						["4", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Clubs],
-						[Face.Jack, Suit.Clubs],
-						[Face.Jack, Suit.Spades],
+						["4", "c"],
+						["j", "c"],
+						["j", "s"],
 					],
 				}),
 			),
@@ -399,14 +395,14 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Spades],
-						[Face.Four, Suit.Hearts],
+						["4", "s"],
+						["4", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Clubs],
-						[Face.Jack, Suit.Clubs],
-						[Face.Jack, Suit.Spades],
-						[Face.King, Suit.Spades],
+						["4", "c"],
+						["j", "c"],
+						["j", "s"],
+						["k", "s"],
 					],
 				}),
 			),
@@ -419,13 +415,13 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Spades],
-						[Face.Four, Suit.Hearts],
+						["4", "s"],
+						["4", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Clubs],
-						[Face.Four, Suit.Diamonds],
-						[Face.Jack, Suit.Spades],
+						["4", "c"],
+						["4", "d"],
+						["j", "s"],
 					],
 				}),
 			),
@@ -436,14 +432,14 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Spades],
-						[Face.Four, Suit.Hearts],
+						["4", "s"],
+						["4", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Clubs],
-						[Face.Four, Suit.Diamonds],
-						[Face.Jack, Suit.Spades],
-						[Face.King, Suit.Spades],
+						["4", "c"],
+						["4", "d"],
+						["j", "s"],
+						["k", "s"],
 					],
 				}),
 			),
@@ -456,13 +452,13 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Eight, Suit.Diamonds],
-						[Face.Seven, Suit.Diamonds],
+						["8", "d"],
+						["7", "d"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Five, Suit.Diamonds],
-						[Face.Four, Suit.Diamonds],
+						["6", "d"],
+						["5", "d"],
+						["4", "d"],
 					],
 				}),
 			),
@@ -473,13 +469,13 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Ace, Suit.Spades],
-						[Face.Two, Suit.Spades],
+						["a", "s"],
+						["2", "s"],
 					],
 					communityCards: [
-						[Face.Three, Suit.Spades],
-						[Face.Four, Suit.Spades],
-						[Face.Five, Suit.Spades],
+						["3", "s"],
+						["4", "s"],
+						["5", "s"],
 					],
 				}),
 			),
@@ -490,14 +486,14 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Ace, Suit.Spades],
-						[Face.Two, Suit.Spades],
+						["a", "s"],
+						["2", "s"],
 					],
 					communityCards: [
-						[Face.Three, Suit.Spades],
-						[Face.Four, Suit.Spades],
-						[Face.Five, Suit.Spades],
-						[Face.Eight, Suit.Spades],
+						["3", "s"],
+						["4", "s"],
+						["5", "s"],
+						["8", "s"],
 					],
 				}),
 			),
@@ -510,14 +506,14 @@ void describe("hand/describe", () => {
 			describeHand(
 				extractHand({
 					pocketCards: [
-						[Face.Ace, Suit.Spades],
-						[Face.Ten, Suit.Spades],
+						["a", "s"],
+						["t", "s"],
 					],
 					communityCards: [
-						[Face.King, Suit.Spades],
-						[Face.Jack, Suit.Spades],
-						[Face.Queen, Suit.Spades],
-						[Face.Two, Suit.Spades],
+						["k", "s"],
+						["j", "s"],
+						["q", "s"],
+						["2", "s"],
 					],
 				}),
 			),

@@ -1,8 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Face, Suit } from "../card/constants.js";
-import { HandRank } from "./constants.js";
 import { extractHand } from "./extract.js";
 
 void describe("hand/extract", () => {
@@ -14,7 +12,7 @@ void describe("hand/extract", () => {
 					communityCards: [],
 				}),
 				{
-					rank: HandRank.HighCard,
+					rank: "highCard",
 					rankCards: [],
 					kickerCards: [],
 				},
@@ -22,12 +20,12 @@ void describe("hand/extract", () => {
 
 			assert.deepStrictEqual(
 				extractHand({
-					pocketCards: [[Face.Ace, Suit.Clubs]],
+					pocketCards: [["a", "c"]],
 					communityCards: [],
 				}),
 				{
-					rank: HandRank.HighCard,
-					rankCards: [[Face.Ace, Suit.Clubs]],
+					rank: "highCard",
+					rankCards: [["a", "c"]],
 					kickerCards: [],
 				},
 			);
@@ -37,25 +35,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Jack, Suit.Clubs],
-						[Face.Eight, Suit.Spades],
+						["j", "c"],
+						["8", "s"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Two, Suit.Diamonds],
-						[Face.Three, Suit.Clubs],
-						[Face.Four, Suit.Clubs],
-						[Face.Queen, Suit.Diamonds],
+						["6", "d"],
+						["2", "d"],
+						["3", "c"],
+						["4", "c"],
+						["q", "d"],
 					],
 				}),
 				{
-					rank: HandRank.HighCard,
-					rankCards: [[Face.Queen, Suit.Diamonds]],
+					rank: "highCard",
+					rankCards: [["q", "d"]],
 					kickerCards: [
-						[Face.Jack, Suit.Clubs],
-						[Face.Eight, Suit.Spades],
-						[Face.Six, Suit.Diamonds],
-						[Face.Four, Suit.Clubs],
+						["j", "c"],
+						["8", "s"],
+						["6", "d"],
+						["4", "c"],
 					],
 				},
 			);
@@ -65,27 +63,27 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Six, Suit.Clubs],
-						[Face.Two, Suit.Diamonds],
+						["6", "c"],
+						["2", "d"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Jack, Suit.Clubs],
-						[Face.Eight, Suit.Spades],
-						[Face.Four, Suit.Clubs],
-						[Face.Queen, Suit.Diamonds],
+						["6", "d"],
+						["j", "c"],
+						["8", "s"],
+						["4", "c"],
+						["q", "d"],
 					],
 				}),
 				{
-					rank: HandRank.Pair,
+					rank: "pair",
 					rankCards: [
-						[Face.Six, Suit.Clubs],
-						[Face.Six, Suit.Diamonds],
+						["6", "c"],
+						["6", "d"],
 					],
 					kickerCards: [
-						[Face.Queen, Suit.Diamonds],
-						[Face.Jack, Suit.Clubs],
-						[Face.Eight, Suit.Spades],
+						["q", "d"],
+						["j", "c"],
+						["8", "s"],
 					],
 				},
 			);
@@ -95,26 +93,26 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Clubs],
-						[Face.Jack, Suit.Diamonds],
+						["4", "c"],
+						["j", "d"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Two, Suit.Diamonds],
-						[Face.Eight, Suit.Spades],
-						[Face.Six, Suit.Clubs],
-						[Face.Jack, Suit.Clubs],
+						["6", "d"],
+						["2", "d"],
+						["8", "s"],
+						["6", "c"],
+						["j", "c"],
 					],
 				}),
 				{
-					rank: HandRank.TwoPair,
+					rank: "twoPair",
 					rankCards: [
-						[Face.Jack, Suit.Clubs],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Six, Suit.Clubs],
-						[Face.Six, Suit.Diamonds],
+						["j", "d"],
+						["j", "c"],
+						["6", "d"],
+						["6", "c"],
 					],
-					kickerCards: [[Face.Eight, Suit.Spades]],
+					kickerCards: [["8", "s"]],
 				},
 			);
 
@@ -122,26 +120,26 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Queen, Suit.Clubs],
-						[Face.Jack, Suit.Clubs],
+						["q", "c"],
+						["j", "c"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Eight, Suit.Spades],
-						[Face.Six, Suit.Clubs],
-						[Face.Queen, Suit.Spades],
+						["6", "d"],
+						["j", "d"],
+						["8", "s"],
+						["6", "c"],
+						["q", "s"],
 					],
 				}),
 				{
-					rank: HandRank.TwoPair,
+					rank: "twoPair",
 					rankCards: [
-						[Face.Queen, Suit.Spades],
-						[Face.Queen, Suit.Clubs],
-						[Face.Jack, Suit.Clubs],
-						[Face.Jack, Suit.Diamonds],
+						["q", "c"],
+						["q", "s"],
+						["j", "c"],
+						["j", "d"],
 					],
-					kickerCards: [[Face.Eight, Suit.Spades]],
+					kickerCards: [["8", "s"]],
 				},
 			);
 		});
@@ -150,27 +148,27 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Eight, Suit.Spades],
-						[Face.Six, Suit.Clubs],
+						["8", "s"],
+						["6", "c"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Two, Suit.Diamonds],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Six, Suit.Hearts],
-						[Face.Queen, Suit.Clubs],
+						["6", "d"],
+						["2", "d"],
+						["j", "d"],
+						["6", "h"],
+						["q", "c"],
 					],
 				}),
 				{
-					rank: HandRank.ThreeOfAKind,
+					rank: "threeOfAKind",
 					rankCards: [
-						[Face.Six, Suit.Hearts],
-						[Face.Six, Suit.Clubs],
-						[Face.Six, Suit.Diamonds],
+						["6", "c"],
+						["6", "d"],
+						["6", "h"],
 					],
 					kickerCards: [
-						[Face.Queen, Suit.Clubs],
-						[Face.Jack, Suit.Diamonds],
+						["q", "c"],
+						["j", "d"],
 					],
 				},
 			);
@@ -180,25 +178,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Eight, Suit.Spades],
-						[Face.Six, Suit.Hearts],
+						["8", "s"],
+						["6", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Diamonds],
-						[Face.Two, Suit.Clubs],
-						[Face.Three, Suit.Diamonds],
-						[Face.Five, Suit.Clubs],
-						[Face.Six, Suit.Diamonds],
+						["4", "d"],
+						["2", "c"],
+						["3", "d"],
+						["5", "c"],
+						["6", "d"],
 					],
 				}),
 				{
-					rank: HandRank.Straight,
+					rank: "straight",
 					rankCards: [
-						[Face.Six, Suit.Hearts],
-						[Face.Five, Suit.Clubs],
-						[Face.Four, Suit.Diamonds],
-						[Face.Three, Suit.Diamonds],
-						[Face.Two, Suit.Clubs],
+						["6", "h"],
+						["5", "c"],
+						["4", "d"],
+						["3", "d"],
+						["2", "c"],
 					],
 					kickerCards: [],
 				},
@@ -208,25 +206,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Ace, Suit.Spades],
-						[Face.Eight, Suit.Hearts],
+						["a", "s"],
+						["8", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Diamonds],
-						[Face.Two, Suit.Clubs],
-						[Face.Three, Suit.Diamonds],
-						[Face.Five, Suit.Clubs],
-						[Face.Eight, Suit.Diamonds],
+						["4", "d"],
+						["2", "c"],
+						["3", "d"],
+						["5", "c"],
+						["8", "d"],
 					],
 				}),
 				{
-					rank: HandRank.Straight,
+					rank: "straight",
 					rankCards: [
-						[Face.Five, Suit.Clubs],
-						[Face.Four, Suit.Diamonds],
-						[Face.Three, Suit.Diamonds],
-						[Face.Two, Suit.Clubs],
-						[Face.Ace, Suit.Spades],
+						["5", "c"],
+						["4", "d"],
+						["3", "d"],
+						["2", "c"],
+						["a", "s"],
 					],
 					kickerCards: [],
 				},
@@ -236,69 +234,69 @@ void describe("hand/extract", () => {
 
 			const ambiguousAce = extractHand({
 				pocketCards: [
-					[Face.Ace, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
+					["a", "d"],
+					["5", "d"],
 				],
 				communityCards: [
-					[Face.Nine, Suit.Diamonds],
-					[Face.Queen, Suit.Clubs],
-					[Face.Seven, Suit.Hearts],
-					[Face.King, Suit.Clubs],
-					[Face.Jack, Suit.Diamonds],
+					["9", "d"],
+					["q", "c"],
+					["7", "h"],
+					["k", "c"],
+					["j", "d"],
 				],
 			});
 
-			assert.notEqual(ambiguousAce.rank, HandRank.Straight);
-			assert.strictEqual(ambiguousAce.rank, HandRank.HighCard);
+			assert.notEqual(ambiguousAce.rank, "straight");
+			assert.strictEqual(ambiguousAce.rank, "highCard");
 
 			const queenInAceHigh = extractHand({
 				pocketCards: [
-					[Face.Jack, Suit.Diamonds],
-					[Face.Three, Suit.Clubs],
+					["j", "d"],
+					["3", "c"],
 				],
 				communityCards: [
-					[Face.Queen, Suit.Diamonds],
-					[Face.King, Suit.Clubs],
-					[Face.Eight, Suit.Diamonds],
-					[Face.Ten, Suit.Hearts],
-					[Face.Ace, Suit.Hearts],
+					["q", "d"],
+					["k", "c"],
+					["8", "d"],
+					["t", "h"],
+					["a", "h"],
 				],
 			});
 
 			assert.deepStrictEqual(queenInAceHigh, {
-				rank: HandRank.Straight,
+				rank: "straight",
 				rankCards: [
-					[Face.Ace, Suit.Hearts],
-					[Face.King, Suit.Clubs],
-					[Face.Queen, Suit.Diamonds],
-					[Face.Jack, Suit.Diamonds],
-					[Face.Ten, Suit.Hearts],
+					["a", "h"],
+					["k", "c"],
+					["q", "d"],
+					["j", "d"],
+					["t", "h"],
 				],
 				kickerCards: [],
 			});
 
 			const queenInAceHighInverseCommunity = extractHand({
 				pocketCards: [
-					[Face.Jack, Suit.Diamonds],
-					[Face.Three, Suit.Clubs],
+					["j", "d"],
+					["3", "c"],
 				],
 				communityCards: [
-					[Face.Ace, Suit.Hearts],
-					[Face.Ten, Suit.Hearts],
-					[Face.Eight, Suit.Diamonds],
-					[Face.King, Suit.Clubs],
-					[Face.Queen, Suit.Diamonds],
+					["a", "h"],
+					["t", "h"],
+					["8", "d"],
+					["k", "c"],
+					["q", "d"],
 				],
 			});
 
 			assert.deepStrictEqual(queenInAceHighInverseCommunity, {
-				rank: HandRank.Straight,
+				rank: "straight",
 				rankCards: [
-					[Face.Ace, Suit.Hearts],
-					[Face.King, Suit.Clubs],
-					[Face.Queen, Suit.Diamonds],
-					[Face.Jack, Suit.Diamonds],
-					[Face.Ten, Suit.Hearts],
+					["a", "h"],
+					["k", "c"],
+					["q", "d"],
+					["j", "d"],
+					["t", "h"],
 				],
 				kickerCards: [],
 			});
@@ -308,25 +306,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Three, Suit.Diamonds],
-						[Face.Jack, Suit.Diamonds],
+						["3", "d"],
+						["j", "d"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Diamonds],
-						[Face.Two, Suit.Diamonds],
-						[Face.Three, Suit.Spades],
-						[Face.Five, Suit.Diamonds],
-						[Face.Jack, Suit.Hearts],
+						["4", "d"],
+						["2", "d"],
+						["3", "s"],
+						["5", "d"],
+						["j", "h"],
 					],
 				}),
 				{
-					rank: HandRank.Flush,
+					rank: "flush",
 					rankCards: [
-						[Face.Jack, Suit.Diamonds],
-						[Face.Five, Suit.Diamonds],
-						[Face.Four, Suit.Diamonds],
-						[Face.Three, Suit.Diamonds],
-						[Face.Two, Suit.Diamonds],
+						["j", "d"],
+						["5", "d"],
+						["4", "d"],
+						["3", "d"],
+						["2", "d"],
 					],
 					kickerCards: [],
 				},
@@ -337,25 +335,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Three, Suit.Spades],
-						[Face.Four, Suit.Diamonds],
+						["3", "s"],
+						["4", "d"],
 					],
 					communityCards: [
-						[Face.Three, Suit.Clubs],
-						[Face.Three, Suit.Diamonds],
-						[Face.Five, Suit.Diamonds],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Jack, Suit.Hearts],
+						["3", "c"],
+						["3", "d"],
+						["5", "d"],
+						["j", "d"],
+						["j", "h"],
 					],
 				}),
 				{
-					rank: HandRank.FullHouse,
+					rank: "fullHouse",
 					rankCards: [
-						[Face.Three, Suit.Spades],
-						[Face.Three, Suit.Clubs],
-						[Face.Three, Suit.Diamonds],
-						[Face.Jack, Suit.Hearts],
-						[Face.Jack, Suit.Diamonds],
+						["3", "s"],
+						["3", "c"],
+						["3", "d"],
+						["j", "d"],
+						["j", "h"],
 					],
 					kickerCards: [],
 				},
@@ -365,25 +363,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Diamonds],
-						[Face.Jack, Suit.Hearts],
+						["4", "d"],
+						["j", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Hearts],
-						[Face.Three, Suit.Clubs],
-						[Face.Three, Suit.Diamonds],
-						[Face.Jack, Suit.Spades],
-						[Face.Jack, Suit.Diamonds],
+						["4", "h"],
+						["3", "c"],
+						["3", "d"],
+						["j", "s"],
+						["j", "d"],
 					],
 				}),
 				{
-					rank: HandRank.FullHouse,
+					rank: "fullHouse",
 					rankCards: [
-						[Face.Jack, Suit.Spades],
-						[Face.Jack, Suit.Hearts],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Four, Suit.Hearts],
-						[Face.Four, Suit.Diamonds],
+						["j", "h"],
+						["j", "s"],
+						["j", "d"],
+						["4", "d"],
+						["4", "h"],
 					],
 					kickerCards: [],
 				},
@@ -393,25 +391,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Four, Suit.Diamonds],
-						[Face.Three, Suit.Clubs],
+						["4", "d"],
+						["3", "c"],
 					],
 					communityCards: [
-						[Face.Three, Suit.Hearts],
-						[Face.Three, Suit.Diamonds],
-						[Face.Jack, Suit.Spades],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Jack, Suit.Hearts],
+						["3", "h"],
+						["3", "d"],
+						["j", "s"],
+						["j", "d"],
+						["j", "h"],
 					],
 				}),
 				{
-					rank: HandRank.FullHouse,
+					rank: "fullHouse",
 					rankCards: [
-						[Face.Jack, Suit.Spades],
-						[Face.Jack, Suit.Hearts],
-						[Face.Jack, Suit.Diamonds],
-						[Face.Three, Suit.Hearts],
-						[Face.Three, Suit.Clubs],
+						["j", "s"],
+						["j", "d"],
+						["j", "h"],
+						["3", "c"],
+						["3", "h"],
 					],
 					kickerCards: [],
 				},
@@ -422,26 +420,26 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Eight, Suit.Spades],
-						[Face.Jack, Suit.Diamonds],
+						["8", "s"],
+						["j", "d"],
 					],
 					communityCards: [
-						[Face.Six, Suit.Diamonds],
-						[Face.Two, Suit.Diamonds],
-						[Face.Six, Suit.Clubs],
-						[Face.Six, Suit.Hearts],
-						[Face.Six, Suit.Spades],
+						["6", "d"],
+						["2", "d"],
+						["6", "c"],
+						["6", "h"],
+						["6", "s"],
 					],
 				}),
 				{
-					rank: HandRank.FourOfAKind,
+					rank: "fourOfAKind",
 					rankCards: [
-						[Face.Six, Suit.Spades],
-						[Face.Six, Suit.Hearts],
-						[Face.Six, Suit.Clubs],
-						[Face.Six, Suit.Diamonds],
+						["6", "d"],
+						["6", "c"],
+						["6", "h"],
+						["6", "s"],
 					],
-					kickerCards: [[Face.Jack, Suit.Diamonds]],
+					kickerCards: [["j", "d"]],
 				},
 			);
 		});
@@ -450,25 +448,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Two, Suit.Clubs],
-						[Face.Six, Suit.Clubs],
+						["2", "c"],
+						["6", "c"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Clubs],
-						[Face.Three, Suit.Clubs],
-						[Face.Eight, Suit.Spades],
-						[Face.Five, Suit.Clubs],
-						[Face.Six, Suit.Spades],
+						["4", "c"],
+						["3", "c"],
+						["8", "s"],
+						["5", "c"],
+						["6", "s"],
 					],
 				}),
 				{
-					rank: HandRank.StraightFlush,
+					rank: "straightFlush",
 					rankCards: [
-						[Face.Six, Suit.Clubs],
-						[Face.Five, Suit.Clubs],
-						[Face.Four, Suit.Clubs],
-						[Face.Three, Suit.Clubs],
-						[Face.Two, Suit.Clubs],
+						["6", "c"],
+						["5", "c"],
+						["4", "c"],
+						["3", "c"],
+						["2", "c"],
 					],
 					kickerCards: [],
 				},
@@ -477,25 +475,25 @@ void describe("hand/extract", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.Ace, Suit.Spades],
-						[Face.Eight, Suit.Hearts],
+						["a", "s"],
+						["8", "h"],
 					],
 					communityCards: [
-						[Face.Four, Suit.Spades],
-						[Face.Two, Suit.Spades],
-						[Face.Three, Suit.Spades],
-						[Face.Five, Suit.Spades],
-						[Face.Eight, Suit.Diamonds],
+						["4", "s"],
+						["2", "s"],
+						["3", "s"],
+						["5", "s"],
+						["8", "d"],
 					],
 				}),
 				{
-					rank: HandRank.StraightFlush,
+					rank: "straightFlush",
 					rankCards: [
-						[Face.Five, Suit.Spades],
-						[Face.Four, Suit.Spades],
-						[Face.Three, Suit.Spades],
-						[Face.Two, Suit.Spades],
-						[Face.Ace, Suit.Spades],
+						["5", "s"],
+						["4", "s"],
+						["3", "s"],
+						["2", "s"],
+						["a", "s"],
 					],
 					kickerCards: [],
 				},
@@ -505,61 +503,61 @@ void describe("hand/extract", () => {
 
 			const offsuitAce = extractHand({
 				pocketCards: [
-					[Face.Ace, Suit.Clubs],
-					[Face.Two, Suit.Spades],
+					["a", "c"],
+					["2", "s"],
 				],
 				communityCards: [
-					[Face.Three, Suit.Spades],
-					[Face.Four, Suit.Spades],
-					[Face.Five, Suit.Spades],
-					[Face.Eight, Suit.Spades],
+					["3", "s"],
+					["4", "s"],
+					["5", "s"],
+					["8", "s"],
 				],
 			});
 
-			assert.notEqual(offsuitAce.rank, HandRank.StraightFlush);
-			assert.strictEqual(offsuitAce.rank, HandRank.Flush);
+			assert.notEqual(offsuitAce.rank, "straightFlush");
+			assert.strictEqual(offsuitAce.rank, "flush");
 
 			const ambiguousAce = extractHand({
 				pocketCards: [
-					[Face.Ace, Suit.Diamonds],
-					[Face.Five, Suit.Diamonds],
+					["a", "d"],
+					["5", "d"],
 				],
 				communityCards: [
-					[Face.Nine, Suit.Diamonds],
-					[Face.Queen, Suit.Diamonds],
-					[Face.Seven, Suit.Diamonds],
-					[Face.King, Suit.Diamonds],
-					[Face.Jack, Suit.Diamonds],
+					["9", "d"],
+					["q", "d"],
+					["7", "d"],
+					["k", "d"],
+					["j", "d"],
 				],
 			});
 
-			assert.notEqual(ambiguousAce.rank, HandRank.StraightFlush);
-			assert.strictEqual(ambiguousAce.rank, HandRank.Flush);
+			assert.notEqual(ambiguousAce.rank, "straightflush");
+			assert.strictEqual(ambiguousAce.rank, "flush");
 		});
 
 		void it("should extract royal flush", () => {
 			assert.deepStrictEqual(
 				extractHand({
 					pocketCards: [
-						[Face.King, Suit.Clubs],
-						[Face.Queen, Suit.Clubs],
+						["k", "c"],
+						["q", "c"],
 					],
 					communityCards: [
-						[Face.Ace, Suit.Clubs],
-						[Face.Ten, Suit.Clubs],
-						[Face.Eight, Suit.Spades],
-						[Face.Jack, Suit.Clubs],
-						[Face.Jack, Suit.Spades],
+						["a", "c"],
+						["t", "c"],
+						["8", "s"],
+						["j", "c"],
+						["j", "s"],
 					],
 				}),
 				{
-					rank: HandRank.RoyalFlush,
+					rank: "royalFlush",
 					rankCards: [
-						[Face.Ace, Suit.Clubs],
-						[Face.King, Suit.Clubs],
-						[Face.Queen, Suit.Clubs],
-						[Face.Jack, Suit.Clubs],
-						[Face.Ten, Suit.Clubs],
+						["a", "c"],
+						["k", "c"],
+						["q", "c"],
+						["j", "c"],
+						["t", "c"],
 					],
 					kickerCards: [],
 				},

@@ -1,6 +1,6 @@
-import { Suit, Face } from "../card/constants.js";
+import { FACES, SUITS } from "../card/constants.js";
 
-import type { Card, Cards } from "../card/types.js";
+import type { Card, Cards, Suit } from "../card/types.js";
 
 /**
  * Creates a 52 card deck without Jokers, sorted by suite and face.
@@ -19,23 +19,21 @@ export function createDeck({ order = "ndo" }: CreateDeckOptions = {}) {
 
 export type DeckOrder = "ndo" | "value";
 
-export type CreateDeckOptions = {
-	order?: DeckOrder;
-};
+export type CreateDeckOptions = { order?: DeckOrder };
 
 function createDeckValue(): Cards {
-	return Object.values(Suit).flatMap(createSuit);
+	return SUITS.flatMap(createSuit);
 }
 
 function createDeckNdo(): Cards {
 	return [
-		...createSuit(Suit.Hearts),
-		...createSuit(Suit.Clubs),
-		...createSuit(Suit.Diamonds).reverse(),
-		...createSuit(Suit.Spades).reverse(),
+		...createSuit("h"),
+		...createSuit("c"),
+		...createSuit("d").reverse(),
+		...createSuit("s").reverse(),
 	];
 }
 
 function createSuit(suit: Suit) {
-	return Object.values(Face).map((face): Card => [face, suit]);
+	return FACES.map((face): Card => [face, suit]);
 }

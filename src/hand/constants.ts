@@ -1,12 +1,12 @@
-export enum HandRank {
-	HighCard = "HighCard",
-	Pair = "Pair",
-	TwoPair = "TwoPair",
-	ThreeOfAKind = "ThreeOfAKind",
-	Straight = "Straight",
-	Flush = "Flush",
-	FullHouse = "FullHouse",
-	FourOfAKind = "FourOfAKind",
-	StraightFlush = "StraightFlush",
-	RoyalFlush = "RoyalFlush",
-}
+export const HAND_RANKS = [
+	"highCard",
+	"pair",
+	"twoPair",
+	"threeOfAKind",
+	"straight",
+	"flush",
+	"fullHouse",
+	"fourOfAKind",
+	"straightFlush",
+	"royalFlush",
+] as const;

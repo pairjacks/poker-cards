@@ -1,12 +1,10 @@
 import { uniqBy } from "../util/array.js";
-import { Face } from "../card/constants.js";
-import { HandRank } from "./constants.js";
 import {
 	omitAndSort,
 	getSortedConsequtiveFaceGroups,
 	getSortedFaceGroups,
 	getSortedCards,
-	getSortedSuitGroups,
+	getSuitGroups,
 	createExtractorResult,
 } from "./util.js";
 
@@ -22,7 +20,7 @@ export const extractHighCard: HandExtractor<Hand> = (cards) => {
 	const [highestCard, ...kickers] = getSortedCards(cards);
 
 	return {
-		rank: HandRank.HighCard,
+		rank: "highCard",
 		rankCards: highestCard ? [highestCard] : [],
 		kickerCards: kickers.slice(0, 4),
 	};
@@ -31,9 +29,7 @@ export const extractHighCard: HandExtractor<Hand> = (cards) => {
 export const extractPair: HandExtractor = (cards) => {
 	const rankCards = getSortedFaceGroups(cards)[0]?.slice(0, 2);
 
-	return rankCards
-		? createExtractorResult(HandRank.Pair, rankCards, cards)
-		: null;
+	return rankCards ? createExtractorResult("pair", rankCards, cards) : null;
 };
 
 export const extractTwoPair: HandExtractor = (cards) => {
@@ -42,7 +38,7 @@ export const extractTwoPair: HandExtractor = (cards) => {
 		.flatMap((sortedCards) => sortedCards.slice(0, 2));
 
 	return rankCards.length === 4
-		? createExtractorResult(HandRank.TwoPair, rankCards, cards)
+		? createExtractorResult("twoPair", rankCards, cards)
 		: null;
 };
 
@@ -52,7 +48,7 @@ export const extractThreeOfAKind: HandExtractor = (cards) => {
 		?.slice(0, 3);
 
 	return rankCards
-		? createExtractorResult(HandRank.ThreeOfAKind, rankCards, cards)
+		? createExtractorResult("threeOfAKind", rankCards, cards)
 		: null;
 };
 
@@ -66,28 +62,26 @@ export const extractStraight: HandExtractor = (cards) => {
 
 	// Ace highs should be part of 5 card candidates since they sort high
 	if (candidate.length === 5) {
-		return createExtractorResult(HandRank.Straight, candidate, cards);
+		return createExtractorResult("straight", candidate, cards);
 	}
 
 	// Only consider ace low if lowest card in candidate is two,
 	// otherwise we end up with a disjointed straight
-	if (candidate[candidate.length - 1]?.[0] !== Face.Two) return null;
+	if (candidate[candidate.length - 1]?.[0] !== "2") return null;
 
-	const ace = getSortedCards(cards).find(([face]) => face === Face.Ace);
+	const ace = getSortedCards(cards).find(([face]) => face === "a");
 
 	return ace
-		? createExtractorResult(HandRank.Straight, [...candidate, ace], cards)
+		? createExtractorResult("straight", [...candidate, ace], cards)
 		: null;
 };
 
 export const extractFlush: HandExtractor = (cards) => {
-	const rankCards = getSortedSuitGroups(cards)
+	const rankCards = getSuitGroups(cards)
 		.find((g) => g.length > 4)
 		?.slice(0, 5);
 
-	return rankCards
-		? createExtractorResult(HandRank.Flush, rankCards, cards)
-		: null;
+	return rankCards ? createExtractorResult("flush", rankCards, cards) : null;
 };
 
 export const extractFullHouse: HandExtractor = (cards) => {
@@ -101,7 +95,7 @@ export const extractFullHouse: HandExtractor = (cards) => {
 	);
 
 	return tok && pair
-		? createExtractorResult(HandRank.FullHouse, [...tok, ...pair], cards)
+		? createExtractorResult("fullHouse", [...tok, ...pair], cards)
 		: null;
 };
 
@@ -111,12 +105,12 @@ export const extractFourOfAKind: HandExtractor = (cards) => {
 		?.slice(0, 4);
 
 	return rankCards
-		? createExtractorResult(HandRank.FourOfAKind, rankCards, cards)
+		? createExtractorResult("fourOfAKind", rankCards, cards)
 		: null;
 };
 
 export const extractStraightFlush: HandExtractor = (cards) => {
-	const candidate = getSortedSuitGroups(
+	const candidate = getSuitGroups(
 		getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 3) ??
 			[],
 	)
@@ -127,19 +121,19 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 
 	// Ace highs should be part of 5 card candidates since they sort high
 	if (candidate.length === 5) {
-		return createExtractorResult(HandRank.StraightFlush, candidate, cards);
+		return createExtractorResult("straightFlush", candidate, cards);
 	}
 
 	// Only consider ace low if lowest card in candidate is two,
 	// otherwise we end up with a disjointed straight
-	if (candidate[candidate.length - 1]?.[0] !== Face.Two) return null;
+	if (candidate[candidate.length - 1]?.[0] !== "2") return null;
 
 	const ace = getSortedCards(cards).find(
-		([face, suit]) => face === Face.Ace && suit === candidate[0]?.[1],
+		([face, suit]) => face === "a" && suit === candidate[0]?.[1],
 	);
 
 	return ace
-		? createExtractorResult(HandRank.StraightFlush, [...candidate, ace], cards)
+		? createExtractorResult("straightFlush", [...candidate, ace], cards)
 		: null;
 };
 
@@ -149,11 +143,11 @@ export const extractRoyalFlush: HandExtractor = (cards) => {
 		kickerCards: [],
 	};
 
-	return rankCards?.[0]?.[0] === Face.Ace
+	return rankCards?.[0]?.[0] === "a"
 		? {
-				kickerCards: kickers,
 				rankCards,
-				rank: HandRank.RoyalFlush,
+				rank: "royalFlush",
+				kickerCards: kickers,
 		  }
 		: null;
 };

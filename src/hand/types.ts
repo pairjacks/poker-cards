@@ -1,5 +1,7 @@
-import type { HandRank } from "./constants.js";
+import type { HAND_RANKS } from "./constants.js";
 import type { Cards } from "../card/types.js";
+
+export type HandRank = (typeof HAND_RANKS)[number];
 
 /** Represents a collection of cards that can be used to create a 5 card hand */
 export type HandCandidate = {

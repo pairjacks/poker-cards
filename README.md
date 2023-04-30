@@ -5,28 +5,26 @@
 ## Base Constants & Types
 
 ```ts
-enum Face {
-	Two = "Two",
-	Three = "Three",
-	Four = "Four",
-	Five = "Five",
-	Six = "Six",
-	Seven = "Seven",
-	Eight = "Eight",
-	Nine = "Nine",
-	Ten = "Ten",
-	Jack = "Jack",
-	Queen = "Queen",
-	King = "King",
-	Ace = "Ace",
-}
+type Face =
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "7"
+  | "8"
+  | "9"
+  | "t"
+  | "j"
+  | "q"
+  | "k"
+  | "a";
 
-enum Suit {
-	Diamonds = "Diamonds",
-	Clubs = "Clubs",
-	Hearts = "Heart",
-	Spades = "Spades",
-}
+type Suit =
+  | "d"
+  | "c"
+  | "h"
+  | "s";
 
 type Card = readonly [Face, Suit];
 
@@ -34,20 +32,20 @@ type Card = readonly [Face, Suit];
 type Cards = readonly Card[];
 
 // Represents a collection of cards that can be used to create a 5 card hand
-type HandCandidate = {
-	readonly pocketCards: Cards;
-	readonly communityCards: Cards;
-};
+type HandCandidate {
+  readonly pocketCards: Cards;
+  readonly communityCards: Cards;
+}
 
 // A hand derived from a HandCandidate
-type Hand = {
-	// Straight, TwoPair etc
-	readonly rank: HandRank;
-	// Cards included in the ranking combination
-	readonly rankCards: Cards;
-	// Cards included in the hand but not in the ranking combination
-	readonly kickerCards: Cards;
-};
+type Hand {
+  // Straight, TwoPair etc
+  readonly rank: HandRank;
+  // Cards included in the ranking combination
+  readonly rankCards: Cards;
+  // Cards included in the hand but not in the ranking combination
+  readonly kickerCards: Cards;
+}
 ```
 
 ## Api
@@ -61,8 +59,8 @@ Determines if two cards are identical
 ```ts
 import { isSameCard, Face, Suit } from "@pairjacks/poker-cards";
 
-isSameCard([Face.Two, Suit.Clubs], [Face.Two, Suit.Clubs]); // true
-isSameCard([Face.Three, Suit.Clubs], [Face.Two, Suit.Clubs]); // false
+isSameCard(["2", "c"], ["2", "c"]); // true
+isSameCard(["3", "c"], ["2", "c"]); // false
 ```
 
 ### Deck
@@ -166,26 +164,26 @@ import { extractHand } from "@pairjacks/poker-cards";
 
 const hand = extractHand({
 	pocketCards: [
-		[Face.Two, Suit.Clubs],
-		[Face.Six, Suit.Clubs],
+		["2", "c"],
+		["6", "c"],
 	],
 	communityCards: [
-		[Face.Four, Suit.Clubs],
-		[Face.Three, Suit.Clubs],
-		[Face.Eight, Suit.Spades],
-		[Face.Five, Suit.Clubs],
-		[Face.Six, Suit.Spades],
+		["4", "c"],
+		["3", "c"],
+		["8", "s"],
+		["5", "c"],
+		["6", "s"],
 	],
 });
 /*
 hand: Hand = {
-  rank: HandRank.StraightFlush,
+  rank: 'straightFlush',
   rankCards: [
-    [Face.Six, Suit.Clubs],
-    [Face.Five, Suit.Clubs],
-    [Face.Four, Suit.Clubs],
-    [Face.Three, Suit.Clubs],
-    [Face.Two, Suit.Clubs],
+    ['6', 'c'],
+    ['5', 'c'],
+    ['4', 'c'],
+    ['3', 'c'],
+    ['2', 'c'],
   ],
   kickerCards: [],
 }
@@ -229,8 +227,8 @@ Describes pocket cards in words
 import { describePocketCards, Face, Suit } from "@pairjacks/poker-cards";
 
 describePocketCards([
-	[Face.Ace, Suit.Hearts],
-	[Face.Ace, Suit.Spades],
+	["a", "h"],
+	["a", "s"],
 ]);
 // Pocket Aces
 ```
@@ -240,18 +238,18 @@ describePocketCards([
 Describes a hand in words
 
 ```ts
-import { extractHand, describeHand, Face, Suit } from '@pairjacks/poker-cards';
+import { extractHand, describeHand, Face, Suit } from "@pairjacks/poker-cards";
 
 describeHand(extractHand({
   pocketCards: [
-    [Face.Five, Suit.Hearts],
-    [Face.Three, Suit.Diamonds],
+    ["5", "h"],
+    ["3", "d"],
   ],
   communityCards: [
-    [Face.Two, Suit.Hearts],
-    [Face.Five, Suit.Diamonds],
-    [Face.Two, Suit.Diamonds],
-    [Face.Seven, Suit.Clubs],
+    ["2", "h"],
+    ["5", "d"],
+    ["2", "d"],
+    ["7", "c"],
   ],
 });
 // { rank: 'Two pair, Fives over Twos', kickers: 'Seven kicker' }

@@ -1,9 +1,8 @@
 import { isFiniteNumber } from "../util/predicate.js";
-import { getFaceValue } from "../card/value.js";
-import { HandRank } from "./constants.js";
+import { getCardValue } from "../card/value.js";
 
+import type { HandRank, HandComparisonResult } from "./types.js";
 import type { Cards } from "../card/types.js";
-import type { HandComparisonResult } from "./types.js";
 
 /*
  * Tie breakers try to resolve ties between hands, given the same rank for all
@@ -11,11 +10,13 @@ import type { HandComparisonResult } from "./types.js";
  * cannot be determined
  */
 
-const highestKicker: TieBreaker = (results) =>
-	indecesWithHighestFace(results.map(({ hand }) => hand.kickerCards));
+const highestKicker: TieBreaker = (results) => {
+	return indecesWithHighestValue(results.map(({ hand }) => hand.kickerCards));
+};
 
-const highestRankCard: TieBreaker = (results) =>
-	indecesWithHighestFace(results.map(({ hand }) => hand.rankCards));
+const highestRankCard: TieBreaker = (results) => {
+	return indecesWithHighestValue(results.map(({ hand }) => hand.rankCards));
+};
 
 const highestRankCardThenHighestKicker: TieBreaker = (results) => {
 	const rankResult = highestRankCard(results);
@@ -25,31 +26,33 @@ const highestRankCardThenHighestKicker: TieBreaker = (results) => {
 		: rankResult;
 };
 
-const alwaysTied: TieBreaker = (results) => results.map((_, index) => index);
+const alwaysTied: TieBreaker = (results) => {
+	return results.map((_, index) => index);
+};
 
 export const tieBreakers: { [key in HandRank]: TieBreaker } = {
-	[HandRank.HighCard]: highestKicker,
-	[HandRank.Pair]: highestRankCardThenHighestKicker,
-	[HandRank.TwoPair]: highestRankCardThenHighestKicker,
+	highCard: highestKicker,
+	pair: highestRankCardThenHighestKicker,
+	twoPair: highestRankCardThenHighestKicker,
 	// It should be impossible for two hands to have the same
 	// value three of a kind, so a natural higher hand should
 	// be determined by high rank card.
-	[HandRank.ThreeOfAKind]: highestRankCard,
+	threeOfAKind: highestRankCard,
 	// No kickers in a straight.
-	[HandRank.Straight]: highestRankCard,
+	straight: highestRankCard,
 	// No kickers in a flush.
-	[HandRank.Flush]: highestRankCard,
+	flush: highestRankCard,
 	// No kickers in a full house.
-	[HandRank.FullHouse]: highestRankCard,
+	fullHouse: highestRankCard,
 	// It should be impossible for two hands to contain equal value
 	// four-of-a-kinds, so there should always be a natural better hand
 	// on highest rank card.
-	[HandRank.FourOfAKind]: highestRankCard,
+	fourOfAKind: highestRankCard,
 	// No kickers in a straight.
-	[HandRank.StraightFlush]: highestRankCard,
+	straightFlush: highestRankCard,
 	// Straight flushes always draw since high card is the same and they
 	// have no kickers.
-	[HandRank.RoyalFlush]: alwaysTied,
+	royalFlush: alwaysTied,
 };
 
 // Assumes xs are sorted highest first
@@ -74,9 +77,9 @@ function indecesWithHighestNumber(xss: readonly (readonly number[])[]) {
 	return xss.map((_, index) => index);
 }
 
-function indecesWithHighestFace(cardChunks: readonly Cards[]) {
+function indecesWithHighestValue(cardChunks: readonly Cards[]) {
 	return indecesWithHighestNumber(
-		cardChunks.map((cards) => cards.map(getFaceValue)),
+		cardChunks.map((cards) => cards.map(getCardValue)),
 	);
 }
 

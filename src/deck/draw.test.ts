@@ -1,7 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Suit, Face } from "../card/constants.js";
 import { drawCardsFromDeck } from "./draw.js";
 
 import type { Cards } from "../card/types.js";
@@ -10,7 +9,7 @@ void describe("deck/draw", () => {
 	void describe("drawCardsFromDeck", () => {
 		void it("should not modify deck if no cards to be drawn", () => {
 			const emptyDeck: Cards = [] as const;
-			const initialDeck = [[Face.Two, Suit.Diamonds]] as const;
+			const initialDeck = [["2", "d"]] as const;
 
 			let drawResult = drawCardsFromDeck(emptyDeck, 1);
 
@@ -30,20 +29,20 @@ void describe("deck/draw", () => {
 
 		void it("should immutably draw cards from top of deck", () => {
 			const initialDeck = [
-				[Face.Jack, Suit.Hearts],
-				[Face.Six, Suit.Diamonds],
-				[Face.Nine, Suit.Spades],
-				[Face.Ten, Suit.Clubs],
+				["j", "h"],
+				["6", "d"],
+				["9", "s"],
+				["t", "c"],
 			] as const;
 
 			let drawResult = drawCardsFromDeck(initialDeck);
 
 			assert.deepStrictEqual(drawResult, {
-				cards: [[Face.Jack, Suit.Hearts]],
+				cards: [["j", "h"]],
 				deck: [
-					[Face.Six, Suit.Diamonds],
-					[Face.Nine, Suit.Spades],
-					[Face.Ten, Suit.Clubs],
+					["6", "d"],
+					["9", "s"],
+					["t", "c"],
 				],
 			});
 
@@ -54,10 +53,10 @@ void describe("deck/draw", () => {
 
 			assert.deepStrictEqual(drawResult, {
 				cards: [
-					[Face.Ten, Suit.Clubs],
-					[Face.Nine, Suit.Spades],
-					[Face.Six, Suit.Diamonds],
-					[Face.Jack, Suit.Hearts],
+					["t", "c"],
+					["9", "s"],
+					["6", "d"],
+					["j", "h"],
 				],
 				deck: [],
 			});

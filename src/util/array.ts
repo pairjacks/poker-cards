@@ -15,44 +15,54 @@ export function uniqBy<X>(
 	value: (x: Readonly<X>) => unknown,
 	xs: readonly X[],
 ) {
-	return xs.reduce<X[]>((acc, x) => {
-		if (!acc.find((a) => value(a) === value(x))) acc.push(x);
+	const result: X[] = [];
 
-		return acc;
-	}, []);
+	for (const x of xs) {
+		if (!result.find((a) => value(a) === value(x))) result.push(x);
+	}
+
+	return result;
 }
 
 export function groupBy<X>(
 	value: (x: Readonly<X>) => unknown,
 	xs: readonly X[],
 ) {
-	return xs.reduce<Record<string, X[]>>((acc, x) => {
+	const grouped: Record<string, X[]> = {};
+
+	for (const x of xs) {
 		const key = String(value(x));
-		const curr = acc[key];
+		const curr = grouped[key];
 
 		if (curr) curr.push(x);
-		else acc[key] = [x];
+		else grouped[key] = [x];
+	}
 
-		return acc;
-	}, {});
+	return grouped;
 }
 
 export function chunkPreviousWith<X>(
 	predicate: (current: Readonly<X>, previous: Readonly<X>) => boolean,
 	xs: readonly X[],
 ) {
-	return xs.reduce<X[][]>((chunks, item) => {
+	const chunks: X[][] = [];
+
+	for (const item of xs) {
 		const currentChunk = chunks[chunks.length - 1];
 
-		if (!currentChunk) return [[item]];
+		if (!currentChunk) {
+			chunks.push([item]);
+
+			continue;
+		}
 
 		const previousItem = currentChunk[currentChunk.length - 1];
 
 		if (previousItem && predicate(item, previousItem)) currentChunk.push(item);
 		else chunks.push([item]);
+	}
 
-		return chunks;
-	}, []);
+	return chunks;
 }
 
 export function allEqualBy<X>(
