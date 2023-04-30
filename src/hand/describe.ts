@@ -1,30 +1,27 @@
-import { Face } from "../card/constants.ts";
-import { getFaceValue, getSuitValue } from "../card/value.ts";
 import { allEqualBy } from "../util/array.ts";
 
-import { HandRank } from "./constants.ts";
 import { getSortedCards } from "./util.ts";
 
-import type { Card, Cards } from "../card/types.ts";
-import type { Hand, HandDescription } from "./types.ts";
+import type { Card, Cards, Face } from "../card/types.ts";
+import type { HandRank, Hand, HandDescription } from "./types.ts";
 
 /**
  * Describes pocket cards in words, e.g. "Pocket Aces"
  * @param pocketCards - Player's pocket cards
  */
 export function describePocketCards(pocketCards: Cards) {
-	const [first, ...rest] = pocketCards;
+	const first = pocketCards[0];
 
 	if (!first) return "";
 
-	if (!rest.length) return facePlural(first);
+	if (pocketCards.length === 1) return facePlural(first);
 
-	if (allEqualBy(getFaceValue, pocketCards)) {
+	if (allEqualBy((card) => card[0], pocketCards)) {
 		return `Pocket ${facePlural(first, 2)}`;
 	}
 
 	const sorted = getSortedCards(pocketCards);
-	const suitStatus = allEqualBy(getSuitValue, pocketCards)
+	const suitStatus = allEqualBy((card) => card[1], pocketCards)
 		? "Suited"
 		: "Offsuit";
 
@@ -41,19 +38,19 @@ export function describeHand(hand: Hand): HandDescription {
 }
 
 const faceTextPluralForms: { [key in Face]: PluralForms } = {
-	[Face.Two]: ["Two", "Twos"],
-	[Face.Three]: ["Three", "Threes"],
-	[Face.Four]: ["Four", "Fours"],
-	[Face.Five]: ["Five", "Fives"],
-	[Face.Six]: ["Six", "Sixes"],
-	[Face.Seven]: ["Seven", "Sevens"],
-	[Face.Eight]: ["Eight", "Eights"],
-	[Face.Nine]: ["Nine", "Nines"],
-	[Face.Ten]: ["Ten", "Tens"],
-	[Face.Jack]: ["Jack", "Jacks"],
-	[Face.Queen]: ["Queen", "Queens"],
-	[Face.King]: ["King", "Kings"],
-	[Face.Ace]: ["Ace", "Aces"],
+	2: ["Two", "Twos"],
+	3: ["Three", "Threes"],
+	4: ["Four", "Fours"],
+	5: ["Five", "Fives"],
+	6: ["Six", "Sixes"],
+	7: ["Seven", "Sevens"],
+	8: ["Eight", "Eights"],
+	9: ["Nine", "Nines"],
+	t: ["Ten", "Tens"],
+	j: ["Jack", "Jacks"],
+	q: ["Queen", "Queens"],
+	k: ["King", "Kings"],
+	a: ["Ace", "Aces"],
 };
 
 function facePlural(card: Card, count = 1) {
@@ -77,7 +74,7 @@ function assertCard(card?: Card): asserts card is Card {
 const handDescribers: { [key in HandRank]: HandDescriber } = {
 	// This is the only rank at which rankCards could be zero - for the rest
 	// to have been derived, there would need to be at least 2 rank cards
-	[HandRank.HighCard]: ({ rankCards: [rankCard], kickerCards }) =>
+	highCard: ({ rankCards: [rankCard], kickerCards }) =>
 		rankCard
 			? {
 					rank: `${facePlural(rankCard)} high`,
@@ -85,7 +82,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 				}
 			: { rank: "", kickers: "" },
 
-	[HandRank.Pair]: ({ rankCards: [rankCard], kickerCards }) => {
+	pair: ({ rankCards: [rankCard], kickerCards }) => {
 		assertCard(rankCard);
 
 		return {
@@ -94,7 +91,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.TwoPair]: ({ rankCards: [rankCard, , over], kickerCards }) => {
+	twoPair: ({ rankCards: [rankCard, , over], kickerCards }) => {
 		assertCard(rankCard);
 		assertCard(over);
 
@@ -104,7 +101,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.ThreeOfAKind]: ({ rankCards: [rankCard], kickerCards }) => {
+	threeOfAKind: ({ rankCards: [rankCard], kickerCards }) => {
 		assertCard(rankCard);
 
 		return {
@@ -113,7 +110,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.Straight]: ({ rankCards }) => {
+	straight: ({ rankCards }) => {
 		const first = rankCards[0];
 		const last = rankCards[rankCards.length - 1];
 
@@ -126,7 +123,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.Flush]: ({ rankCards }) => ({
+	flush: ({ rankCards }) => ({
 		rank: `Flush, ${rankCards
 			.slice(0, 2)
 			.map((card) => facePlural(card))
@@ -134,7 +131,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		kickers: "",
 	}),
 
-	[HandRank.FullHouse]: ({ rankCards }) => {
+	fullHouse: ({ rankCards }) => {
 		const first = rankCards[0];
 		const last = rankCards[rankCards.length - 1];
 
@@ -150,7 +147,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.FourOfAKind]: ({ rankCards: [rankCard], kickerCards }) => {
+	fourOfAKind: ({ rankCards: [rankCard], kickerCards }) => {
 		assertCard(rankCard);
 
 		return {
@@ -159,7 +156,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.StraightFlush]: ({ rankCards }) => {
+	straightFlush: ({ rankCards }) => {
 		const first = rankCards[0];
 		const last = rankCards[rankCards.length - 1];
 
@@ -172,7 +169,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	[HandRank.RoyalFlush]: () => ({ rank: "Royal flush", kickers: "" }),
+	royalFlush: () => ({ rank: "Royal flush", kickers: "" }),
 };
 
 type HandDescriber = (hand: Hand) => HandDescription;

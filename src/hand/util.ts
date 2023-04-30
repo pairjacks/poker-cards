@@ -1,25 +1,20 @@
-import {
-	isSameCard,
-	compareCards,
-	compareFaces,
-	compareSuits,
-} from "../card/compare.ts";
+import { isSameCard, compareCards } from "../card/compare.ts";
 import { groupBy, differenceWith, chunkPreviousWith } from "../util/array.ts";
 import { memoize } from "../util/function.ts";
 import { isInRangeInclusive } from "../util/number.ts";
 
-import { HandRank } from "./constants.ts";
+import { HAND_RANKS } from "./constants.ts";
 
 import type { Cards } from "../card/types.ts";
-import type { HandCandidate, Hand, HandExtractor } from "./types.ts";
+import type { HandCandidate, Hand, HandExtractor, HandRank } from "./types.ts";
 
 export function getHandRankValue(rank: HandRank) {
-	return Object.values(HandRank).indexOf(rank) + 1;
+	return HAND_RANKS.indexOf(rank) + 1;
 }
 
-export const getSortedCards = memoize(
-	(cards: Cards): Cards => [...cards].sort(compareCards),
-);
+export const getSortedCards = memoize((cards: Cards): Cards => {
+	return [...cards].sort(compareCards);
+});
 
 export function omitAndSort(from: Cards, cards: Cards) {
 	return getSortedCards(differenceWith(isSameCard, from, cards));
@@ -58,23 +53,23 @@ export function createExtractorResult(
 }
 
 export const getSortedFaceGroups = memoize((cards: Cards): readonly Cards[] => {
-	return Object.entries(groupBy(([face]) => face, getSortedCards(cards)))
-		.filter(([, groupedCards]) => groupedCards.length > 1)
-		.map(([, groupedCards]) => groupedCards);
-});
-
-export const getSortedSuitGroups = memoize((cards: Cards): readonly Cards[] => {
-	return Object.entries(groupBy(([, suit]) => suit, getSortedCards(cards)))
-		.filter(([, groupedCards]) => groupedCards.length > 1)
-		.map(([, groupedCards]) => groupedCards)
-		.sort(([a], [b]) => (a && b ? compareSuits(a, b) : 0));
+	return chunkPreviousWith(
+		(curr, prev) => curr[0] === prev[0],
+		getSortedCards(cards),
+	).filter((chunk) => chunk.length > 1);
 });
 
 export const getSortedConsequtiveFaceGroups = memoize(
 	(cards: Cards): readonly Cards[] => {
 		return chunkPreviousWith(
-			(curr, prev) => isInRangeInclusive(0, 1, compareFaces(curr, prev)),
+			(curr, prev) => isInRangeInclusive(0, 1, compareCards(curr, prev)),
 			getSortedCards(cards),
 		);
 	},
 );
+
+export const getSuitGroups = memoize((cards: Cards): readonly Cards[] => {
+	return Object.entries(groupBy(([, suit]) => suit, getSortedCards(cards)))
+		.filter(([, groupedCards]) => groupedCards.length > 1)
+		.map(([, groupedCards]) => groupedCards);
+});

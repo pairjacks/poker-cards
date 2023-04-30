@@ -1,4 +1,8 @@
-import type { Suit, Face } from "./constants.ts";
+import type { FACES, SUITS } from "./constants.ts";
+
+export type Face = (typeof FACES)[number];
+
+export type Suit = (typeof SUITS)[number];
 
 export type Card = readonly [Face, Suit];
 

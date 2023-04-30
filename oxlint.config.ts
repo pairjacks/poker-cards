@@ -30,6 +30,11 @@ export default defineConfig({
 			},
 		],
 
+		"typescript/consistent-type-definitions": ["error", "interface"],
+		"typescript/consistent-type-imports": [
+			"error",
+			{ disallowTypeAnnotations: true },
+		],
 		"typescript/no-explicit-any": "error",
 		"typescript/no-non-null-assertion": "error",
 

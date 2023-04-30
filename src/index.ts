@@ -1,4 +1,4 @@
-export { Face, Suit } from "./card/constants.ts";
+export { FACES, SUITS } from "./card/constants.ts";
 export { isSameCard } from "./card/compare.ts";
 
 export type { Card, Cards } from "./card/types.ts";
@@ -20,7 +20,7 @@ export type {
 	DeckShuffler,
 } from "./deck/shuffle.ts";
 
-export { HandRank } from "./hand/constants.ts";
+export { HAND_RANKS } from "./hand/constants.ts";
 export { extractHand } from "./hand/extract.ts";
 export { findHighestHands } from "./hand/compare.ts";
 export { describePocketCards, describeHand } from "./hand/describe.ts";

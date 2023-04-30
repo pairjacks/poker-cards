@@ -5,6 +5,8 @@
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
 		"checkJs": true,
+		"erasableSyntaxOnly": true,
+		"verbatimModuleSyntax": true,
 
 		// leave the following to linter / formatter
 		"noUnusedLocals": false,
