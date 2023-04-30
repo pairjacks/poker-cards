@@ -24,14 +24,15 @@ export function extractInPreferenceOrder(
 	fallbackExtractor: HandExtractor<Hand>,
 ) {
 	return function extract({ pocketCards, communityCards }: HandCandidate) {
-		const cards: Cards = [...pocketCards, ...communityCards];
+		const cards = [...pocketCards, ...communityCards];
 
-		return (
-			extractors.reduce<Hand | null>(
-				(result, extractor) => result ?? extractor(cards),
-				null,
-			) ?? fallbackExtractor(cards)
-		);
+		for (const extractor of extractors) {
+			const result = extractor(cards);
+
+			if (result) return result;
+		}
+
+		return fallbackExtractor(cards);
 	};
 }
 
