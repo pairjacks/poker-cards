@@ -1,4 +1,4 @@
-import type { Card, Cards, Suit } from "../card/types.ts";
+import type { Card, Suit } from "../card/types.ts";
 
 /**
  * Creates a 52 card deck without Jokers, sorted by suite and face.
@@ -21,7 +21,7 @@ export interface CreateDeckOptions {
 	order?: DeckOrder;
 }
 
-function createDeckValue(): Cards {
+function createDeckValue(): Card[] {
 	return [
 		...createSuit("d"),
 		...createSuit("c"),
@@ -30,7 +30,7 @@ function createDeckValue(): Cards {
 	];
 }
 
-function createDeckNdo(): Cards {
+function createDeckNdo(): Card[] {
 	return [
 		...createSuit("h"),
 		...createSuit("c"),

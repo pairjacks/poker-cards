@@ -1,7 +1,7 @@
 export { FACE, SUIT } from "./card/constants.ts";
 export { compareCards } from "./card/compare.ts";
 
-export type { Card, Cards } from "./card/types.ts";
+export type { Face, Suit, Card } from "./card/types.ts";
 
 export { createDeck } from "./deck/create.ts";
 export { drawCardsFromDeck } from "./deck/draw.ts";

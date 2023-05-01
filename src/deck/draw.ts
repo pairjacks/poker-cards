@@ -1,6 +1,6 @@
 import { clamp } from "../util/number.ts";
 
-import type { Cards } from "../card/types.ts";
+import type { Card } from "../card/types.ts";
 
 /**
  * Draws n cards from deck without mutating the deck. Returned card order tries
@@ -9,7 +9,10 @@ import type { Cards } from "../card/types.ts";
  * @param deck - the deck to draw from
  * @param count - the number of cards to draw
  */
-export function drawCardsFromDeck(deck: Cards, count = 1): DeckDrawResult {
+export function drawCardsFromDeck(
+	deck: readonly Card[],
+	count = 1,
+): DeckDrawResult {
 	const drawCount = clamp(0, deck.length, count);
 
 	if (!deck.length || !drawCount) return { deck, cards: [] };
@@ -27,7 +30,7 @@ export function drawCardsFromDeck(deck: Cards, count = 1): DeckDrawResult {
 	return { cards, deck: nextDeck };
 }
 
-export type DeckDrawResult = {
-	readonly cards: Cards;
-	readonly deck: Cards;
-};
+export interface DeckDrawResult {
+	readonly cards: readonly Card[];
+	readonly deck: readonly Card[];
+}

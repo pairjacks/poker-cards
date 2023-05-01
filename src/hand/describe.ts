@@ -3,7 +3,7 @@ import { allEqualBy } from "../util/array.ts";
 
 import { getSortedCards } from "./util.ts";
 
-import type { Card, Cards, Face, Suit } from "../card/types.ts";
+import type { Card, Face, Suit } from "../card/types.ts";
 import type { HandRank, Hand, HandDescription } from "./types.ts";
 
 /**
@@ -18,7 +18,7 @@ export function describeCard(card: Card) {
  * Describes pocket cards in words, e.g. "Pocket Aces"
  * @param pocketCards - Player's pocket cards
  */
-export function describePocketCards(pocketCards: Cards) {
+export function describePocketCards(pocketCards: readonly Card[]) {
 	const first = pocketCards[0];
 
 	if (!first) return "";
@@ -73,11 +73,11 @@ function facePlural(card: Card, count = 1) {
 	return faceTextPluralForms[getCardFace(card)][count > 1 ? 1 : 0];
 }
 
-function cardList(cards: Cards) {
+function cardList(cards: readonly Card[]) {
 	return cards.map((card) => facePlural(card)).join("-");
 }
 
-function kickerList(kickers: Cards) {
+function kickerList(kickers: readonly Card[]) {
 	return kickers.length
 		? `${cardList(kickers)} ${kickers.length > 1 ? "kickers" : "kicker"}`
 		: "";
