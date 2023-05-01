@@ -3,15 +3,6 @@ import { getCardValue } from "./value.js";
 import type { Card } from "./types.js";
 
 /**
- * Determines if two cards are identical
- * @param a - Card
- * @param b - Card
- */
-export function isSameCard(a: Card, b: Card) {
-	return a === b;
-}
-
-/**
  * Compares values of cards
  * Returns 0 if values are the same
  * Returns less than 0 if a is higher than b

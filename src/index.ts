@@ -1,5 +1,5 @@
 export { FACE, SUIT } from "./card/constants.js";
-export { isSameCard, compareCards } from "./card/compare.js";
+export { compareCards } from "./card/compare.js";
 
 export type { Card, Cards } from "./card/types.js";
 

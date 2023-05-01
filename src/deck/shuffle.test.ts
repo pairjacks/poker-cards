@@ -2,7 +2,6 @@ import assert from "node:assert";
 import { describe, it } from "node:test";
 
 import { differenceWith } from "../util/array.js";
-import { isSameCard } from "../card/compare.js";
 import { fullDeckNdo } from "./__fixtures__/deck.js";
 import { shuffleDeckNaive, createDeckShuffler } from "./shuffle.js";
 
@@ -10,10 +9,11 @@ void describe("deck/shuffle", () => {
 	void it("should asynchronously shuffle a deck using naive shuffler", async () => {
 		const deck = [...fullDeckNdo];
 		const shuffled = await shuffleDeckNaive(deck);
+		const eq = <T>(a: T, b: T) => a === b;
 
 		assert.notStrictEqual(shuffled, deck);
-		assert.strictEqual(differenceWith(isSameCard, deck, shuffled).length, 0);
-		assert.strictEqual(differenceWith(isSameCard, shuffled, deck).length, 0);
+		assert.strictEqual(differenceWith(eq, deck, shuffled).length, 0);
+		assert.strictEqual(differenceWith(eq, shuffled, deck).length, 0);
 	});
 
 	void it("should accept a custom shuffle function", async () => {

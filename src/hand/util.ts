@@ -1,7 +1,7 @@
 import { memoize } from "../util/function.js";
 import { isInRangeInclusive } from "../util/number.js";
 import { groupBy, differenceWith, chunkPreviousWith } from "../util/array.js";
-import { isSameCard, compareCards } from "../card/compare.js";
+import { compareCards } from "../card/compare.js";
 import { getCardFace, getCardSuit } from "../card/value.js";
 import { HAND_RANK_VALUE } from "./constants.js";
 
@@ -17,7 +17,7 @@ export const getSortedCards = memoize((cards: Cards): Cards => {
 });
 
 export function omitAndSort(from: Cards, cards: Cards) {
-	return getSortedCards(differenceWith(isSameCard, from, cards));
+	return getSortedCards(differenceWith((a, b) => a === b, from, cards));
 }
 
 export function extractInPreferenceOrder(
