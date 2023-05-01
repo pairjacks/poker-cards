@@ -9,7 +9,7 @@ void describe("deck/draw", () => {
 	void describe("drawCardsFromDeck", () => {
 		void it("should not modify deck if no cards to be drawn", () => {
 			const emptyDeck: Cards = [] as const;
-			const initialDeck = [["2", "d"]] as const;
+			const initialDeck = ["2d"] as const;
 
 			let drawResult = drawCardsFromDeck(emptyDeck, 1);
 
@@ -28,22 +28,13 @@ void describe("deck/draw", () => {
 		});
 
 		void it("should immutably draw cards from top of deck", () => {
-			const initialDeck = [
-				["j", "h"],
-				["6", "d"],
-				["9", "s"],
-				["t", "c"],
-			] as const;
+			const initialDeck = ["jh", "6d", "9s", "tc"] as const;
 
 			let drawResult = drawCardsFromDeck(initialDeck);
 
 			assert.deepStrictEqual(drawResult, {
-				cards: [["j", "h"]],
-				deck: [
-					["6", "d"],
-					["9", "s"],
-					["t", "c"],
-				],
+				cards: ["jh"],
+				deck: ["6d", "9s", "tc"],
 			});
 
 			assert.notStrictEqual(drawResult.deck, initialDeck);
@@ -52,12 +43,7 @@ void describe("deck/draw", () => {
 			drawResult = drawCardsFromDeck(initialDeck, 6);
 
 			assert.deepStrictEqual(drawResult, {
-				cards: [
-					["t", "c"],
-					["9", "s"],
-					["6", "d"],
-					["j", "h"],
-				],
+				cards: ["tc", "9s", "6d", "jh"],
 				deck: [],
 			});
 			assert.notStrictEqual(drawResult.deck, initialDeck);

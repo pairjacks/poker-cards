@@ -1,5 +1,5 @@
-export { FACES, SUITS } from "./card/constants.js";
-export { isSameCard } from "./card/compare.js";
+export { FACE, SUIT } from "./card/constants.js";
+export { isSameCard, compareCards } from "./card/compare.js";
 
 export type { Card, Cards } from "./card/types.js";
 
@@ -20,10 +20,14 @@ export type {
 	DeckShuffler,
 } from "./deck/shuffle.js";
 
-export { HAND_RANKS } from "./hand/constants.js";
+export { HAND_RANK } from "./hand/constants.js";
 export { extractHand } from "./hand/extract.js";
 export { findHighestHands } from "./hand/compare.js";
-export { describePocketCards, describeHand } from "./hand/describe.js";
+export {
+	describeCard,
+	describePocketCards,
+	describeHand,
+} from "./hand/describe.js";
 
 export type {
 	Hand,

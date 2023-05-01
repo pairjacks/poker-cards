@@ -9,29 +9,14 @@ void describe("hand/describe", () => {
 		void it("should describe pocket cards", () => {
 			assert.strictEqual(describePocketCards([]), "");
 
-			assert.strictEqual(describePocketCards([["3", "d"]]), "Three");
+			assert.strictEqual(describePocketCards(["3d"]), "Three");
+
+			assert.strictEqual(describePocketCards(["ac", "2c"]), "Ace-Two Suited");
+
+			assert.strictEqual(describePocketCards(["2d", "2c"]), "Pocket Twos");
 
 			assert.strictEqual(
-				describePocketCards([
-					["a", "c"],
-					["2", "c"],
-				]),
-				"Ace-Two Suited",
-			);
-
-			assert.strictEqual(
-				describePocketCards([
-					["2", "d"],
-					["2", "c"],
-				]),
-				"Pocket Twos",
-			);
-
-			assert.strictEqual(
-				describePocketCards([
-					["8", "d"],
-					["k", "c"],
-				]),
+				describePocketCards(["8d", "kc"]),
 				"King-Eight Offsuit",
 			);
 		});
@@ -52,7 +37,7 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [["a", "c"]],
+						pocketCards: ["ac"],
 						communityCards: [],
 					}),
 				),
@@ -64,7 +49,7 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [["a", "c"]],
+						pocketCards: ["ac"],
 						communityCards: [],
 					}),
 				),
@@ -74,10 +59,7 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "c"],
-							["2", "c"],
-						],
+						pocketCards: ["ac", "2c"],
 						communityCards: [],
 					}),
 				),
@@ -87,11 +69,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "c"],
-							["2", "c"],
-						],
-						communityCards: [["7", "c"]],
+						pocketCards: ["ac", "2c"],
+						communityCards: ["7c"],
 					}),
 				),
 				{ rank: "Ace high", kickers: "Seven-Two kickers" },
@@ -100,14 +79,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "c"],
-							["2", "d"],
-						],
-						communityCards: [
-							["t", "s"],
-							["7", "c"],
-						],
+						pocketCards: ["ac", "2d"],
+						communityCards: ["ts", "7c"],
 					}),
 				),
 				{ rank: "Ace high", kickers: "Ten-Seven-Two kickers" },
@@ -116,16 +89,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "c"],
-							["2", "d"],
-						],
-						communityCards: [
-							["t", "s"],
-							["7", "c"],
-							["j", "c"],
-							["3", "d"],
-						],
+						pocketCards: ["ac", "2d"],
+						communityCards: ["ts", "7c", "jc", "3d"],
 					}),
 				),
 				{ rank: "Ace high", kickers: "Jack-Ten-Seven-Three kickers" },
@@ -136,10 +101,7 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["2", "d"],
-							["2", "c"],
-						],
+						pocketCards: ["2d", "2c"],
 						communityCards: [],
 					}),
 				),
@@ -149,11 +111,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["2", "d"],
-							["2", "c"],
-						],
-						communityCards: [["7", "c"]],
+						pocketCards: ["2d", "2c"],
+						communityCards: ["7c"],
 					}),
 				),
 				{ rank: "Pair Twos", kickers: "Seven kicker" },
@@ -162,16 +121,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["2", "d"],
-							["2", "c"],
-						],
-						communityCards: [
-							["t", "c"],
-							["7", "c"],
-							["j", "d"],
-							["8", "d"],
-						],
+						pocketCards: ["2d", "2c"],
+						communityCards: ["tc", "7c", "jd", "8d"],
 					}),
 				),
 				{ rank: "Pair Twos", kickers: "Jack-Ten-Eight kickers" },
@@ -182,14 +133,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["6", "d"],
-							["6", "c"],
-						],
-						communityCards: [
-							["2", "d"],
-							["2", "c"],
-						],
+						pocketCards: ["6d", "6c"],
+						communityCards: ["2d", "2c"],
 					}),
 				),
 				{ rank: "Two pair, Sixes over Twos", kickers: "" },
@@ -198,16 +143,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["2", "d"],
-							["2", "c"],
-						],
-						communityCards: [
-							["6", "d"],
-							["6", "c"],
-							["j", "c"],
-							["7", "d"],
-						],
+						pocketCards: ["2d", "2c"],
+						communityCards: ["6d", "6c", "jc", "7d"],
 					}),
 				),
 				{ rank: "Two pair, Sixes over Twos", kickers: "Jack kicker" },
@@ -218,11 +155,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["6", "d"],
-							["6", "c"],
-						],
-						communityCards: [["6", "s"]],
+						pocketCards: ["6d", "6c"],
+						communityCards: ["6s"],
 					}),
 				),
 				{ rank: "Three of a kind Sixes", kickers: "" },
@@ -231,14 +165,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["4", "d"],
-							["4", "c"],
-						],
-						communityCards: [
-							["4", "s"],
-							["8", "d"],
-						],
+						pocketCards: ["4d", "4c"],
+						communityCards: ["4s", "8d"],
 					}),
 				),
 				{ rank: "Three of a kind Fours", kickers: "Eight kicker" },
@@ -247,17 +175,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["4", "d"],
-							["4", "c"],
-						],
-						communityCards: [
-							["4", "s"],
-							["6", "s"],
-							["2", "c"],
-							["8", "d"],
-							["j", "c"],
-						],
+						pocketCards: ["4d", "4c"],
+						communityCards: ["4s", "6s", "2c", "8d", "jc"],
 					}),
 				),
 				{ rank: "Three of a kind Fours", kickers: "Jack-Eight kickers" },
@@ -268,15 +187,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["8", "d"],
-							["7", "c"],
-						],
-						communityCards: [
-							["6", "s"],
-							["5", "h"],
-							["4", "s"],
-						],
+						pocketCards: ["8d", "7c"],
+						communityCards: ["6s", "5h", "4s"],
 					}),
 				),
 				{ rank: "Straight, Four to Eight", kickers: "" },
@@ -285,15 +197,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "s"],
-							["2", "h"],
-						],
-						communityCards: [
-							["3", "s"],
-							["4", "c"],
-							["5", "d"],
-						],
+						pocketCards: ["as", "2h"],
+						communityCards: ["3s", "4c", "5d"],
 					}),
 				),
 				{ rank: "Straight, Ace to Five", kickers: "" },
@@ -302,15 +207,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "s"],
-							["t", "h"],
-						],
-						communityCards: [
-							["k", "s"],
-							["j", "c"],
-							["q", "d"],
-						],
+						pocketCards: ["as", "th"],
+						communityCards: ["ks", "jc", "qd"],
 					}),
 				),
 				{ rank: "Straight, Ten to Ace", kickers: "" },
@@ -319,16 +217,8 @@ void describe("hand/describe", () => {
 			assert.deepStrictEqual(
 				describeHand(
 					extractHand({
-						pocketCards: [
-							["a", "s"],
-							["t", "h"],
-						],
-						communityCards: [
-							["k", "s"],
-							["j", "c"],
-							["q", "d"],
-							["2", "d"],
-						],
+						pocketCards: ["as", "th"],
+						communityCards: ["ks", "jc", "qd", "2d"],
 					}),
 				),
 				{ rank: "Straight, Ten to Ace", kickers: "" },
@@ -340,15 +230,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["7", "s"],
-						["2", "s"],
-					],
-					communityCards: [
-						["j", "s"],
-						["4", "s"],
-						["5", "s"],
-					],
+					pocketCards: ["7s", "2s"],
+					communityCards: ["js", "4s", "5s"],
 				}),
 			),
 			{ rank: "Flush, Jack-Seven high", kickers: "" },
@@ -357,16 +240,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["7", "s"],
-						["2", "s"],
-					],
-					communityCards: [
-						["j", "s"],
-						["4", "s"],
-						["5", "s"],
-						["a", "c"],
-					],
+					pocketCards: ["7s", "2s"],
+					communityCards: ["js", "4s", "5s", "ac"],
 				}),
 			),
 			{ rank: "Flush, Jack-Seven high", kickers: "" },
@@ -377,15 +252,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["4", "s"],
-						["4", "h"],
-					],
-					communityCards: [
-						["4", "c"],
-						["j", "c"],
-						["j", "s"],
-					],
+					pocketCards: ["4s", "4h"],
+					communityCards: ["4c", "jc", "js"],
 				}),
 			),
 			{ rank: "Full house, Fours full of Jacks", kickers: "" },
@@ -394,16 +262,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["4", "s"],
-						["4", "h"],
-					],
-					communityCards: [
-						["4", "c"],
-						["j", "c"],
-						["j", "s"],
-						["k", "s"],
-					],
+					pocketCards: ["4s", "4h"],
+					communityCards: ["4c", "jc", "js", "ks"],
 				}),
 			),
 			{ rank: "Full house, Fours full of Jacks", kickers: "" },
@@ -414,15 +274,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["4", "s"],
-						["4", "h"],
-					],
-					communityCards: [
-						["4", "c"],
-						["4", "d"],
-						["j", "s"],
-					],
+					pocketCards: ["4s", "4h"],
+					communityCards: ["4c", "4d", "js"],
 				}),
 			),
 			{ rank: "Four of a kind Fours", kickers: "Jack kicker" },
@@ -431,16 +284,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["4", "s"],
-						["4", "h"],
-					],
-					communityCards: [
-						["4", "c"],
-						["4", "d"],
-						["j", "s"],
-						["k", "s"],
-					],
+					pocketCards: ["4s", "4h"],
+					communityCards: ["4c", "4d", "js", "ks"],
 				}),
 			),
 			{ rank: "Four of a kind Fours", kickers: "King kicker" },
@@ -451,15 +296,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["8", "d"],
-						["7", "d"],
-					],
-					communityCards: [
-						["6", "d"],
-						["5", "d"],
-						["4", "d"],
-					],
+					pocketCards: ["8d", "7d"],
+					communityCards: ["6d", "5d", "4d"],
 				}),
 			),
 			{ rank: "Straight flush, Four to Eight", kickers: "" },
@@ -468,15 +306,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["a", "s"],
-						["2", "s"],
-					],
-					communityCards: [
-						["3", "s"],
-						["4", "s"],
-						["5", "s"],
-					],
+					pocketCards: ["as", "2s"],
+					communityCards: ["3s", "4s", "5s"],
 				}),
 			),
 			{ rank: "Straight flush, Ace to Five", kickers: "" },
@@ -485,16 +316,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["a", "s"],
-						["2", "s"],
-					],
-					communityCards: [
-						["3", "s"],
-						["4", "s"],
-						["5", "s"],
-						["8", "s"],
-					],
+					pocketCards: ["as", "2s"],
+					communityCards: ["3s", "4s", "5s", "8s"],
 				}),
 			),
 			{ rank: "Straight flush, Ace to Five", kickers: "" },
@@ -505,16 +328,8 @@ void describe("hand/describe", () => {
 		assert.deepStrictEqual(
 			describeHand(
 				extractHand({
-					pocketCards: [
-						["a", "s"],
-						["t", "s"],
-					],
-					communityCards: [
-						["k", "s"],
-						["j", "s"],
-						["q", "s"],
-						["2", "s"],
-					],
+					pocketCards: ["as", "ts"],
+					communityCards: ["ks", "js", "qs", "2s"],
 				}),
 			),
 			{ rank: "Royal flush", kickers: "" },

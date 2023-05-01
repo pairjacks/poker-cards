@@ -1,5 +1,3 @@
-import { FACES, SUITS } from "../card/constants.js";
-
 import type { Card, Cards, Suit } from "../card/types.js";
 
 /**
@@ -22,7 +20,12 @@ export type DeckOrder = "ndo" | "value";
 export type CreateDeckOptions = { order?: DeckOrder };
 
 function createDeckValue(): Cards {
-	return SUITS.flatMap(createSuit);
+	return [
+		...createSuit("d"),
+		...createSuit("c"),
+		...createSuit("h"),
+		...createSuit("s"),
+	];
 }
 
 function createDeckNdo(): Cards {
@@ -34,6 +37,20 @@ function createDeckNdo(): Cards {
 	];
 }
 
-function createSuit(suit: Suit) {
-	return FACES.map((face): Card => [face, suit]);
+function createSuit(suit: Suit): Card[] {
+	return [
+		`a${suit}`,
+		`2${suit}`,
+		`3${suit}`,
+		`4${suit}`,
+		`5${suit}`,
+		`6${suit}`,
+		`7${suit}`,
+		`8${suit}`,
+		`9${suit}`,
+		`t${suit}`,
+		`j${suit}`,
+		`q${suit}`,
+		`k${suit}`,
+	];
 }
