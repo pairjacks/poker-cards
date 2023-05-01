@@ -1,7 +1,7 @@
 import { uniqBy } from "../util/array.js";
 import {
 	omitAndSort,
-	getSortedConsequtiveFaceGroups,
+	getSortedConsecutiveGroups,
 	getSortedFaceGroups,
 	getSortedCards,
 	getSuitGroups,
@@ -53,7 +53,7 @@ export const extractThreeOfAKind: HandExtractor = (cards) => {
 };
 
 export const extractStraight: HandExtractor = (cards) => {
-	const candidate = getSortedConsequtiveFaceGroups(cards)
+	const candidate = getSortedConsecutiveGroups(cards)
 		.map((group) => uniqBy(([face]) => face, group))
 		.find((group) => group.length > 3)
 		?.slice(0, 5);
@@ -111,8 +111,7 @@ export const extractFourOfAKind: HandExtractor = (cards) => {
 
 export const extractStraightFlush: HandExtractor = (cards) => {
 	const candidate = getSuitGroups(
-		getSortedConsequtiveFaceGroups(cards).find((group) => group.length > 3) ??
-			[],
+		getSortedConsecutiveGroups(cards).find((group) => group.length > 3) ?? [],
 	)
 		.find((group) => group.length > 3)
 		?.slice(0, 5);

@@ -1,5 +1,4 @@
 import { memoize } from "../util/function.js";
-import { isInRangeInclusive } from "../util/number.js";
 import { groupBy, differenceWith, chunkPreviousWith } from "../util/array.js";
 import { compareCards } from "../card/compare.js";
 import { getCardFace, getCardSuit } from "../card/value.js";
@@ -55,18 +54,16 @@ export function createExtractorResult(
 
 export const getSortedFaceGroups = memoize(
 	(cards: readonly Card[]): Card[][] => {
-		return chunkPreviousWith(
-			(curr, prev) => getCardFace(curr) === getCardFace(prev),
-			getSortedCards(cards),
-		).filter((chunk) => chunk.length > 1);
+		return chunkPreviousWith(isSameFace, getSortedCards(cards)).filter(
+			(chunk) => chunk.length > 1,
+		);
 	},
 );
 
-export const getSortedConsequtiveFaceGroups = memoize(
+export const getSortedConsecutiveGroups = memoize(
 	(cards: readonly Card[]): Card[][] => {
-		return chunkPreviousWith(
-			(curr, prev) => isInRangeInclusive(0, 1, compareCards(curr, prev)),
-			getSortedCards(cards),
+		return chunkPreviousWith(isConsecutive, getSortedCards(cards)).filter(
+			(chunk) => chunk.length > 1,
 		);
 	},
 );
@@ -78,3 +75,13 @@ export const getSuitGroups = memoize((cards: readonly Card[]): Card[][] => {
 		.filter(([, groupedCards]) => groupedCards.length > 1)
 		.map(([, groupedCards]) => groupedCards);
 });
+
+function isSameFace(curr: Card, prev: Card) {
+	return getCardFace(curr) === getCardFace(prev);
+}
+
+function isConsecutive(curr: Card, prev: Card) {
+	const comparison = compareCards(curr, prev);
+
+	return comparison === 0 || comparison === 1;
+}
