@@ -1,4 +1,4 @@
-import type { Card, Cards } from "../card/types.js";
+import type { Card } from "../card/types.js";
 
 /**
  * Provide a naive Math.random based generator.
@@ -49,11 +49,11 @@ export function createDeckShuffler(shuffleFn: ShuffleFunction): DeckShuffler {
 	};
 }
 
-export type DeckShuffler = (deck: Cards) => Promise<Cards>;
+export type DeckShuffler = (deck: readonly Card[]) => Promise<Card[]>;
 
 export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 
-export type ShuffleFunction = (cards: Card[]) => Promise<Cards>;
+export type ShuffleFunction = (cards: Card[]) => Promise<Card[]>;
 
 export type ShuffleFunctionCreator = (
 	randomIntGenerator: RandomIntGenerator,

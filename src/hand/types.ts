@@ -1,27 +1,27 @@
 import type { HAND_RANK } from "./constants.js";
-import type { Cards } from "../card/types.js";
+import type { Card } from "../card/types.js";
 
 export type HandRank = (typeof HAND_RANK)[keyof typeof HAND_RANK];
 
 /** Represents a collection of cards that can be used to create a 5 card hand */
 export type HandCandidate = {
 	/** A player's pocket cards */
-	readonly pocketCards: Cards;
+	readonly pocketCards: readonly Card[];
 	/** Community cards available to all players */
-	readonly communityCards: Cards;
+	readonly communityCards: readonly Card[];
 };
 
 /** Represents a hand derived from a HandCandidate */
 export type Hand = {
 	readonly rank: HandRank;
 	/** Cards included in the ranking combination */
-	readonly rankCards: Cards;
+	readonly rankCards: readonly Card[];
 	/** Cards included in the hand but not in the ranking combination */
-	readonly kickerCards: Cards;
+	readonly kickerCards: readonly Card[];
 };
 
 /** Finds a hand pattern from the given array of cards */
-export type HandExtractor<T = Hand | null> = (cards: Cards) => T;
+export type HandExtractor<T = Hand | null> = (cards: readonly Card[]) => T;
 
 /** Represents an item in the result of comparing hands */
 export type HandComparisonResult = {

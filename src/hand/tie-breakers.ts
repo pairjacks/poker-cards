@@ -2,7 +2,7 @@ import { isFiniteNumber } from "../util/predicate.js";
 import { getCardValue } from "../card/value.js";
 
 import type { HandRank, HandComparisonResult } from "./types.js";
-import type { Cards } from "../card/types.js";
+import type { Card } from "../card/types.js";
 
 /*
  * Tie breakers try to resolve ties between hands, given the same rank for all
@@ -55,13 +55,14 @@ export const tieBreakers: { [key in HandRank]: TieBreaker } = {
 	royalFlush: alwaysTied,
 };
 
-// Assumes xs are sorted highest first
-function indecesWithHighestNumber(xss: readonly (readonly number[])[]) {
-	const maxLength = Math.min(...xss.map((xs) => xs.length));
+function indecesWithHighestValue(cardChunks: readonly (readonly Card[])[]) {
+	// Assumes cards are sorted highest first
+	const cardValues = cardChunks.map((cards) => cards.map(getCardValue));
+	const maxLength = Math.min(...cardValues.map((xs) => xs.length));
 	let itr = 0;
 
 	while (itr < maxLength) {
-		const topVals = xss.map((xs) => xs[itr]).filter(isFiniteNumber);
+		const topVals = cardValues.map((xs) => xs[itr]).filter(isFiniteNumber);
 		const maxTopVal = Math.max(...topVals);
 		const indeces = topVals.reduce<number[]>((acc, curr, index) => {
 			if (curr === maxTopVal) acc.push(index);
@@ -69,18 +70,12 @@ function indecesWithHighestNumber(xss: readonly (readonly number[])[]) {
 			return acc;
 		}, []);
 
-		if (indeces.length < xss.length) return indeces;
+		if (indeces.length < cardValues.length) return indeces;
 
 		itr++;
 	}
 
-	return xss.map((_, index) => index);
-}
-
-function indecesWithHighestValue(cardChunks: readonly Cards[]) {
-	return indecesWithHighestNumber(
-		cardChunks.map((cards) => cards.map(getCardValue)),
-	);
+	return cardValues.map((_, index) => index);
 }
 
 type TieBreaker = (results: readonly HandComparisonResult[]) => number[];

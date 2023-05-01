@@ -1,6 +1,6 @@
 import { clamp } from "../util/number.js";
 
-import type { Cards } from "../card/types.js";
+import type { Card } from "../card/types.js";
 
 /**
  * Draws n cards from deck without mutating the deck. Returned card order tries
@@ -9,7 +9,10 @@ import type { Cards } from "../card/types.js";
  * @param deck - the deck to draw from
  * @param count - the number of cards to draw
  */
-export function drawCardsFromDeck(deck: Cards, count = 1): DeckDrawResult {
+export function drawCardsFromDeck(
+	deck: readonly Card[],
+	count = 1,
+): DeckDrawResult {
 	const drawCount = clamp(0, deck.length, count);
 
 	if (!deck.length || !drawCount) return { deck, cards: [] };
@@ -28,6 +31,6 @@ export function drawCardsFromDeck(deck: Cards, count = 1): DeckDrawResult {
 }
 
 export type DeckDrawResult = {
-	readonly cards: Cards;
-	readonly deck: Cards;
+	readonly cards: readonly Card[];
+	readonly deck: readonly Card[];
 };

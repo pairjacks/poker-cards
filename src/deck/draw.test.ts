@@ -3,12 +3,10 @@ import { describe, it } from "node:test";
 
 import { drawCardsFromDeck } from "./draw.js";
 
-import type { Cards } from "../card/types.js";
-
 void describe("deck/draw", () => {
 	void describe("drawCardsFromDeck", () => {
 		void it("should not modify deck if no cards to be drawn", () => {
-			const emptyDeck: Cards = [] as const;
+			const emptyDeck = [] as const;
 			const initialDeck = ["2d"] as const;
 
 			let drawResult = drawCardsFromDeck(emptyDeck, 1);

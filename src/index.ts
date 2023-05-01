@@ -1,7 +1,7 @@
 export { FACE, SUIT } from "./card/constants.js";
 export { compareCards } from "./card/compare.js";
 
-export type { Card, Cards } from "./card/types.js";
+export type { Face, Suit, Card } from "./card/types.js";
 
 export { createDeck } from "./deck/create.js";
 export { drawCardsFromDeck } from "./deck/draw.js";
