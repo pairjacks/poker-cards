@@ -1,4 +1,4 @@
-import { isSameCard, compareCards } from "../card/compare.ts";
+import { compareCards } from "../card/compare.ts";
 import { getCardFace, getCardSuit } from "../card/value.ts";
 import { groupBy, differenceWith, chunkPreviousWith } from "../util/array.ts";
 import { memoize } from "../util/function.ts";
@@ -18,7 +18,7 @@ export const getSortedCards = memoize((cards: Cards): Cards => {
 });
 
 export function omitAndSort(from: Cards, cards: Cards) {
-	return getSortedCards(differenceWith(isSameCard, from, cards));
+	return getSortedCards(differenceWith((a, b) => a === b, from, cards));
 }
 
 export function extractInPreferenceOrder(

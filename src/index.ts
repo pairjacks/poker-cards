@@ -1,5 +1,5 @@
 export { FACE, SUIT } from "./card/constants.ts";
-export { isSameCard, compareCards } from "./card/compare.ts";
+export { compareCards } from "./card/compare.ts";
 
 export type { Card, Cards } from "./card/types.ts";
 
