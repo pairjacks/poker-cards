@@ -1,9 +1,18 @@
+import { getCardFace, getCardSuit } from "../card/value.ts";
 import { allEqualBy } from "../util/array.ts";
 
 import { getSortedCards } from "./util.ts";
 
-import type { Card, Cards, Face } from "../card/types.ts";
+import type { Card, Cards, Face, Suit } from "../card/types.ts";
 import type { HandRank, Hand, HandDescription } from "./types.ts";
+
+/**
+ * Describes a cards in words, e.g. "Two of Hearts"
+ * @param card - A card
+ */
+export function describeCard(card: Card) {
+	return `${facePlural(card)} of ${suitText[getCardSuit(card)]}`;
+}
 
 /**
  * Describes pocket cards in words, e.g. "Pocket Aces"
@@ -53,8 +62,15 @@ const faceTextPluralForms: { [key in Face]: PluralForms } = {
 	a: ["Ace", "Aces"],
 };
 
+const suitText: { [key in Suit]: string } = {
+	d: "Diamonds",
+	c: "Clubs",
+	h: "Hearts",
+	s: "Spades",
+};
+
 function facePlural(card: Card, count = 1) {
-	return faceTextPluralForms[card[0]][count > 1 ? 1 : 0];
+	return faceTextPluralForms[getCardFace(card)][count > 1 ? 1 : 0];
 }
 
 function cardList(cards: Cards) {

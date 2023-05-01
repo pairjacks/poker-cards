@@ -9,59 +9,23 @@ void describe("hand/compare", () => {
 	void describe("findHighestHands", () => {
 		void it("should find natural highest hands", () => {
 			const twoPair = {
-				pocketCards: [
-					["4", "c"],
-					["j", "d"],
-				],
-				communityCards: [
-					["6", "d"],
-					["2", "d"],
-					["8", "s"],
-					["6", "c"],
-					["j", "c"],
-				],
+				pocketCards: ["4c", "jd"],
+				communityCards: ["6d", "2d", "8s", "6c", "jc"],
 			} as const;
 
 			const fullHouse = {
-				pocketCards: [
-					["3", "s"],
-					["4", "d"],
-				],
-				communityCards: [
-					["3", "c"],
-					["3", "d"],
-					["5", "d"],
-					["j", "d"],
-					["j", "h"],
-				],
+				pocketCards: ["3s", "4d"],
+				communityCards: ["3c", "3d", "5d", "jd", "jh"],
 			} as const;
 
 			const fourOfAKind = {
-				pocketCards: [
-					["8", "s"],
-					["j", "d"],
-				],
-				communityCards: [
-					["6", "d"],
-					["2", "d"],
-					["6", "c"],
-					["6", "h"],
-					["6", "s"],
-				],
+				pocketCards: ["8s", "jd"],
+				communityCards: ["6d", "2d", "6c", "6h", "6s"],
 			} as const;
 
 			const royalFlush = {
-				pocketCards: [
-					["k", "c"],
-					["q", "c"],
-				],
-				communityCards: [
-					["a", "c"],
-					["t", "c"],
-					["8", "s"],
-					["j", "c"],
-					["j", "s"],
-				],
+				pocketCards: ["kc", "qc"],
+				communityCards: ["ac", "tc", "8s", "jc", "js"],
 			} as const;
 
 			assertFindHighestResult(
@@ -83,45 +47,18 @@ void describe("hand/compare", () => {
 
 		void it("should find highest ties when all ranks are same", () => {
 			const straightEightSpadesHigh = {
-				pocketCards: [
-					["8", "s"],
-					["7", "d"],
-				],
-				communityCards: [
-					["6", "h"],
-					["5", "c"],
-					["4", "d"],
-					["3", "d"],
-					["2", "c"],
-				],
+				pocketCards: ["8s", "7d"],
+				communityCards: ["6h", "5c", "4d", "3d", "2c"],
 			} as const;
 
 			const straightEightClubsHigh = {
-				pocketCards: [
-					["8", "c"],
-					["7", "h"],
-				],
-				communityCards: [
-					["6", "d"],
-					["5", "s"],
-					["4", "h"],
-					["3", "h"],
-					["2", "s"],
-				],
+				pocketCards: ["8c", "7h"],
+				communityCards: ["6d", "5s", "4h", "3h", "2s"],
 			} as const;
 
 			const straightAceSpadesLow = {
-				pocketCards: [
-					["5", "s"],
-					["4", "h"],
-				],
-				communityCards: [
-					["3", "h"],
-					["2", "s"],
-					["a", "s"],
-					["8", "h"],
-					["8", "h"],
-				],
+				pocketCards: ["5s", "4h"],
+				communityCards: ["3h", "2s", "as", "8h", "8h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -143,31 +80,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve to high card", () => {
 			const highCardHighKicker = {
-				pocketCards: [
-					["j", "c"],
-					["8", "s"],
-				],
-				communityCards: [
-					["7", "d"],
-					["2", "d"],
-					["3", "c"],
-					["4", "c"],
-					["q", "d"],
-				],
+				pocketCards: ["jc", "8s"],
+				communityCards: ["7d", "2d", "3c", "4c", "qd"],
 			} as const;
 
 			const highCardLowKicker = {
-				pocketCards: [
-					["j", "c"],
-					["8", "s"],
-				],
-				communityCards: [
-					["6", "d"],
-					["2", "d"],
-					["3", "c"],
-					["4", "c"],
-					["q", "d"],
-				],
+				pocketCards: ["jc", "8s"],
+				communityCards: ["6d", "2d", "3c", "4c", "qd"],
 			} as const;
 
 			assertFindHighestResult(
@@ -182,31 +101,13 @@ void describe("hand/compare", () => {
 			);
 
 			const highCardEqualA = {
-				pocketCards: [
-					["j", "c"],
-					["8", "s"],
-				],
-				communityCards: [
-					["6", "d"],
-					["2", "d"],
-					["3", "c"],
-					["4", "c"],
-					["q", "d"],
-				],
+				pocketCards: ["jc", "8s"],
+				communityCards: ["6d", "2d", "3c", "4c", "qd"],
 			} as const;
 
 			const highCardEqualB = {
-				pocketCards: [
-					["j", "s"],
-					["8", "d"],
-				],
-				communityCards: [
-					["6", "c"],
-					["2", "h"],
-					["3", "s"],
-					["4", "h"],
-					["q", "s"],
-				],
+				pocketCards: ["js", "8d"],
+				communityCards: ["6c", "2h", "3s", "4h", "qs"],
 			} as const;
 
 			assertFindHighestResult(
@@ -228,31 +129,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve pair", () => {
 			const pairThrees = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["k", "d"],
-					["5", "c"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["kd", "5c", "as", "8h", "7d"],
 			} as const;
 
 			const pairFives = {
-				pocketCards: [
-					["3", "h"],
-					["5", "c"],
-				],
-				communityCards: [
-					["k", "d"],
-					["5", "d"],
-					["a", "h"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "5c"],
+				communityCards: ["kd", "5d", "ah", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -267,31 +150,13 @@ void describe("hand/compare", () => {
 			);
 
 			const pairThreesHighKicker = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["k", "d"],
-					["5", "c"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["kd", "5c", "as", "8h", "7d"],
 			} as const;
 
 			const pairThreesLowKicker = {
-				pocketCards: [
-					["3", "h"],
-					["3", "s"],
-				],
-				communityCards: [
-					["4", "h"],
-					["5", "s"],
-					["a", "c"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "3s"],
+				communityCards: ["4h", "5s", "ac", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -306,31 +171,13 @@ void describe("hand/compare", () => {
 			);
 
 			const pairEqualA = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["k", "d"],
-					["5", "c"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["kd", "5c", "as", "8h", "7d"],
 			} as const;
 
 			const pairEqualB = {
-				pocketCards: [
-					["3", "h"],
-					["3", "s"],
-				],
-				communityCards: [
-					["k", "h"],
-					["5", "s"],
-					["a", "c"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "3s"],
+				communityCards: ["kh", "5s", "ac", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -352,31 +199,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve two pair", () => {
 			const twoPairFivesOverThrees = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["5", "d"],
-					["5", "c"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["5d", "5c", "as", "8h", "7d"],
 			} as const;
 
 			const twoPairSixesOverThrees = {
-				pocketCards: [
-					["3", "h"],
-					["3", "s"],
-				],
-				communityCards: [
-					["6", "d"],
-					["6", "c"],
-					["a", "c"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "3s"],
+				communityCards: ["6d", "6c", "ac", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -391,17 +220,8 @@ void describe("hand/compare", () => {
 			);
 
 			const twoPairFivesOverFours = {
-				pocketCards: [
-					["4", "h"],
-					["4", "s"],
-				],
-				communityCards: [
-					["5", "h"],
-					["5", "s"],
-					["a", "c"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["4h", "4s"],
+				communityCards: ["5h", "5s", "ac", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -416,31 +236,13 @@ void describe("hand/compare", () => {
 			);
 
 			const twoPairFoursOverThreesHighKicker = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["4", "d"],
-					["4", "c"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["4d", "4c", "as", "8h", "7d"],
 			} as const;
 
 			const twoPairFoursOverThreesLowKicker = {
-				pocketCards: [
-					["3", "h"],
-					["3", "s"],
-				],
-				communityCards: [
-					["4", "h"],
-					["4", "s"],
-					["k", "c"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "3s"],
+				communityCards: ["4h", "4s", "kc", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -455,31 +257,13 @@ void describe("hand/compare", () => {
 			);
 
 			const twoPairEqualA = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["4", "d"],
-					["4", "c"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["4d", "4c", "as", "8h", "7d"],
 			} as const;
 
 			const twoPairEqualB = {
-				pocketCards: [
-					["3", "h"],
-					["3", "s"],
-				],
-				communityCards: [
-					["4", "h"],
-					["4", "s"],
-					["a", "c"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "3s"],
+				communityCards: ["4h", "4s", "ac", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -505,31 +289,13 @@ void describe("hand/compare", () => {
 			// be determined by high rank card
 
 			const threeOfAKindThrees = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["k", "d"],
-					["3", "s"],
-					["a", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["kd", "3s", "as", "8h", "7d"],
 			} as const;
 
 			const threeOfAKindFives = {
-				pocketCards: [
-					["5", "h"],
-					["5", "c"],
-				],
-				communityCards: [
-					["k", "d"],
-					["5", "d"],
-					["a", "h"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["5h", "5c"],
+				communityCards: ["kd", "5d", "ah", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -546,31 +312,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve straight", () => {
 			const straightEightSpadesHigh = {
-				pocketCards: [
-					["8", "s"],
-					["6", "h"],
-				],
-				communityCards: [
-					["4", "d"],
-					["2", "c"],
-					["3", "d"],
-					["5", "c"],
-					["7", "d"],
-				],
+				pocketCards: ["8s", "6h"],
+				communityCards: ["4d", "2c", "3d", "5c", "7d"],
 			} as const;
 
 			const straightAceSpadesLow = {
-				pocketCards: [
-					["a", "s"],
-					["8", "h"],
-				],
-				communityCards: [
-					["4", "h"],
-					["2", "s"],
-					["3", "h"],
-					["5", "s"],
-					["8", "h"],
-				],
+				pocketCards: ["as", "8h"],
+				communityCards: ["4h", "2s", "3h", "5s", "8h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -585,17 +333,8 @@ void describe("hand/compare", () => {
 			);
 
 			const straightEightClubsHigh = {
-				pocketCards: [
-					["8", "c"],
-					["6", "d"],
-				],
-				communityCards: [
-					["4", "h"],
-					["2", "s"],
-					["3", "h"],
-					["5", "s"],
-					["7", "h"],
-				],
+				pocketCards: ["8c", "6d"],
+				communityCards: ["4h", "2s", "3h", "5s", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -617,31 +356,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve flush", () => {
 			const flushJackHighDiamonds = {
-				pocketCards: [
-					["j", "d"],
-					["5", "d"],
-				],
-				communityCards: [
-					["3", "d"],
-					["4", "d"],
-					["2", "d"],
-					["j", "h"],
-					["3", "s"],
-				],
+				pocketCards: ["jd", "5d"],
+				communityCards: ["3d", "4d", "2d", "jh", "3s"],
 			} as const;
 
 			const flushNineHighHearts = {
-				pocketCards: [
-					["9", "h"],
-					["5", "h"],
-				],
-				communityCards: [
-					["4", "h"],
-					["3", "h"],
-					["2", "h"],
-					["3", "c"],
-					["9", "d"],
-				],
+				pocketCards: ["9h", "5h"],
+				communityCards: ["4h", "3h", "2h", "3c", "9d"],
 			} as const;
 
 			assertFindHighestResult(
@@ -656,17 +377,8 @@ void describe("hand/compare", () => {
 			);
 
 			const flushJackHighSpades = {
-				pocketCards: [
-					["j", "s"],
-					["5", "s"],
-				],
-				communityCards: [
-					["4", "s"],
-					["3", "s"],
-					["2", "s"],
-					["3", "d"],
-					["j", "h"],
-				],
+				pocketCards: ["js", "5s"],
+				communityCards: ["4s", "3s", "2s", "3d", "jh"],
 			} as const;
 
 			assertFindHighestResult(
@@ -686,17 +398,8 @@ void describe("hand/compare", () => {
 			);
 
 			const flushNineHighDiamondsHigherInternal = {
-				pocketCards: [
-					["9", "d"],
-					["8", "d"],
-				],
-				communityCards: [
-					["4", "d"],
-					["3", "d"],
-					["2", "d"],
-					["9", "h"],
-					["3", "s"],
-				],
+				pocketCards: ["9d", "8d"],
+				communityCards: ["4d", "3d", "2d", "9h", "3s"],
 			} as const;
 
 			assertFindHighestResult(
@@ -717,31 +420,13 @@ void describe("hand/compare", () => {
 			// always be a natural higher hand on high card value
 
 			const fullHouseFivesOverThrees = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["5", "d"],
-					["5", "c"],
-					["5", "s"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["5d", "5c", "5s", "8h", "7d"],
 			} as const;
 
 			const fullHouseSixesOverThrees = {
-				pocketCards: [
-					["3", "h"],
-					["3", "s"],
-				],
-				communityCards: [
-					["6", "d"],
-					["6", "c"],
-					["6", "h"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["3h", "3s"],
+				communityCards: ["6d", "6c", "6h", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -762,31 +447,13 @@ void describe("hand/compare", () => {
 			// on highest rank cards.
 
 			const fourOfAKindThrees = {
-				pocketCards: [
-					["3", "c"],
-					["3", "d"],
-				],
-				communityCards: [
-					["k", "d"],
-					["3", "s"],
-					["3", "h"],
-					["8", "h"],
-					["7", "d"],
-				],
+				pocketCards: ["3c", "3d"],
+				communityCards: ["kd", "3s", "3h", "8h", "7d"],
 			} as const;
 
 			const fourOfAKindFives = {
-				pocketCards: [
-					["5", "h"],
-					["5", "c"],
-				],
-				communityCards: [
-					["k", "d"],
-					["5", "d"],
-					["5", "s"],
-					["8", "d"],
-					["7", "h"],
-				],
+				pocketCards: ["5h", "5c"],
+				communityCards: ["kd", "5d", "5s", "8d", "7h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -803,31 +470,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve straight flush", () => {
 			const straightFlushEightHigh = {
-				pocketCards: [
-					["2", "c"],
-					["6", "c"],
-				],
-				communityCards: [
-					["4", "c"],
-					["3", "c"],
-					["8", "s"],
-					["5", "c"],
-					["6", "s"],
-				],
+				pocketCards: ["2c", "6c"],
+				communityCards: ["4c", "3c", "8s", "5c", "6s"],
 			} as const;
 
 			const straightFlushAceLow = {
-				pocketCards: [
-					["a", "s"],
-					["8", "h"],
-				],
-				communityCards: [
-					["4", "s"],
-					["2", "s"],
-					["3", "s"],
-					["5", "s"],
-					["8", "d"],
-				],
+				pocketCards: ["as", "8h"],
+				communityCards: ["4s", "2s", "3s", "5s", "8d"],
 			} as const;
 
 			assertFindHighestResult(
@@ -842,31 +491,13 @@ void describe("hand/compare", () => {
 			);
 
 			const straightFlushSixHighClubs = {
-				pocketCards: [
-					["2", "c"],
-					["6", "c"],
-				],
-				communityCards: [
-					["4", "c"],
-					["3", "c"],
-					["8", "s"],
-					["5", "c"],
-					["6", "s"],
-				],
+				pocketCards: ["2c", "6c"],
+				communityCards: ["4c", "3c", "8s", "5c", "6s"],
 			} as const;
 
 			const straightFlushSixHighSpades = {
-				pocketCards: [
-					["2", "s"],
-					["6", "s"],
-				],
-				communityCards: [
-					["4", "s"],
-					["3", "s"],
-					["8", "h"],
-					["5", "s"],
-					["6", "h"],
-				],
+				pocketCards: ["2s", "6s"],
+				communityCards: ["4s", "3s", "8h", "5s", "6h"],
 			} as const;
 
 			assertFindHighestResult(
@@ -888,31 +519,13 @@ void describe("hand/compare", () => {
 
 		void it("should resolve royal flush", () => {
 			const royalFlushDiamonds = {
-				pocketCards: [
-					["k", "d"],
-					["q", "d"],
-				],
-				communityCards: [
-					["a", "d"],
-					["t", "d"],
-					["8", "s"],
-					["j", "d"],
-					["j", "s"],
-				],
+				pocketCards: ["kd", "qd"],
+				communityCards: ["ad", "td", "8s", "jd", "js"],
 			} as const;
 
 			const royalFlushSpades = {
-				pocketCards: [
-					["k", "s"],
-					["q", "s"],
-				],
-				communityCards: [
-					["a", "s"],
-					["t", "s"],
-					["8", "s"],
-					["j", "s"],
-					["j", "s"],
-				],
+				pocketCards: ["ks", "qs"],
+				communityCards: ["as", "ts", "8s", "js", "js"],
 			} as const;
 
 			assertFindHighestResult(

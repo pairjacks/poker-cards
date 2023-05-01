@@ -8,7 +8,13 @@ export function differenceWith<X, Y>(
 	xs: readonly X[],
 	ys: readonly Y[],
 ) {
-	return xs.filter((x) => !ys.find((y) => predicate(x, y)));
+	const result: X[] = [];
+
+	for (const x of xs) {
+		if (!ys.find((y) => predicate(x, y))) result.push(x);
+	}
+
+	return result;
 }
 
 export function uniqBy<X>(

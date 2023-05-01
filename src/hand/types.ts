@@ -1,7 +1,7 @@
 import type { Cards } from "../card/types.ts";
-import type { HAND_RANKS } from "./constants.ts";
+import type { HAND_RANK } from "./constants.ts";
 
-export type HandRank = (typeof HAND_RANKS)[number];
+export type HandRank = (typeof HAND_RANK)[keyof typeof HAND_RANK];
 
 /** Represents a collection of cards that can be used to create a 5 card hand */
 export interface HandCandidate {
