@@ -137,16 +137,13 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 };
 
 export const extractRoyalFlush: HandExtractor = (cards) => {
-	const { rankCards, kickerCards: kickers } = extractStraightFlush(cards) ?? {
-		rankCards: null,
-		kickerCards: [],
-	};
+	const straightFlush = extractStraightFlush(cards);
 
-	return rankCards?.[0]?.[0] === "a"
-		? {
-				rankCards,
-				rank: "royalFlush",
-				kickerCards: kickers,
-		  }
+	if (!straightFlush) return null;
+
+	const { rankCards, kickerCards } = straightFlush;
+
+	return rankCards[0]?.charAt(0) === "a"
+		? { rankCards, kickerCards, rank: "royalFlush" }
 		: null;
 };
