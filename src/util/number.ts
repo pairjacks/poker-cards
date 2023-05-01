@@ -4,7 +4,3 @@ export function clamp(min: number, max: number, x: number) {
 
 	return x;
 }
-
-export function isInRangeInclusive(min: number, max: number, x: number) {
-	return x >= min && x <= max;
-}
