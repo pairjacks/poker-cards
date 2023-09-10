@@ -1,6 +1,6 @@
 {
   "name": "@pairjacks/poker-cards",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": false,
   "description": "Handles cards, decks and hands for poker",
   "repository": {
@@ -11,7 +11,7 @@
   "author": "Kav Singh <flakisms@gmail.com>",
   "contributors": [],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
