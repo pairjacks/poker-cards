@@ -1,4 +1,4 @@
-import { FACE_VALUE, SUIT_VALUE } from "./constants.js";
+import { FACE, SUIT } from "./constants.js";
 
 import type { Card, Face, Suit } from "./types.js";
 
@@ -41,3 +41,26 @@ function assertFace(char: string): asserts char is Face {
 function assertSuit(char: string): asserts char is Suit {
 	if (!(char in SUIT_VALUE)) throw new Error(`invalid suit ${char}`);
 }
+
+const FACE_VALUE: { [key in Face]: number } = {
+	[FACE.Two]: 1,
+	[FACE.Three]: 2,
+	[FACE.Four]: 3,
+	[FACE.Five]: 4,
+	[FACE.Six]: 5,
+	[FACE.Seven]: 6,
+	[FACE.Eight]: 7,
+	[FACE.Nine]: 8,
+	[FACE.Ten]: 9,
+	[FACE.Jack]: 10,
+	[FACE.Queen]: 11,
+	[FACE.King]: 12,
+	[FACE.Ace]: 13,
+};
+
+const SUIT_VALUE: { [key in Suit]: number } = {
+	[SUIT.Diamonds]: 1,
+	[SUIT.Clubs]: 1,
+	[SUIT.Hearts]: 1,
+	[SUIT.Spades]: 1,
+};
