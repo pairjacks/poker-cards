@@ -22,18 +22,17 @@ export function omitAndSort(from: readonly Card[], cards: readonly Card[]) {
 export function extractInPreferenceOrder(
 	extractors: HandExtractor[],
 	fallbackExtractor: HandExtractor<Hand>,
+	{ pocketCards, communityCards }: HandCandidate,
 ) {
-	return function extract({ pocketCards, communityCards }: HandCandidate) {
-		const cards = [...pocketCards, ...communityCards];
+	const cards = [...pocketCards, ...communityCards];
 
-		for (const extractor of extractors) {
-			const result = extractor(cards);
+	for (const extractor of extractors) {
+		const result = extractor(cards);
 
-			if (result) return result;
-		}
+		if (result) return result;
+	}
 
-		return fallbackExtractor(cards);
-	};
+	return fallbackExtractor(cards);
 }
 
 export function createExtractorResult(
