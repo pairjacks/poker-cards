@@ -7,6 +7,7 @@ import {
 	getSuitGroups,
 	createExtractorResult,
 } from "./util.js";
+import { FACE } from "../card/constants.js";
 
 import type { Hand, HandExtractor } from "./types.js";
 
@@ -67,9 +68,9 @@ export const extractStraight: HandExtractor = (cards) => {
 
 	// Only consider ace low if lowest card in candidate is two,
 	// otherwise we end up with a disjointed straight
-	if (candidate[candidate.length - 1]?.[0] !== "2") return null;
+	if (candidate[candidate.length - 1]?.[0] !== FACE.Two) return null;
 
-	const ace = getSortedCards(cards).find(([face]) => face === "a");
+	const ace = getSortedCards(cards).find(([face]) => face === FACE.Ace);
 
 	return ace
 		? createExtractorResult("straight", [...candidate, ace], cards)
@@ -85,17 +86,16 @@ export const extractFlush: HandExtractor = (cards) => {
 };
 
 export const extractFullHouse: HandExtractor = (cards) => {
-	const { rankCards: tok } = extractThreeOfAKind(cards) ?? {
+	const { rankCards } = extractThreeOfAKind(cards) ?? {
 		rankCards: null,
 	};
 
-	const pair = getSortedFaceGroups(omitAndSort(cards, tok ?? []))[0]?.slice(
-		0,
-		2,
-	);
+	const pair = getSortedFaceGroups(
+		omitAndSort(cards, rankCards ?? []),
+	)[0]?.slice(0, 2);
 
-	return tok && pair
-		? createExtractorResult("fullHouse", [...tok, ...pair], cards)
+	return rankCards && pair
+		? createExtractorResult("fullHouse", [...rankCards, ...pair], cards)
 		: null;
 };
 
@@ -125,10 +125,10 @@ export const extractStraightFlush: HandExtractor = (cards) => {
 
 	// Only consider ace low if lowest card in candidate is two,
 	// otherwise we end up with a disjointed straight
-	if (candidate[candidate.length - 1]?.[0] !== "2") return null;
+	if (candidate[candidate.length - 1]?.[0] !== FACE.Two) return null;
 
 	const ace = getSortedCards(cards).find(
-		([face, suit]) => face === "a" && suit === candidate[0]?.[1],
+		([face, suit]) => face === FACE.Ace && suit === candidate[0]?.[1],
 	);
 
 	return ace
@@ -143,7 +143,7 @@ export const extractRoyalFlush: HandExtractor = (cards) => {
 
 	const { rankCards, kickerCards } = straightFlush;
 
-	return rankCards[0]?.charAt(0) === "a"
+	return rankCards[0]?.charAt(0) === FACE.Ace
 		? { rankCards, kickerCards, rank: "royalFlush" }
 		: null;
 };
