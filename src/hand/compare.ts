@@ -1,5 +1,4 @@
 import { uniqBy } from "../util/array.js";
-import { identity } from "../util/function.js";
 import { isNotNullish } from "../util/predicate.js";
 import { extractHand } from "./extract.js";
 import { tieBreakers } from "./tie-breakers.js";
@@ -49,7 +48,7 @@ function resolveTies([first, ...rest]: readonly HandComparisonResult[]) {
 
 	const results = [first, ...rest];
 	const uniqueRanks = uniqBy(
-		identity,
+		(x) => x,
 		results.map(({ hand }) => hand.rank),
 	);
 
