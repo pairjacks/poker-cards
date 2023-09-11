@@ -12,14 +12,14 @@ import {
 } from "./hand-extractors.ts";
 import { extractInPreferenceOrder } from "./util.ts";
 
-import type { Hand, HandCandidate } from "./types.ts";
+import type { HandCandidate } from "./types.ts";
 
 /**
  * Extracts the highest possible hand from a candidate hand
  * @param candidate - a HandCandidate to evaluate
  */
-export const extractHand: (candidate: HandCandidate) => Hand =
-	extractInPreferenceOrder(
+export function extractHand(candidate: HandCandidate) {
+	return extractInPreferenceOrder(
 		[
 			extractRoyalFlush,
 			extractStraightFlush,
@@ -32,4 +32,6 @@ export const extractHand: (candidate: HandCandidate) => Hand =
 			extractPair,
 		],
 		extractHighCard,
+		candidate,
 	);
+}
