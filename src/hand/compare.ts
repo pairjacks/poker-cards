@@ -1,5 +1,4 @@
 import { uniqBy } from "../util/array.ts";
-import { identity } from "../util/function.ts";
 import { isNotNullish } from "../util/predicate.ts";
 
 import { extractHand } from "./extract.ts";
@@ -7,6 +6,10 @@ import { tieBreakers } from "./tie-breakers.ts";
 import { getHandRankValue } from "./util.ts";
 
 import type { HandCandidate, HandComparisonResult } from "./types.ts";
+
+function identity<T>(value: T): T {
+	return value;
+}
 
 /**
  * Returns an array of highest hands from a list of candidates. Multiple entries indicates a draw.
