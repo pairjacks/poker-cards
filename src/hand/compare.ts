@@ -19,18 +19,14 @@ export function findHighestHands(
 	candidates: readonly HandCandidate[],
 ): readonly HandComparisonResult[] {
 	const evaluated = candidates
-		.map(
-			(candidate, candidateIndex): HandComparisonResult => ({
-				candidate,
-				candidateIndex,
-				hand: extractHand(candidate),
-			}),
-		)
-		.toSorted(
-			(a, b) => getHandRankValue(b.hand.rank) - getHandRankValue(a.hand.rank),
-		);
+		.map((candidate, candidateIndex): HandComparisonResult => {
+			return { candidate, candidateIndex, hand: extractHand(candidate) };
+		})
+		.sort((a, b) => {
+			return getHandRankValue(b.hand.rank) - getHandRankValue(a.hand.rank);
+		});
 
-	const highestEvaluated = evaluated[0];
+	const [highestEvaluated] = evaluated;
 
 	if (!highestEvaluated) throw new Error("No hand found to evaluate");
 
@@ -63,7 +59,7 @@ function resolveTies([first, ...rest]: readonly HandComparisonResult[]) {
 		);
 	}
 
-	const rank = uniqueRanks[0];
+	const [rank] = uniqueRanks;
 
 	if (!rank) throw new Error("No viable rank found for comparison");
 
