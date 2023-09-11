@@ -17,6 +17,10 @@ export function differenceWith<X, Y>(
 	return result;
 }
 
+export function omit<T>(from: readonly T[], items: readonly T[]) {
+	return differenceWith((a, b) => a === b, from, items);
+}
+
 export function uniqBy<X>(
 	value: (x: Readonly<X>) => unknown,
 	xs: readonly X[],

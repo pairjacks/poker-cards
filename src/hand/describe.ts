@@ -1,6 +1,6 @@
-import { getSortedCards } from "./util.js";
 import { allEqualBy } from "../util/array.js";
 import { getCardFace, getCardSuit } from "../card/value.js";
+import { compareCards } from "../card/compare.js";
 
 import type { HandRank, Hand, HandDescription } from "./types.js";
 import type { Card, Face, Suit } from "../card/types.js";
@@ -24,12 +24,12 @@ export function describePocketCards(pocketCards: readonly Card[]) {
 
 	if (pocketCards.length === 1) return facePlural(first);
 
-	if (allEqualBy((card) => card[0], pocketCards)) {
+	if (allEqualBy(getCardFace, pocketCards)) {
 		return `Pocket ${facePlural(first, 2)}`;
 	}
 
-	const sorted = getSortedCards(pocketCards);
-	const suitStatus = allEqualBy((card) => card[1], pocketCards)
+	const sorted = [...pocketCards].sort(compareCards);
+	const suitStatus = allEqualBy(getCardSuit, pocketCards)
 		? "Suited"
 		: "Offsuit";
 
@@ -89,15 +89,16 @@ function assertCard(card?: Card): asserts card is Card {
 const handDescribers: { [key in HandRank]: HandDescriber } = {
 	// This is the only rank at which rankCards could be zero - for the rest
 	// to have been derived, there would need to be at least 2 rank cards
-	highCard: ({ rankCards: [rankCard], kickerCards }) =>
-		rankCard
+	highCard({ rankCards: [rankCard], kickerCards }) {
+		return rankCard
 			? {
 					rank: `${facePlural(rankCard)} high`,
 					kickers: kickerList(kickerCards),
 			  }
-			: { rank: "", kickers: "" },
+			: { rank: "", kickers: "" };
+	},
 
-	pair: ({ rankCards: [rankCard], kickerCards }) => {
+	pair({ rankCards: [rankCard], kickerCards }) {
 		assertCard(rankCard);
 
 		return {
@@ -106,7 +107,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	twoPair: ({ rankCards: [rankCard, , over], kickerCards }) => {
+	twoPair({ rankCards: [rankCard, , over], kickerCards }) {
 		assertCard(rankCard);
 		assertCard(over);
 
@@ -116,7 +117,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	threeOfAKind: ({ rankCards: [rankCard], kickerCards }) => {
+	threeOfAKind({ rankCards: [rankCard], kickerCards }) {
 		assertCard(rankCard);
 
 		return {
@@ -125,7 +126,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	straight: ({ rankCards }) => {
+	straight({ rankCards }) {
 		const first = rankCards[0];
 		const last = rankCards[rankCards.length - 1];
 
@@ -138,15 +139,17 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	flush: ({ rankCards }) => ({
-		rank: `Flush, ${rankCards
-			.slice(0, 2)
-			.map((card) => facePlural(card))
-			.join("-")} high`,
-		kickers: "",
-	}),
+	flush({ rankCards }) {
+		return {
+			rank: `Flush, ${rankCards
+				.slice(0, 2)
+				.map((card) => facePlural(card))
+				.join("-")} high`,
+			kickers: "",
+		};
+	},
 
-	fullHouse: ({ rankCards }) => {
+	fullHouse({ rankCards }) {
 		const first = rankCards[0];
 		const last = rankCards[rankCards.length - 1];
 
@@ -162,7 +165,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	fourOfAKind: ({ rankCards: [rankCard], kickerCards }) => {
+	fourOfAKind({ rankCards: [rankCard], kickerCards }) {
 		assertCard(rankCard);
 
 		return {
@@ -171,7 +174,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	straightFlush: ({ rankCards }) => {
+	straightFlush({ rankCards }) {
 		const first = rankCards[0];
 		const last = rankCards[rankCards.length - 1];
 
@@ -184,7 +187,9 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 		};
 	},
 
-	royalFlush: () => ({ rank: "Royal flush", kickers: "" }),
+	royalFlush() {
+		return { rank: "Royal flush", kickers: "" };
+	},
 };
 
 type HandDescriber = (hand: Hand) => HandDescription;

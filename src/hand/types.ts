@@ -20,8 +20,10 @@ export type Hand = {
 	readonly kickerCards: readonly Card[];
 };
 
-/** Finds a hand pattern from the given array of cards */
-export type HandExtractor<T = Hand | null> = (cards: readonly Card[]) => T;
+/** Finds a hand pattern from the given array of _*sorted*_ cards */
+export type HandExtractor<T = Hand | null> = (
+	sortedCards: readonly Card[],
+) => T;
 
 /** Represents an item in the result of comparing hands */
 export type HandComparisonResult = {
