@@ -14,27 +14,24 @@ type Face =
   | "7"
   | "8"
   | "9"
-  | "t"
-  | "j"
-  | "q"
-  | "k"
-  | "a";
+  | "t" // 10
+  | "j" // Jack
+  | "q" // Queen
+  | "k" // King
+  | "a"; // Ace
 
 type Suit =
-  | "d"
-  | "c"
-  | "h"
-  | "s";
+  | "d" // Diamonds
+  | "c" // Clubs
+  | "h" // Hearts
+  | "s"; // Spades
 
-type Card = readonly [Face, Suit];
-
-// Convenience type expressing a readonly array of readonly cards
-type Cards = readonly Card[];
+type Card = `${Face}${Suit}`;
 
 // Represents a collection of cards that can be used to create a 5 card hand
 type HandCandidate {
-  readonly pocketCards: Cards;
-  readonly communityCards: Cards;
+  readonly pocketCards: readonly Card[];
+  readonly communityCards: readonly Card[];
 }
 
 // A hand derived from a HandCandidate
@@ -42,9 +39,9 @@ type Hand {
   // Straight, TwoPair etc
   readonly rank: HandRank;
   // Cards included in the ranking combination
-  readonly rankCards: Cards;
+  readonly rankCards: readonly Card[];
   // Cards included in the hand but not in the ranking combination
-  readonly kickerCards: Cards;
+  readonly kickerCards: readonly Card[];
 }
 ```
 
@@ -52,15 +49,18 @@ type Hand {
 
 ### Cards
 
-#### `isSameCard`
+#### `compareCards`
 
-Determines if two cards are identical
+Returns -1 if first card is higher in value than second card
+Returns 0 if card values are the same
+Returns 1 if second card is higher in value than first card
 
 ```ts
-import { isSameCard, Face, Suit } from "@pairjacks/poker-cards";
+import { compareCards } from "@pairjacks/poker-cards";
 
-isSameCard(["2", "c"], ["2", "c"]); // true
-isSameCard(["3", "c"], ["2", "c"]); // false
+compareCards("2c", "2d"); // 0
+compareCards("3c", "2c"); // -1
+compareCards("3d", "5c"); // 1
 ```
 
 ### Deck
@@ -75,14 +75,9 @@ Creates a 52 card deck without Jokers. Accepts an optional parameter object
 ```ts
 import { createDeck } from "@pairjacks/poker-cards";
 
-createDeck();
-// [[Ace, Hearts], [Two, Hearts] ... [Two, Spades], [Ace, Spades]]
-
-createDeck({ order: "ndo" });
-// [[Ace, Hearts], [Two, Hearts] ... [Two, Spades], [Ace, Spades]] (default)
-
-createDeck({ order: "value" });
-// [[Ace, Diamonds], [Two, Diamonds] ... [Queen, Spades], [King, Spades]]
+createDeck(); // ["ah", "2h" ... "2s", "as"]
+createDeck({ order: "ndo" }); // ["ah", "2h" ... "2s", "as"]
+createDeck({ order: "value" }); // ["ad", "2d" ... "qs", "ks"]
 ```
 
 #### `drawCardsFromDeck`
@@ -163,28 +158,13 @@ Extracts the highest possible hand from a candidate hand
 import { extractHand } from "@pairjacks/poker-cards";
 
 const hand = extractHand({
-	pocketCards: [
-		["2", "c"],
-		["6", "c"],
-	],
-	communityCards: [
-		["4", "c"],
-		["3", "c"],
-		["8", "s"],
-		["5", "c"],
-		["6", "s"],
-	],
+	pocketCards: ["2c", "6c"],
+	communityCards: ["4c", "3c", "8s", "5c", "6s"],
 });
 /*
 hand: Hand = {
-  rank: 'straightFlush',
-  rankCards: [
-    ['6', 'c'],
-    ['5', 'c'],
-    ['4', 'c'],
-    ['3', 'c'],
-    ['2', 'c'],
-  ],
+  rank: "straightFlush",
+  rankCards: ["6c", "5c", "4c", "3c", "2c"],
   kickerCards: [],
 }
 */
@@ -226,10 +206,7 @@ Describes pocket cards in words
 ```ts
 import { describePocketCards, Face, Suit } from "@pairjacks/poker-cards";
 
-describePocketCards([
-	["a", "h"],
-	["a", "s"],
-]);
+describePocketCards(["ah", "as"]);
 // Pocket Aces
 ```
 
@@ -241,16 +218,8 @@ Describes a hand in words
 import { extractHand, describeHand, Face, Suit } from "@pairjacks/poker-cards";
 
 describeHand(extractHand({
-  pocketCards: [
-    ["5", "h"],
-    ["3", "d"],
-  ],
-  communityCards: [
-    ["2", "h"],
-    ["5", "d"],
-    ["2", "d"],
-    ["7", "c"],
-  ],
+  pocketCards: ["5h", "3d"],
+  communityCards: ["2h", "5d", "2d", "7c"],
 });
 // { rank: 'Two pair, Fives over Twos', kickers: 'Seven kicker' }
 ```
