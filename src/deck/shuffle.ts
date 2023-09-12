@@ -1,4 +1,4 @@
-import type { Card, Cards } from '../card/types';
+import type { Card, Cards } from "../card/types.js";
 
 /**
  * Provide a naive Math.random based generator.
@@ -6,37 +6,37 @@ import type { Card, Cards } from '../card/types';
  * @param max - maximum int value
  * @returns a random int value
  */
-export const randomIntNaive: RandomIntGenerator = (min, max) =>
-  Promise.resolve(min + Math.floor(Math.random() * max));
+export const randomIntNaive: RandomIntGenerator = (min, max) => {
+	return Promise.resolve(min + Math.floor(Math.random() * max));
+};
 
 /**
  * Create a shuffler based on fisher-yates (https://bost.ocks.org/mike/shuffle/)
  * Adapted from https://medium.com/swlh/the-javascript-shuffle-62660df19a5d
+ * NOTE: This function shuffles in-place
  * @param randomIntGenerator - an async random integer generator
  */
 export const createFisherYatesStackShuffle: ShuffleFunctionCreator = (
-  randomIntGenerator,
+	randomIntGenerator,
 ) => {
-  return function shuffleFn(arr) {
-    const futureInts = arr.map((_, i) => randomIntGenerator(0, arr.length - i));
+	return async function shuffleFn(arr) {
+		const futureInts = arr.map((_, i) => randomIntGenerator(0, arr.length - i));
 
-    return Promise.all(futureInts).then((ints) => {
-      for (const i of ints) {
-        const picked = arr.splice(i, 1)[0];
+		for (const i of await Promise.all(futureInts)) {
+			const [picked] = arr.splice(i, 1);
 
-        if (picked) arr.push(picked);
-      }
+			if (picked) arr.push(picked);
+		}
 
-      return arr;
-    });
-  };
+		return arr;
+	};
 };
 
 /**
  * Provide a default shuffler using naive Math.random int generator
  */
 export const shuffleDeckNaive: DeckShuffler = createDeckShuffler(
-  createFisherYatesStackShuffle(randomIntNaive),
+	createFisherYatesStackShuffle(randomIntNaive),
 );
 
 /**
@@ -44,9 +44,9 @@ export const shuffleDeckNaive: DeckShuffler = createDeckShuffler(
  * @param shuffleFn - an async shuffle function
  */
 export function createDeckShuffler(shuffleFn: ShuffleFunction): DeckShuffler {
-  return function shuffle(deck) {
-    return shuffleFn([...deck]);
-  };
+	return function shuffle(deck) {
+		return shuffleFn([...deck]);
+	};
 }
 
 export type DeckShuffler = (deck: Cards) => Promise<Cards>;
@@ -56,5 +56,5 @@ export type RandomIntGenerator = (min: number, max: number) => Promise<number>;
 export type ShuffleFunction = (cards: Card[]) => Promise<Cards>;
 
 export type ShuffleFunctionCreator = (
-  randomIntGenerator: RandomIntGenerator,
+	randomIntGenerator: RandomIntGenerator,
 ) => ShuffleFunction;

@@ -1,6 +1,6 @@
-import { getFaceValue, getSuitValue } from './value';
+import { getFaceValue, getSuitValue } from "./value.js";
 
-import type { Card } from './types';
+import type { Card } from "./types.js";
 
 /**
  * Determines if two cards are identical
@@ -8,7 +8,7 @@ import type { Card } from './types';
  * @param b - Card
  */
 export function isSameCard(a: Card, b: Card) {
-  return a[0] === b[0] && a[1] === b[1];
+	return a[0] === b[0] && a[1] === b[1];
 }
 
 /**
@@ -20,7 +20,7 @@ export function isSameCard(a: Card, b: Card) {
  * @param b - Card
  */
 export function compareFaces(a: Card, b: Card) {
-  return getFaceValue(b) - getFaceValue(a);
+	return getFaceValue(b) - getFaceValue(a);
 }
 
 /**
@@ -32,7 +32,7 @@ export function compareFaces(a: Card, b: Card) {
  * @param b - Card
  */
 export function compareSuits(a: Card, b: Card) {
-  return getSuitValue(b) - getSuitValue(a);
+	return getSuitValue(b) - getSuitValue(a);
 }
 
 /**
@@ -45,5 +45,5 @@ export function compareSuits(a: Card, b: Card) {
  * @param b - Card
  */
 export function compareCards(a: Card, b: Card) {
-  return compareFaces(a, b) || compareSuits(a, b);
+	return compareFaces(a, b) || compareSuits(a, b);
 }

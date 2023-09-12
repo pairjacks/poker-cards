@@ -6,26 +6,26 @@
 
 ```ts
 enum Face {
-  Two = 'Two',
-  Three = 'Three',
-  Four = 'Four',
-  Five = 'Five',
-  Six = 'Six',
-  Seven = 'Seven',
-  Eight = 'Eight',
-  Nine = 'Nine',
-  Ten = 'Ten',
-  Jack = 'Jack',
-  Queen = 'Queen',
-  King = 'King',
-  Ace = 'Ace',
+	Two = "Two",
+	Three = "Three",
+	Four = "Four",
+	Five = "Five",
+	Six = "Six",
+	Seven = "Seven",
+	Eight = "Eight",
+	Nine = "Nine",
+	Ten = "Ten",
+	Jack = "Jack",
+	Queen = "Queen",
+	King = "King",
+	Ace = "Ace",
 }
 
 enum Suit {
-  Diamonds = 'Diamonds',
-  Clubs = 'Clubs',
-  Hearts = 'Heart',
-  Spades = 'Spades',
+	Diamonds = "Diamonds",
+	Clubs = "Clubs",
+	Hearts = "Heart",
+	Spades = "Spades",
 }
 
 type Card = readonly [Face, Suit];
@@ -34,20 +34,20 @@ type Card = readonly [Face, Suit];
 type Cards = readonly Card[];
 
 // Represents a collection of cards that can be used to create a 5 card hand
-interface HandCandidate {
-  readonly pocketCards: Cards;
-  readonly communityCards: Cards;
-}
+type HandCandidate = {
+	readonly pocketCards: Cards;
+	readonly communityCards: Cards;
+};
 
 // A hand derived from a HandCandidate
-interface Hand {
-  // Straight, TwoPair etc
-  readonly rank: HandRank;
-  // Cards included in the ranking combination
-  readonly rankCards: Cards;
-  // Cards included in the hand but not in the ranking combination
-  readonly kickerCards: Cards;
-}
+type Hand = {
+	// Straight, TwoPair etc
+	readonly rank: HandRank;
+	// Cards included in the ranking combination
+	readonly rankCards: Cards;
+	// Cards included in the hand but not in the ranking combination
+	readonly kickerCards: Cards;
+};
 ```
 
 ## Api
@@ -59,7 +59,7 @@ interface Hand {
 Determines if two cards are identical
 
 ```ts
-import { isSameCard, Face, Suit } from '@pairjacks/poker-cards';
+import { isSameCard, Face, Suit } from "@pairjacks/poker-cards";
 
 isSameCard([Face.Two, Suit.Clubs], [Face.Two, Suit.Clubs]); // true
 isSameCard([Face.Three, Suit.Clubs], [Face.Two, Suit.Clubs]); // false
@@ -75,15 +75,15 @@ Creates a 52 card deck without Jokers. Accepts an optional parameter object
 - `{ order: "value" }` sorted by suite (Diamonds to Spades) and face (Two to Ace).
 
 ```ts
-import { createDeck } from '@pairjacks/poker-cards';
+import { createDeck } from "@pairjacks/poker-cards";
 
 createDeck();
 // [[Ace, Hearts], [Two, Hearts] ... [Two, Spades], [Ace, Spades]]
 
-createDeck({ order: 'ndo' });
+createDeck({ order: "ndo" });
 // [[Ace, Hearts], [Two, Hearts] ... [Two, Spades], [Ace, Spades]] (default)
 
-createDeck({ order: 'value' });
+createDeck({ order: "value" });
 // [[Ace, Diamonds], [Two, Diamonds] ... [Queen, Spades], [King, Spades]]
 ```
 
@@ -100,7 +100,7 @@ then third: [b] => [c, b, a]
 ```
 
 ```ts
-import { drawCardsFromDeck } from '@pairjacks/poker-cards';
+import { drawCardsFromDeck } from "@pairjacks/poker-cards";
 
 drawCardsFromDeck(deck, 4);
 // { cards: [...4 cards], deck: [...deck without 4 cards] }
@@ -115,7 +115,7 @@ Shuffle functions are async to allow for async random number generators.
 A default shuffle deck function is provided which uses Math.random to drive a fisher-yates shuffle.
 
 ```ts
-import { shuffleDeckNaive } from '@pairjacks/poker-cards';
+import { shuffleDeckNaive } from "@pairjacks/poker-cards";
 
 const shuffled = await shuffleDeckNaive(deck);
 ```
@@ -126,10 +126,10 @@ You might want to use a more robust random int generator, like that provided by 
 
 ```ts
 import {
-  createDeckShuffler,
-  createFisherYatesStackShuffle,
-} from '@pairjacks/poker-cards';
-import randomNumberCsprng from 'random-number-csprng';
+	createDeckShuffler,
+	createFisherYatesStackShuffle,
+} from "@pairjacks/poker-cards";
+import randomNumberCsprng from "random-number-csprng";
 
 // (min: number, max: number) => Promise<number>;
 const randomInt = randomNumberCsprng;
@@ -144,13 +144,13 @@ As another example, the following produces `shuffleDeckNaive` described above
 
 ```ts
 import {
-  createDeckShuffler,
-  createFisherYatesStackShuffle,
-  randomIntNaive,
-} from '@pairjacks/poker-cards';
+	createDeckShuffler,
+	createFisherYatesStackShuffle,
+	randomIntNaive,
+} from "@pairjacks/poker-cards";
 
 const shuffleDeckNaive = createDeckShuffler(
-  createFisherYatesStackShuffle(randomIntNaive),
+	createFisherYatesStackShuffle(randomIntNaive),
 );
 const shuffled = await shuffle(deck);
 ```
@@ -162,20 +162,20 @@ const shuffled = await shuffle(deck);
 Extracts the highest possible hand from a candidate hand
 
 ```ts
-import { extractHand } from '@pairjacks/poker-cards';
+import { extractHand } from "@pairjacks/poker-cards";
 
 const hand = extractHand({
-  pocketCards: [
-    [Face.Two, Suit.Clubs],
-    [Face.Six, Suit.Clubs],
-  ],
-  communityCards: [
-    [Face.Four, Suit.Clubs],
-    [Face.Three, Suit.Clubs],
-    [Face.Eight, Suit.Spades],
-    [Face.Five, Suit.Clubs],
-    [Face.Six, Suit.Spades],
-  ],
+	pocketCards: [
+		[Face.Two, Suit.Clubs],
+		[Face.Six, Suit.Clubs],
+	],
+	communityCards: [
+		[Face.Four, Suit.Clubs],
+		[Face.Three, Suit.Clubs],
+		[Face.Eight, Suit.Spades],
+		[Face.Five, Suit.Clubs],
+		[Face.Six, Suit.Spades],
+	],
 });
 /*
 hand: Hand = {
@@ -226,11 +226,11 @@ winners: HandComparisonResult[] = [
 Describes pocket cards in words
 
 ```ts
-import { describePocketCards, Face, Suit } from '@pairjacks/poker-cards';
+import { describePocketCards, Face, Suit } from "@pairjacks/poker-cards";
 
 describePocketCards([
-  [Face.Ace, Suit.Hearts],
-  [Face.Ace, Suit.Spades],
+	[Face.Ace, Suit.Hearts],
+	[Face.Ace, Suit.Spades],
 ]);
 // Pocket Aces
 ```

@@ -1,65 +1,68 @@
-import { Suit, Face } from '../card/constants';
-import { drawCardsFromDeck } from './draw';
+import assert from "node:assert";
+import { describe, it } from "node:test";
 
-import type { Cards } from '../card/types';
+import { Suit, Face } from "../card/constants.js";
+import { drawCardsFromDeck } from "./draw.js";
 
-describe('draw', () => {
-  describe('drawCardsFromDeck', () => {
-    it('does not modify deck if no cards to be drawn', () => {
-      const emptyDeck: Cards = [] as const;
-      const initialDeck = [[Face.Two, Suit.Diamonds]] as const;
+import type { Cards } from "../card/types.js";
 
-      let drawResult = drawCardsFromDeck(emptyDeck, 1);
+void describe("deck/draw", () => {
+	void describe("drawCardsFromDeck", () => {
+		void it("should not modify deck if no cards to be drawn", () => {
+			const emptyDeck: Cards = [] as const;
+			const initialDeck = [[Face.Two, Suit.Diamonds]] as const;
 
-      expect(drawResult.cards).toEqual([]);
-      expect(drawResult.deck).toBe(emptyDeck);
+			let drawResult = drawCardsFromDeck(emptyDeck, 1);
 
-      drawResult = drawCardsFromDeck(initialDeck, 0);
+			assert.deepStrictEqual(drawResult.cards, []);
+			assert.deepStrictEqual(drawResult.deck === emptyDeck, true);
 
-      expect(drawResult.cards).toEqual([]);
-      expect(drawResult.deck).toBe(initialDeck);
+			drawResult = drawCardsFromDeck(initialDeck, 0);
 
-      drawResult = drawCardsFromDeck(initialDeck, -1);
+			assert.deepStrictEqual(drawResult.cards, []);
+			assert.deepStrictEqual(drawResult.deck === initialDeck, true);
 
-      expect(drawResult.cards).toEqual([]);
-      expect(drawResult.deck).toBe(initialDeck);
-    });
+			drawResult = drawCardsFromDeck(initialDeck, -1);
 
-    it('immutably draws cards from "top" of deck', () => {
-      const initialDeck = [
-        [Face.Jack, Suit.Hearts],
-        [Face.Six, Suit.Diamonds],
-        [Face.Nine, Suit.Spades],
-        [Face.Ten, Suit.Clubs],
-      ] as const;
+			assert.deepStrictEqual(drawResult.cards, []);
+			assert.deepStrictEqual(drawResult.deck === initialDeck, true);
+		});
 
-      let drawResult = drawCardsFromDeck(initialDeck);
+		void it("should immutably draw cards from top of deck", () => {
+			const initialDeck = [
+				[Face.Jack, Suit.Hearts],
+				[Face.Six, Suit.Diamonds],
+				[Face.Nine, Suit.Spades],
+				[Face.Ten, Suit.Clubs],
+			] as const;
 
-      expect(drawResult).toEqual({
-        cards: [[Face.Jack, Suit.Hearts]],
-        deck: [
-          [Face.Six, Suit.Diamonds],
-          [Face.Nine, Suit.Spades],
-          [Face.Ten, Suit.Clubs],
-        ],
-      });
+			let drawResult = drawCardsFromDeck(initialDeck);
 
-      expect(drawResult.deck).not.toBe(initialDeck);
-      expect(initialDeck).toHaveLength(4);
+			assert.deepStrictEqual(drawResult, {
+				cards: [[Face.Jack, Suit.Hearts]],
+				deck: [
+					[Face.Six, Suit.Diamonds],
+					[Face.Nine, Suit.Spades],
+					[Face.Ten, Suit.Clubs],
+				],
+			});
 
-      drawResult = drawCardsFromDeck(initialDeck, 6);
+			assert.notStrictEqual(drawResult.deck, initialDeck);
+			assert.strictEqual(initialDeck.length, 4);
 
-      expect(drawResult).toEqual({
-        cards: [
-          [Face.Ten, Suit.Clubs],
-          [Face.Nine, Suit.Spades],
-          [Face.Six, Suit.Diamonds],
-          [Face.Jack, Suit.Hearts],
-        ],
-        deck: [],
-      });
-      expect(drawResult.deck).not.toBe(initialDeck);
-      expect(initialDeck).toHaveLength(4);
-    });
-  });
+			drawResult = drawCardsFromDeck(initialDeck, 6);
+
+			assert.deepStrictEqual(drawResult, {
+				cards: [
+					[Face.Ten, Suit.Clubs],
+					[Face.Nine, Suit.Spades],
+					[Face.Six, Suit.Diamonds],
+					[Face.Jack, Suit.Hearts],
+				],
+				deck: [],
+			});
+			assert.notStrictEqual(drawResult.deck, initialDeck);
+			assert.strictEqual(initialDeck.length, 4);
+		});
+	});
 });

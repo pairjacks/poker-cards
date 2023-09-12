@@ -1,26 +1,14 @@
 {
-  "extends": [
-    "@tsconfig/node18/tsconfig.json",
-    "@tsconfig/strictest/tsconfig.json"
-  ],
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-    "lib": ["esnext"],
-    "noEmit": true,
-    "sourceMap": true
-  },
-  "exclude": ["**/node_modules"],
-  "include": ["./src", "./scripts", "./*.ts"],
-  "ts-node": {
-    "swc": true,
-    "transpileOnly": true,
-    "compilerOptions": {
-      "isolatedModules": false,
-      "module": "commonjs",
-      "target": "es2020",
-      "lib": ["es2020"],
-      "types": ["node"]
-    }
-  }
+	"extends": [
+		"@tsconfig/strictest/tsconfig.json",
+		"@tsconfig/node20/tsconfig.json"
+	],
+	"compilerOptions": {
+		"isolatedModules": true,
+		"lib": ["esnext"],
+		"noEmit": true,
+		"sourceMap": true
+	},
+	"exclude": ["**/node_modules"],
+	"include": ["./src", "./scripts", "./*.ts"]
 }

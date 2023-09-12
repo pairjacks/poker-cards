@@ -1,44 +1,55 @@
-import { Face, Suit } from './constants';
-import { isSameCard, compareCards } from './compare';
+import assert from "node:assert";
+import { describe, it } from "node:test";
 
-describe('compare', () => {
-  describe('isSameCard', () => {
-    it('determines if two cards are the same', () => {
-      expect(
-        isSameCard([Face.Four, Suit.Diamonds], [Face.Four, Suit.Diamonds]),
-      ).toBe(true);
+import { Face, Suit } from "./constants.js";
+import { isSameCard, compareCards } from "./compare.js";
 
-      expect(
-        isSameCard([Face.Three, Suit.Diamonds], [Face.Four, Suit.Diamonds]),
-      ).toBe(false);
+void describe("card/compare", () => {
+	void describe("isSameCard", () => {
+		void it("should determine if two cards are the same", () => {
+			assert.strictEqual(
+				isSameCard([Face.Four, Suit.Diamonds], [Face.Four, Suit.Diamonds]),
+				true,
+			);
 
-      expect(
-        isSameCard([Face.Four, Suit.Diamonds], [Face.Four, Suit.Clubs]),
-      ).toBe(false);
-    });
-  });
+			assert.strictEqual(
+				isSameCard([Face.Three, Suit.Diamonds], [Face.Four, Suit.Diamonds]),
+				false,
+			);
 
-  describe('compareCards', () => {
-    it('compares card values', () => {
-      expect(compareCards([Face.Two, Suit.Clubs], [Face.Two, Suit.Clubs])).toBe(
-        0,
-      );
+			assert.strictEqual(
+				isSameCard([Face.Four, Suit.Diamonds], [Face.Four, Suit.Clubs]),
+				false,
+			);
+		});
+	});
 
-      expect(
-        compareCards([Face.Two, Suit.Clubs], [Face.Three, Suit.Clubs]),
-      ).toBeGreaterThan(0);
+	void describe("compareCards", () => {
+		void it("should compare card values", () => {
+			assert.strictEqual(
+				compareCards([Face.Two, Suit.Clubs], [Face.Two, Suit.Clubs]),
+				0,
+			);
 
-      expect(
-        compareCards([Face.Two, Suit.Clubs], [Face.Two, Suit.Hearts]),
-      ).toBeGreaterThan(0);
+			assert.strictEqual(
+				compareCards([Face.Two, Suit.Clubs], [Face.Three, Suit.Clubs]),
+				1,
+			);
 
-      expect(
-        compareCards([Face.Three, Suit.Clubs], [Face.Two, Suit.Diamonds]),
-      ).toBeLessThan(0);
+			assert.strictEqual(
+				compareCards([Face.Two, Suit.Clubs], [Face.Two, Suit.Hearts]),
+				1,
+			);
 
-      expect(
-        compareCards([Face.Ten, Suit.Diamonds], [Face.Nine, Suit.Spades]),
-      ).toBeLessThan(0);
-    });
-  });
+			assert.strictEqual(
+				compareCards([Face.Three, Suit.Clubs], [Face.Two, Suit.Diamonds]),
+				-1,
+			);
+
+			assert.strictEqual(
+				compareCards([Face.Ten, Suit.Diamonds], [Face.Nine, Suit.Spades]),
+				-1,
+			);
+		});
+	});
 });
