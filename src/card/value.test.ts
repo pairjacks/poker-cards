@@ -1,8 +1,8 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { getCardFace, getCardSuit } from "./value.js";
-import { FACE, SUIT } from "./constants.js";
+import { FACE, SUIT } from "./constants.ts";
+import { getCardFace, getCardSuit } from "./value.ts";
 
 void describe("card/compare", () => {
 	void describe("getCardFace", () => {
