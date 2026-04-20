@@ -1,14 +1,8 @@
 {
-	"extends": [
-		"@tsconfig/strictest/tsconfig.json",
-		"@tsconfig/node20/tsconfig.json"
-	],
-	"compilerOptions": {
-		"isolatedModules": true,
-		"lib": ["esnext"],
-		"noEmit": true,
-		"sourceMap": true
-	},
-	"exclude": ["**/node_modules"],
-	"include": ["./src", "./scripts", "./*.ts"]
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"include": [],
+	"references": [
+		{ "path": "./tsconfig.node.json" },
+		{ "path": "./tsconfig.src.json" }
+	]
 }

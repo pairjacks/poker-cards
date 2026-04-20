@@ -1,6 +1,7 @@
-import { uniqBy } from "../util/array.js";
-import { Face } from "../card/constants.js";
-import { HandRank } from "./constants.js";
+import { Face } from "../card/constants.ts";
+import { uniqBy } from "../util/array.ts";
+
+import { HandRank } from "./constants.ts";
 import {
 	omitAndSort,
 	getSortedConsequtiveFaceGroups,
@@ -8,9 +9,9 @@ import {
 	getSortedCards,
 	getSortedSuitGroups,
 	createExtractorResult,
-} from "./util.js";
+} from "./util.ts";
 
-import type { Hand, HandExtractor } from "./types.js";
+import type { Hand, HandExtractor } from "./types.ts";
 
 /*
  * Hand extractors try to find particular hand patterns from an array of cards.
@@ -154,6 +155,6 @@ export const extractRoyalFlush: HandExtractor = (cards) => {
 				kickerCards: kickers,
 				rankCards,
 				rank: HandRank.RoyalFlush,
-		  }
+			}
 		: null;
 };

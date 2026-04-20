@@ -1,4 +1,3 @@
-import { extractInPreferenceOrder } from "./util.js";
 import {
 	extractRoyalFlush,
 	extractStraightFlush,
@@ -10,9 +9,10 @@ import {
 	extractTwoPair,
 	extractPair,
 	extractHighCard,
-} from "./hand-extractors.js";
+} from "./hand-extractors.ts";
+import { extractInPreferenceOrder } from "./util.ts";
 
-import type { Hand, HandCandidate } from "./types.js";
+import type { Hand, HandCandidate } from "./types.ts";
 
 /**
  * Extracts the highest possible hand from a candidate hand

@@ -1,11 +1,12 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Suit, Face } from "../card/constants.js";
-import { findHighestHands } from "./compare.js";
-import { HandRank } from "./constants.js";
+import { Suit, Face } from "../card/constants.ts";
 
-import type { HandCandidate } from "./types.js";
+import { findHighestHands } from "./compare.ts";
+import { HandRank } from "./constants.ts";
+
+import type { HandCandidate } from "./types.ts";
 
 void describe("hand/compare", () => {
 	void describe("findHighestHands", () => {

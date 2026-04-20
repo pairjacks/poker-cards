@@ -1,10 +1,11 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { differenceWith } from "../util/array.js";
-import { isSameCard } from "../card/compare.js";
-import { fullDeckNdo } from "./__fixtures__/deck.js";
-import { shuffleDeckNaive, createDeckShuffler } from "./shuffle.js";
+import { isSameCard } from "../card/compare.ts";
+import { differenceWith } from "../util/array.ts";
+
+import { fullDeckNdo } from "./__fixtures__/deck.ts";
+import { shuffleDeckNaive, createDeckShuffler } from "./shuffle.ts";
 
 void describe("deck/shuffle", () => {
 	void it("should asynchronously shuffle a deck using naive shuffler", async () => {

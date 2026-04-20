@@ -1,9 +1,10 @@
-import { isFiniteNumber } from "../util/predicate.js";
-import { getFaceValue } from "../card/value.js";
-import { HandRank } from "./constants.js";
+import { getFaceValue } from "../card/value.ts";
+import { isFiniteNumber } from "../util/predicate.ts";
 
-import type { Cards } from "../card/types.js";
-import type { HandComparisonResult } from "./types.js";
+import { HandRank } from "./constants.ts";
+
+import type { Cards } from "../card/types.ts";
+import type { HandComparisonResult } from "./types.ts";
 
 /*
  * Tie breakers try to resolve ties between hands, given the same rank for all

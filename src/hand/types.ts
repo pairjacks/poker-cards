@@ -1,5 +1,5 @@
-import type { HandRank } from "./constants.js";
-import type { Cards } from "../card/types.js";
+import type { Cards } from "../card/types.ts";
+import type { HandRank } from "./constants.ts";
 
 /** Represents a collection of cards that can be used to create a 5 card hand */
 export type HandCandidate = {

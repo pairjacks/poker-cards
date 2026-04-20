@@ -1,6 +1,6 @@
-import { Suit, Face } from "../card/constants.js";
+import { Suit, Face } from "../card/constants.ts";
 
-import type { Card, Cards } from "../card/types.js";
+import type { Card, Cards } from "../card/types.ts";
 
 /**
  * Creates a 52 card deck without Jokers, sorted by suite and face.

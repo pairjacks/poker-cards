@@ -1,9 +1,10 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Face, Suit } from "../card/constants.js";
-import { HandRank } from "./constants.js";
-import { extractHand } from "./extract.js";
+import { Face, Suit } from "../card/constants.ts";
+
+import { HandRank } from "./constants.ts";
+import { extractHand } from "./extract.ts";
 
 void describe("hand/extract", () => {
 	void describe("extractHand", () => {

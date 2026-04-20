@@ -1,8 +1,8 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { fullDeckValue, fullDeckNdo } from "./__fixtures__/deck.js";
-import { createDeck } from "./create.js";
+import { fullDeckValue, fullDeckNdo } from "./__fixtures__/deck.ts";
+import { createDeck } from "./create.ts";
 
 void describe("deck/create", () => {
 	void describe("createDeck", () => {

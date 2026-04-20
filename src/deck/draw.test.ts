@@ -1,10 +1,11 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { Suit, Face } from "../card/constants.js";
-import { drawCardsFromDeck } from "./draw.js";
+import { Suit, Face } from "../card/constants.ts";
 
-import type { Cards } from "../card/types.js";
+import { drawCardsFromDeck } from "./draw.ts";
+
+import type { Cards } from "../card/types.ts";
 
 void describe("deck/draw", () => {
 	void describe("drawCardsFromDeck", () => {

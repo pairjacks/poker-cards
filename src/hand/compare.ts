@@ -1,11 +1,12 @@
-import { uniqBy } from "../util/array.js";
-import { identity } from "../util/function.js";
-import { isNotNullish } from "../util/predicate.js";
-import { extractHand } from "./extract.js";
-import { tieBreakers } from "./tie-breakers.js";
-import { getHandRankValue } from "./util.js";
+import { uniqBy } from "../util/array.ts";
+import { identity } from "../util/function.ts";
+import { isNotNullish } from "../util/predicate.ts";
 
-import type { HandCandidate, HandComparisonResult } from "./types.js";
+import { extractHand } from "./extract.ts";
+import { tieBreakers } from "./tie-breakers.ts";
+import { getHandRankValue } from "./util.ts";
+
+import type { HandCandidate, HandComparisonResult } from "./types.ts";
 
 /**
  * Returns an array of highest hands from a list of candidates. Multiple entries indicates a draw.
@@ -22,7 +23,7 @@ export function findHighestHands(
 				hand: extractHand(candidate),
 			}),
 		)
-		.sort(
+		.toSorted(
 			(a, b) => getHandRankValue(b.hand.rank) - getHandRankValue(a.hand.rank),
 		);
 

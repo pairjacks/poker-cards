@@ -1,6 +1,6 @@
-import { getFaceValue, getSuitValue } from "./value.js";
+import { getFaceValue, getSuitValue } from "./value.ts";
 
-import type { Card } from "./types.js";
+import type { Card } from "./types.ts";
 
 /**
  * Determines if two cards are identical

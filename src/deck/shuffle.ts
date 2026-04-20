@@ -1,4 +1,4 @@
-import type { Card, Cards } from "../card/types.js";
+import type { Card, Cards } from "../card/types.ts";
 
 /**
  * Provide a naive Math.random based generator.

@@ -1,4 +1,4 @@
-import { Suit, Face } from "../../card/constants.js";
+import { Suit, Face } from "../../card/constants.ts";
 
 export const fullDeckValue = [
 	[Face.Ace, Suit.Diamonds],

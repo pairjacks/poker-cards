@@ -1,6 +1,6 @@
-import { clamp } from "../util/number.js";
+import { clamp } from "../util/number.ts";
 
-import type { Cards } from "../card/types.js";
+import type { Cards } from "../card/types.ts";
 
 /**
  * Draws n cards from deck without mutating the deck. Returned card order tries

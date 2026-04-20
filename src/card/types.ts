@@ -1,4 +1,4 @@
-import type { Suit, Face } from "./constants.js";
+import type { Suit, Face } from "./constants.ts";
 
 export type Card = readonly [Face, Suit];
 

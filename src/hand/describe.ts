@@ -1,11 +1,12 @@
-import { HandRank } from "./constants.js";
-import { Face } from "../card/constants.js";
-import { getSortedCards } from "./util.js";
-import { allEqualBy } from "../util/array.js";
-import { getFaceValue, getSuitValue } from "../card/value.js";
+import { Face } from "../card/constants.ts";
+import { getFaceValue, getSuitValue } from "../card/value.ts";
+import { allEqualBy } from "../util/array.ts";
 
-import type { Card, Cards } from "../card/types.js";
-import type { Hand, HandDescription } from "./types.js";
+import { HandRank } from "./constants.ts";
+import { getSortedCards } from "./util.ts";
+
+import type { Card, Cards } from "../card/types.ts";
+import type { Hand, HandDescription } from "./types.ts";
 
 /**
  * Describes pocket cards in words, e.g. "Pocket Aces"
@@ -81,7 +82,7 @@ const handDescribers: { [key in HandRank]: HandDescriber } = {
 			? {
 					rank: `${facePlural(rankCard)} high`,
 					kickers: kickerList(kickerCards),
-			  }
+				}
 			: { rank: "", kickers: "" },
 
 	[HandRank.Pair]: ({ rankCards: [rankCard], kickerCards }) => {

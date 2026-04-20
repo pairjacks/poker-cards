@@ -1,16 +1,17 @@
-import { memoize } from "../util/function.js";
-import { isInRangeInclusive } from "../util/number.js";
-import { groupBy, differenceWith, chunkPreviousWith } from "../util/array.js";
 import {
 	isSameCard,
 	compareCards,
 	compareFaces,
 	compareSuits,
-} from "../card/compare.js";
-import { HandRank } from "./constants.js";
+} from "../card/compare.ts";
+import { groupBy, differenceWith, chunkPreviousWith } from "../util/array.ts";
+import { memoize } from "../util/function.ts";
+import { isInRangeInclusive } from "../util/number.ts";
 
-import type { Cards } from "../card/types.js";
-import type { HandCandidate, Hand, HandExtractor } from "./types.js";
+import { HandRank } from "./constants.ts";
+
+import type { Cards } from "../card/types.ts";
+import type { HandCandidate, Hand, HandExtractor } from "./types.ts";
 
 export function getHandRankValue(rank: HandRank) {
 	return Object.values(HandRank).indexOf(rank) + 1;

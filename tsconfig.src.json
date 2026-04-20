@@ -1,0 +1,10 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"include": ["./src"],
+	"extends": ["./tsconfig.base.json", "@tsconfig/node24/tsconfig.json"],
+	"compilerOptions": {
+		"composite": true,
+		"emitDeclarationOnly": true,
+		"types": ["node"]
+	}
+}

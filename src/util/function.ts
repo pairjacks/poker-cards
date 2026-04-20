@@ -8,7 +8,7 @@ export function memoize<A extends object, R>(fn: (a: A) => R) {
 	return function memoized(a: A): R {
 		if (!cache.has(a)) cache.set(a, fn(a));
 
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		// oxlint-disable-next-line typescript/no-non-null-assertion
 		return cache.get(a)!;
 	};
 }

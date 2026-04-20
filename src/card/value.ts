@@ -1,6 +1,6 @@
-import { Suit, Face } from "./constants.js";
+import { Suit, Face } from "./constants.ts";
 
-import type { Card } from "./types.js";
+import type { Card } from "./types.ts";
 
 /**
  * Returns a face value for a card
